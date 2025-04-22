@@ -8,8 +8,9 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+const PORT = process.env.PORT || 5001;
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
@@ -31,7 +32,10 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Analytics Dashboard API');
 });
 
-app.listen(5001, () => {
-  console.log('Server running on port 5001');
+app.get('/', (req, res) => res.send('API Running'));
+
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 

@@ -1,15 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import DashboardPage from './pages/DashboardPage';
+import AnalyticsPage from './pages/AnalyticsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
   return (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-      {/* Add more routes here as needed */}
-    </Routes>
-  </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/dashboards/analytics" element={<AnalyticsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 };
 
