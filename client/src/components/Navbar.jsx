@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import {
-  AppBar,
-  Toolbar,
   IconButton,
   InputBase,
   Popover,
@@ -28,7 +26,7 @@ import {
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import { ColorModeContext } from '../theme/themeContext';
-import './navbar.css';
+import '../styles/navbar.css'; // Ensure navbar.css is imported
 
 const NavBar = () => {
   const theme = useTheme();
@@ -46,8 +44,9 @@ const NavBar = () => {
   const isOpen = (anchor) => Boolean(anchor);
 
   return (
-    <AppBar position="sticky" elevation={0} className="navbar">
-      <Toolbar className="navbar-toolbar">
+    <div className="navbar-container">
+    <div className="navbar">
+      <div className="navbar-toolbar">
         <ClickAwayListener onClickAway={handleClose(setSearchAnchor)}>
           <Box className="navbar-search">
             <Paper
@@ -186,8 +185,9 @@ const NavBar = () => {
             </Box>
           </Menu>
         </Box>
-      </Toolbar>
-    </AppBar>
+      </div>
+    </div>
+    </div>
   );
 };
 
