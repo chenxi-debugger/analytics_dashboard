@@ -6,7 +6,7 @@ import mysql from 'mysql2/promise';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import userAccountRoutes from './routes/userAccount.js'; 
+import userAccountRoutes from './mongoose/routes/userAccount.js'; 
 
 // Resolve __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);

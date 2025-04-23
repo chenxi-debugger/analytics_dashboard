@@ -1,5 +1,5 @@
 import express from 'express';
-import UserAccount from '../models/UserAccount.js'; // ✅ Import the actual model
+import UserAccount from '../../mongoose/models/UserAccount.js'; // ✅ Updated import path
 
 const router = express.Router();
 
