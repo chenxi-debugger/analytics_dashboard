@@ -49,13 +49,18 @@ const NavBar = () => {
       <div className="navbar-toolbar">
         <ClickAwayListener onClickAway={handleClose(setSearchAnchor)}>
           <Box className="navbar-search">
-            <Paper
-              onClick={handleOpen(setSearchAnchor)}
-              className="navbar-search-box"
-            >
-              <Search className="navbar-search-icon" />
-              <InputBase placeholder="Search (Ctrl+/)" fullWidth disabled />
-            </Paper>
+          <Paper
+            onClick={handleOpen(setSearchAnchor)}
+            className="navbar-search-box"
+          >
+            <Search className="navbar-search-icon" />
+            <InputBase
+              placeholder="Search (Ctrl+/)"
+              fullWidth
+              readOnly
+              sx={{ cursor: 'pointer' }}
+            />
+          </Paper>
             <Popover
               open={isOpen(searchAnchor)}
               anchorEl={searchAnchor}
