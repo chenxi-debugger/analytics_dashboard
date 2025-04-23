@@ -1,0 +1,49 @@
+.sidebar-drawer {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.sidebar-drawer .MuiDrawer-paper {
+  width: 280px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-right: 1px solid #eee;
+  color: #6b7280;
+}
+
+.sidebar-title {
+  color: #5a57ff;
+  font-weight: bold;
+}
+
+.sidebar-content {
+  overflow-y: auto;
+}
+
+.sidebar-category {
+  padding-left: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.sidebar-box {
+  overflow: auto;
+  margin-top: 16px;
+}
+
+.sidebar-icon {
+  color: #9CA3AF;
+}
+
+/* Add styles for nested items to match the updated structure */
+.sidebar-nested-item {
+  padding-left: 32px;
+  color: #6b7280;
+}
+
+.sidebar-nested-item:hover {
+  color: #5a57ff;
+}

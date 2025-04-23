@@ -1,0 +1,90 @@
+.navbar {
+  background-color: var(--mui-palette-background-paper);
+  color: var(--mui-palette-text-primary);
+}
+
+.navbar-toolbar {
+  justify-content: space-between;
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+.navbar-search-box {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.navbar-search-icon {
+  margin-right: 8px;
+}
+
+.navbar-search-popup {
+  padding: 16px;
+  width: 600px;
+  max-height: 400px;
+}
+
+.navbar-search-popup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.navbar-popup-section {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-shortcut-menu {
+  padding: 8px 16px;
+}
+
+.navbar-notification-menu {
+  padding: 8px 16px;
+}
+
+.navbar-divider {
+  margin: 8px 0;
+}
+
+.navbar-readall {
+  color: var(--mui-palette-primary-main);
+}
+
+.navbar-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.navbar-user-menu {
+  padding: 8px 16px;
+}
+
+.navbar-user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Add hover effects for better interactivity */
+.navbar-actions .MuiIconButton-root:hover {
+  background-color: var(--mui-palette-action-hover);
+}
+
+.navbar-user-menu .MuiMenuItem-root:hover {
+  background-color: var(--mui-palette-action-hover);
+}
