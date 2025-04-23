@@ -1,0 +1,39 @@
+{
+  "pageProps": {
+    "apiData": [
+      {
+        "stats": "21,459",
+        "trendNumber": 29,
+        "title": "Session",
+        "subtitle": "Total Users ",
+        "avatarIcon": "bx:user"
+      },
+      {
+        "stats": "4,567",
+        "trendNumber": 18,
+        "title": "Paid Users",
+        "avatarColor": "error",
+        "subtitle": "Last week analytics ",
+        "avatarIcon": "bx:user-plus"
+      },
+      {
+        "stats": "19,860",
+        "trendNumber": 14,
+        "trend": "negative",
+        "title": "Active Users",
+        "avatarColor": "success",
+        "subtitle": "Last week analytics ",
+        "avatarIcon": "bx:group"
+      },
+      {
+        "stats": "237",
+        "trendNumber": 42,
+        "avatarColor": "warning",
+        "title": "Pending Users",
+        "subtitle": "Last year analytics ",
+        "avatarIcon": "bx:user-voice"
+      }
+    ]
+  },
+  "__N_SSG": true
+}

@@ -1,0 +1,48 @@
+{
+  "pageProps": {
+    "apiClientData": [
+      {
+        "name": "Jordan Stevenson",
+        "address": "7777 Mendez Plains",
+        "company": "Hall-Robbins PLC",
+        "country": "USA",
+        "contact": "(616) 865-4180",
+        "companyEmail": "don85@johnson.com"
+      },
+      {
+        "name": "Stephanie Burns",
+        "address": "04033 Wesley Wall Apt. 961",
+        "company": "Mccann LLC and Sons",
+        "country": "Haiti",
+        "contact": "(226) 204-8287",
+        "companyEmail": "brenda49@taylor.info"
+      },
+      {
+        "name": "Tony Herrera",
+        "address": "5345 Robert Squares",
+        "company": "Leonard-Garcia and Sons",
+        "country": "Denmark",
+        "contact": "(955) 676-1076",
+        "companyEmail": "smithtiffany@powers.com"
+      },
+      {
+        "name": "Kevin Patton",
+        "address": "19022 Clark Parks Suite 149",
+        "company": "Smith, Miller and Henry LLC",
+        "country": "Cambodia",
+        "contact": "(832) 323-6914",
+        "companyEmail": "mejiageorge@lee-perez.com"
+      },
+      {
+        "name": "Mrs. Julie Donovan MD",
+        "address": "8534 Saunders Hill Apt. 583",
+        "company": "Garcia-Cameron and Sons",
+        "country": "Martinique",
+        "contact": "(970) 982-3353",
+        "companyEmail": "brandon07@pierce.com"
+      }
+    ],
+    "invoiceNumber": 5037
+  },
+  "__N_SSG": true
+}
