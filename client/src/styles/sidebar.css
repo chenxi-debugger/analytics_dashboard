@@ -38,7 +38,15 @@
   color: #9CA3AF;
 }
 
-/* Add styles for nested items to match the updated structure */
+.active-item {
+  background-color: #5a57ff;
+  color: #ffffff !important;
+}
+
+.active-item .MuiListItemIcon-root {
+  color: #ffffff !important;
+}
+
 .sidebar-nested-item {
   padding-left: 32px;
   color: #6b7280;
@@ -46,4 +54,9 @@
 
 .sidebar-nested-item:hover {
   color: #5a57ff;
+}
+
+.active-nested-item {
+  color: #5a57ff;
+  font-weight: 600;
 }

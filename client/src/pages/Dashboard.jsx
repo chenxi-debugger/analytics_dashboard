@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import { MoreVert, ArrowDropDown } from '@mui/icons-material';
+import ReactECharts from 'echarts-for-react'; // Import ECharts for React
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -18,6 +19,135 @@ const Dashboard = () => {
 
   const handleOpenYearMenu = (event) => setYearAnchor(event.currentTarget);
   const handleCloseYearMenu = () => setYearAnchor(null);
+
+  // ECharts configuration for Order Chart (Line Chart)
+  const orderChartOption = {
+    xAxis: {
+      type: 'category',
+      data: ['1', '2', '3', '4'],
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { show: false },
+    },
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
+    series: [
+      {
+        data: [20, 40, 60, 80],
+        type: 'line',
+        smooth: true,
+        lineStyle: { color: '#28c76f', width: 2 },
+        itemStyle: { color: '#28c76f' },
+        showSymbol: false,
+      },
+    ],
+    grid: { left: 0, right: 0, top: 0, bottom: 0 },
+  };
+
+  // ECharts configuration for Total Revenue Chart (Bar Chart)
+  const totalRevenueChartOption = {
+    xAxis: {
+      type: 'category',
+      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      axisLabel: { color: '#5e5873', fontSize: 10 },
+      axisLine: { lineStyle: { color: '#e0e0e0' } },
+    },
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
+    series: [
+      {
+        name: '2023',
+        type: 'bar',
+        data: [10, 0, 20, 0, 5, 0],
+        barWidth: 10,
+        itemStyle: { color: '#00cfe8', borderRadius: 4 },
+      },
+      {
+        name: '2024',
+        type: 'bar',
+        data: [0, 30, 0, 25, 0, 15],
+        barWidth: 10,
+        itemStyle: { color: '#7367f0', borderRadius: 4 },
+      },
+    ],
+    grid: { left: 20, right: 20, top: 10, bottom: 20 },
+  };
+
+  // ECharts configuration for Profit Report Chart (Bar Chart)
+  const profitChartOption = {
+    xAxis: {
+      type: 'category',
+      data: ['M', 'T', 'W', 'T', 'F'],
+      axisLabel: { color: '#5e5873', fontSize: 10 },
+      axisLine: { lineStyle: { color: '#e0e0e0' } },
+    },
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
+    series: [
+      {
+        type: 'bar',
+        data: [30, 50, 70, 40, 60],
+        barWidth: 10,
+        itemStyle: { color: '#ff9f43', borderRadius: 4 },
+      },
+    ],
+    grid: { left: 20, right: 20, top: 10, bottom: 20 },
+  };
+
+  // ECharts configuration for Revenue Chart (Bar Chart)
+  const revenueChartOption = {
+    xAxis: {
+      type: 'category',
+      data: ['1', '2', '3', '4', '5'],
+      axisLabel: { show: false },
+      axisLine: { show: false },
+      axisTick: { show: false },
+    },
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
+    series: [
+      {
+        type: 'bar',
+        data: [20, 40, 60, 30, 50],
+        barWidth: 10,
+        itemStyle: { color: '#ff9f43', borderRadius: 4 },
+      },
+    ],
+    grid: { left: 0, right: 0, top: 0, bottom: 0 },
+  };
+
+  // ECharts configuration for Income Chart (Line Chart)
+  const incomeChartOption = {
+    xAxis: {
+      type: 'category',
+      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      axisLabel: { color: '#5e5873', fontSize: 10 },
+      axisLine: { lineStyle: { color: '#e0e0e0' } },
+    },
+    yAxis: {
+      type: 'value',
+      show: false,
+    },
+    series: [
+      {
+        data: [20, 40, 60, 80, 50, 30],
+        type: 'line',
+        smooth: true,
+        lineStyle: { color: '#7367f0', width: 2 },
+        itemStyle: { color: '#7367f0' },
+        showSymbol: false,
+      },
+    ],
+    grid: { left: 20, right: 20, top: 10, bottom: 20 },
+  };
 
   return (
     <Box className="dashboard-main">
@@ -51,7 +181,9 @@ const Dashboard = () => {
               <Typography variant="body2" className="order-stats">
                 Sales <span className="order-stats-value">4,679</span>
               </Typography>
-              <Box className="order-chart">Chart Placeholder</Box>
+              <Box className="order-chart">
+                <ReactECharts option={orderChartOption} style={{ height: '80px', width: '100%' }} />
+              </Box>
             </Paper>
           </Grid>
 
@@ -76,7 +208,9 @@ const Dashboard = () => {
                   </Menu>
                 </Box>
               </Box>
-              <Box className="revenue-chart">Bar Chart Placeholder</Box>
+              <Box className="revenue-chart">
+                <ReactECharts option={totalRevenueChartOption} style={{ height: '200px', width: '100%' }} />
+              </Box>
             </Paper>
           </Grid>
 
@@ -110,7 +244,9 @@ const Dashboard = () => {
               <Typography variant="body2" className="profit-growth">
                 68.2% <span className="profit-growth-icon">⬆</span>
               </Typography>
-              <Box className="profit-chart">Bar Chart Placeholder</Box>
+              <Box className="profit-chart">
+                <ReactECharts option={profitChartOption} style={{ height: '120px', width: '100%' }} />
+              </Box>
             </Paper>
           </Grid>
 
@@ -127,7 +263,9 @@ const Dashboard = () => {
               <Typography variant="body2" className="revenue-growth">
                 $2,468 <span className="revenue-growth-icon">+14.82%</span>
               </Typography>
-              <Box className="revenue-stats-chart">Chart Placeholder</Box>
+              <Box className="revenue-stats-chart">
+                <ReactECharts option={revenueChartOption} style={{ height: '120px', width: '100%' }} />
+              </Box>
             </Paper>
           </Grid>
 
@@ -142,17 +280,22 @@ const Dashboard = () => {
                 <Typography variant="body2">38%</Typography>
               </Box>
               <Box className="order-stats-list">
-                {[
-                  { label: 'Electronic', value: '82.5k' },
-                  { label: 'Fashion', value: '23.8k' },
-                  { label: 'Decor', value: '849' },
-                  { label: 'Sports', value: '99' },
-                ].map((item, index) => (
-                  <Box key={index} className="order-stats-item">
-                    <Typography variant="body2">{item.label}</Typography>
-                    <Typography variant="body2">{item.value}</Typography>
-                  </Box>
-                ))}
+                <Box className="order-stats-item">
+                  <Typography variant="body2">Electronic</Typography>
+                  <Typography variant="body2">82.5k</Typography>
+                </Box>
+                <Box className="order-stats-item">
+                  <Typography variant="body2">Fashion</Typography>
+                  <Typography variant="body2">23.8k</Typography>
+                </Box>
+                <Box className="order-stats-item">
+                  <Typography variant="body2">Decor</Typography>
+                  <Typography variant="body2">849</Typography>
+                </Box>
+                <Box className="order-stats-item">
+                  <Typography variant="body2">Sports</Typography>
+                  <Typography variant="body2">99</Typography>
+                </Box>
               </Box>
             </Paper>
           </Grid>
@@ -170,7 +313,15 @@ const Dashboard = () => {
               <Typography variant="body2" className="income-stats">
                 42.9% <span className="income-stats-icon">⬆</span>
               </Typography>
-              <Box className="income-chart">Line Chart Placeholder</Box>
+              <Box className="income-chart">
+                <ReactECharts option={incomeChartOption} style={{ height: '120px', width: '100%' }} />
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Income This Week */}
+          <Grid item xs={12} md={8}>
+            <Paper className="income-week-card">
               <Typography variant="body2" className="income-week">
                 Income this week
               </Typography>
@@ -190,21 +341,41 @@ const Dashboard = () => {
                 </IconButton>
               </Box>
               <Box className="transactions-list">
-                {[
-                  { label: 'Send Money', value: '+82.6 USD', color: 'purple' },
-                  { label: 'Wallet', value: '+270.69 USD', color: 'blue' },
-                  { label: 'Refund', value: '+637.91 USD', color: 'green' },
-                  { label: 'Credit Card', value: '-838.71 USD', color: 'red' },
-                  { label: 'Ordered Food', value: '-92.45 USD', color: 'yellow' },
-                  { label: 'Starbucks', value: '+203.33 USD', color: 'pink' },
-                  { label: 'Mastercard', value: '+92.45 USD', color: 'orange' },
-                ].map((item, index) => (
-                  <Box key={index} className="transactions-item">
-                    <Box className="transactions-icon" style={{ backgroundColor: item.color }} />
-                    <Typography variant="body2">{item.label}</Typography>
-                    <Typography variant="body2">{item.value}</Typography>
-                  </Box>
-                ))}
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#7367f0' }} />
+                  <Typography variant="body2">Send Money</Typography>
+                  <Typography variant="body2">+82.6 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#00cfe8' }} />
+                  <Typography variant="body2">Wallet</Typography>
+                  <Typography variant="body2">+270.69 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#28c76f' }} />
+                  <Typography variant="body2">Refund</Typography>
+                  <Typography variant="body2">+637.91 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#ea5455' }} />
+                  <Typography variant="body2">Credit Card</Typography>
+                  <Typography variant="body2">-838.71 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#ff9f43' }} />
+                  <Typography variant="body2">Ordered Food</Typography>
+                  <Typography variant="body2">-92.45 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#ff3e1d' }} />
+                  <Typography variant="body2">Starbucks</Typography>
+                  <Typography variant="body2">+203.33 USD</Typography>
+                </Box>
+                <Box className="transactions-item">
+                  <Box className="transactions-icon" style={{ backgroundColor: '#ff9f43' }} />
+                  <Typography variant="body2">Mastercard</Typography>
+                  <Typography variant="body2">+92.45 USD</Typography>
+                </Box>
               </Box>
             </Paper>
           </Grid>
@@ -215,7 +386,7 @@ const Dashboard = () => {
               <Typography variant="h6">Activity Timeline</Typography>
               <Box className="activity-list">
                 <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: 'purple' }}>
+                  <Avatar className="activity-icon" style={{ backgroundColor: '#7367f0' }}>
                     12
                   </Avatar>
                   <Box>
@@ -224,7 +395,7 @@ const Dashboard = () => {
                   </Box>
                 </Box>
                 <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: 'yellow' }}>
+                  <Avatar className="activity-icon" style={{ backgroundColor: '#ff9f43' }}>
                     C
                   </Avatar>
                   <Box>
@@ -235,7 +406,7 @@ const Dashboard = () => {
                   </Box>
                 </Box>
                 <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: 'blue' }}>
+                  <Avatar className="activity-icon" style={{ backgroundColor: '#00cfe8' }}>
                     S
                   </Avatar>
                   <Box>
@@ -244,16 +415,18 @@ const Dashboard = () => {
                   </Box>
                 </Box>
                 <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: 'lightblue' }}>
+                  <Avatar className="activity-icon" style={{ backgroundColor: '#e0e0e0' }}>
                     C
                   </Avatar>
                   <Box>
                     <Typography variant="body2">Create a new project for client</Typography>
                     <Typography variant="caption">5 team members in a project</Typography>
                     <Box className="activity-avatars">
-                      {[...Array(5)].map((_, i) => (
-                        <Avatar key={i} className="activity-avatar" />
-                      ))}
+                      <Avatar className="activity-avatar" style={{ backgroundColor: '#ff9f43' }} alt="Team Member" />
+                      <Avatar className="activity-avatar" style={{ backgroundColor: '#7367f0' }} alt="Team Member" />
+                      <Avatar className="activity-avatar" style={{ backgroundColor: '#28c76f' }} alt="Team Member" />
+                      <Avatar className="activity-avatar" style={{ backgroundColor: '#00cfe8' }} alt="Team Member" />
+                      <Avatar className="activity-avatar" style={{ backgroundColor: '#ea5455' }} alt="Team Member" />
                     </Box>
                   </Box>
                 </Box>
@@ -270,25 +443,66 @@ const Dashboard = () => {
                 <Typography variant="h6">Country</Typography>
               </Box>
               <Box className="browser-list">
-                {[
-                  { browser: 'Chrome', visits: '8.92k', percentage: '64.91%' },
-                  { browser: 'Safari', visits: '1.29k', percentage: '19.03%' },
-                  { browser: 'Firefox', visits: '328', percentage: '3.26%' },
-                  { browser: 'Edge', visits: '142', percentage: '3.89%' },
-                  { browser: 'Opera', visits: '85', percentage: '2.12%' },
-                  { browser: 'Brave', visits: '36', percentage: '1.06%' },
-                ].map((item, index) => (
-                  <Box key={index} className="browser-item">
-                    <Typography variant="body2">{index + 1}</Typography>
-                    <Avatar className="browser-icon" />
-                    <Typography variant="body2">{item.browser}</Typography>
-                    <Typography variant="body2">{item.visits}</Typography>
-                    <Box className="browser-progress">
-                      <Box className="browser-progress-bar" style={{ width: item.percentage }} />
-                    </Box>
-                    <Typography variant="body2">{item.percentage}</Typography>
+                <Box className="browser-item">
+                  <Typography variant="body2">1</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#28c76f' }} />
+                  <Typography variant="body2">Chrome</Typography>
+                  <Typography variant="body2">8.92k</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '64.91%' }} />
                   </Box>
-                ))}
+                  <Typography variant="body2">64.91%</Typography>
+                </Box>
+                <Box className="browser-item">
+                  <Typography variant="body2">2</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#00cfe8' }} />
+                  <Typography variant="body2">Safari</Typography>
+                  <Typography variant="body2">1.29k</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '19.03%' }} />
+                  </Box>
+                  <Typography variant="body2">19.03%</Typography>
+                </Box>
+                <Box className="browser-item">
+                  <Typography variant="body2">3</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#ff9f43' }} />
+                  <Typography variant="body2">Firefox</Typography>
+                  <Typography variant="body2">328</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '3.26%' }} />
+                  </Box>
+                  <Typography variant="body2">3.26%</Typography>
+                </Box>
+                <Box className="browser-item">
+                  <Typography variant="body2">4</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#7367f0' }} />
+                  <Typography variant="body2">Edge</Typography>
+                  <Typography variant="body2">142</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '3.89%' }} />
+                  </Box>
+                  <Typography variant="body2">3.89%</Typography>
+                </Box>
+                <Box className="browser-item">
+                  <Typography variant="body2">5</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#ea5455' }} />
+                  <Typography variant="body2">Opera</Typography>
+                  <Typography variant="body2">85</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '2.12%' }} />
+                  </Box>
+                  <Typography variant="body2">2.12%</Typography>
+                </Box>
+                <Box className="browser-item">
+                  <Typography variant="body2">6</Typography>
+                  <Avatar className="browser-icon" style={{ backgroundColor: '#ff3e1d' }} />
+                  <Typography variant="body2">Brave</Typography>
+                  <Typography variant="body2">36</Typography>
+                  <Box className="browser-progress">
+                    <Box className="browser-progress-bar" style={{ width: '1.06%' }} />
+                  </Box>
+                  <Typography variant="body2">1.06%</Typography>
+                </Box>
               </Box>
             </Paper>
           </Grid>

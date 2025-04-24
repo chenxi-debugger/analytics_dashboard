@@ -6,6 +6,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import Navbar from './components/Navbar'; // Import Navbar
 import Sidebar from './components/Sidebar'; // Import Sidebar
 import './styles/app.css'; // Import global styles
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
           <Navbar /> {/* Navbar Component */}
           <Routes>
             <Route path="/" element={<DashboardPage />} />
-            <Route path="/dashboards/analytics" element={<AnalyticsPage />} />
+            <Route path="/dashboards/analytics" element={<Dashboard />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
