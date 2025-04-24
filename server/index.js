@@ -7,7 +7,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import userAccountRoutes from './mongoose/routes/userAccount.js'; 
-import invoicesRoutes from './mysql/routes/invoices.js'; // ✅ Updated import path
+import invoicesRoutes from './mysql/routes/invoices.js'; 
+import dashboardRoutes from './mongoose/routes/dashboarddata.js';
+
 
 // Resolve __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +30,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 app.use('/api/user-account', userAccountRoutes); // MongoDB API route
+app.use('/api/dashboarddata', dashboardRoutes);
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 
 // Serve static files for production build
