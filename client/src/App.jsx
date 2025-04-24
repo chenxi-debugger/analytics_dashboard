@@ -7,6 +7,8 @@ import Navbar from './components/Navbar'; // Import Navbar
 import Sidebar from './components/Sidebar'; // Import Sidebar
 import './styles/app.css'; // Import global styles
 import Dashboard from './pages/Dashboard';
+import CrmPage from './pages/CrmPage';
+import EcommercePage from './pages/EcommercePage';
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/dashboards/analytics" element={<Dashboard />} />
+            <Route path="/dashboards/crm" element={<CrmPage />} />
+            <Route path="/dashboards/ecommerce" element={<EcommercePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
