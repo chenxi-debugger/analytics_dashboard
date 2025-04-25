@@ -9,6 +9,9 @@ import { fileURLToPath } from 'url';
 import userAccountRoutes from './mongoose/routes/userAccount.js'; 
 import invoicesRoutes from './mysql/routes/invoices.js'; 
 import dashboardRoutes from './mongoose/routes/dashboarddata.js';
+import analyticsRouter from './mongoose/routes/analytics.js';
+import ecommerceRouter from './mongoose/routes/ecommerce.js';
+import crmRouter from './mongoose/routes/crm.js';
 
 
 // Resolve __dirname in ES Modules
@@ -31,6 +34,10 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use('/api/user-account', userAccountRoutes); // MongoDB API route
 app.use('/api/dashboarddata', dashboardRoutes);
+app.use('/api/analytics', analyticsRouter);
+app.use('/api/ecommerce', ecommerceRouter);
+app.use('/api/crm', crmRouter);
+
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 
 // Serve static files for production build

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -11,20 +11,61 @@ import {
   MenuItem,
 } from '@mui/material';
 import { MoreVert, ArrowDropDown } from '@mui/icons-material';
-import ReactECharts from 'echarts-for-react'; // Import ECharts for React
+import ReactECharts from 'echarts-for-react';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
-  const [yearAnchor, setYearAnchor] = React.useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [yearAnchor, setYearAnchor] = useState(null);
+
+  // Fetch data from API
+  useEffect(() => {
+    async function fetchAnalyticsData() {
+      try {
+        const response = await fetch('http://localhost:5001/api/analytics', {
+          mode: 'cors',
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    }
+    fetchAnalyticsData();
+  }, []);
 
   const handleOpenYearMenu = (event) => setYearAnchor(event.currentTarget);
   const handleCloseYearMenu = () => setYearAnchor(null);
 
-  // ECharts configuration for Order Chart (Line Chart)
+  // Loading and error states
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Typography color="error">Error: {error}</Typography>
+      </Box>
+    );
+  }
+
+  // ECharts configurations using fetched data
   const orderChartOption = {
     xAxis: {
       type: 'category',
-      data: ['1', '2', '3', '4'],
+      data: data.order_card.chart.xAxis,
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: { show: false },
@@ -35,7 +76,7 @@ const Dashboard = () => {
     },
     series: [
       {
-        data: [20, 40, 60, 80],
+        data: data.order_card.chart.data,
         type: 'line',
         smooth: true,
         lineStyle: { color: '#28c76f', width: 2 },
@@ -46,11 +87,10 @@ const Dashboard = () => {
     grid: { left: 0, right: 0, top: 0, bottom: 0 },
   };
 
-  // ECharts configuration for Total Revenue Chart (Bar Chart)
   const totalRevenueChartOption = {
     xAxis: {
       type: 'category',
-      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      data: data.total_revenue_card.chart.xAxis,
       axisLabel: { color: '#5e5873', fontSize: 10 },
       axisLine: { lineStyle: { color: '#e0e0e0' } },
     },
@@ -58,30 +98,23 @@ const Dashboard = () => {
       type: 'value',
       show: false,
     },
-    series: [
-      {
-        name: '2023',
-        type: 'bar',
-        data: [10, 0, 20, 0, 5, 0],
-        barWidth: 10,
-        itemStyle: { color: '#00cfe8', borderRadius: 4 },
+    series: data.total_revenue_card.chart.series.map((serie) => ({
+      name: serie.name,
+      type: 'bar',
+      data: serie.data,
+      barWidth: 10,
+      itemStyle: {
+        color: serie.name === '2023' ? '#00cfe8' : '#7367f0',
+        borderRadius: 4,
       },
-      {
-        name: '2024',
-        type: 'bar',
-        data: [0, 30, 0, 25, 0, 15],
-        barWidth: 10,
-        itemStyle: { color: '#7367f0', borderRadius: 4 },
-      },
-    ],
+    })),
     grid: { left: 20, right: 20, top: 10, bottom: 20 },
   };
 
-  // ECharts configuration for Profit Report Chart (Bar Chart)
   const profitChartOption = {
     xAxis: {
       type: 'category',
-      data: ['M', 'T', 'W', 'T', 'F'],
+      data: data.profit_report_card.chart.xAxis,
       axisLabel: { color: '#5e5873', fontSize: 10 },
       axisLine: { lineStyle: { color: '#e0e0e0' } },
     },
@@ -92,7 +125,7 @@ const Dashboard = () => {
     series: [
       {
         type: 'bar',
-        data: [30, 50, 70, 40, 60],
+        data: data.profit_report_card.chart.data,
         barWidth: 10,
         itemStyle: { color: '#ff9f43', borderRadius: 4 },
       },
@@ -100,11 +133,10 @@ const Dashboard = () => {
     grid: { left: 20, right: 20, top: 10, bottom: 20 },
   };
 
-  // ECharts configuration for Revenue Chart (Bar Chart)
   const revenueChartOption = {
     xAxis: {
       type: 'category',
-      data: ['1', '2', '3', '4', '5'],
+      data: data.revenue_stats_card.chart.xAxis,
       axisLabel: { show: false },
       axisLine: { show: false },
       axisTick: { show: false },
@@ -116,7 +148,7 @@ const Dashboard = () => {
     series: [
       {
         type: 'bar',
-        data: [20, 40, 60, 30, 50],
+        data: data.revenue_stats_card.chart.data,
         barWidth: 10,
         itemStyle: { color: '#ff9f43', borderRadius: 4 },
       },
@@ -124,11 +156,10 @@ const Dashboard = () => {
     grid: { left: 0, right: 0, top: 0, bottom: 0 },
   };
 
-  // ECharts configuration for Income Chart (Line Chart)
   const incomeChartOption = {
     xAxis: {
       type: 'category',
-      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      data: data.income_card.chart.xAxis,
       axisLabel: { color: '#5e5873', fontSize: 10 },
       axisLine: { lineStyle: { color: '#e0e0e0' } },
     },
@@ -138,7 +169,7 @@ const Dashboard = () => {
     },
     series: [
       {
-        data: [20, 40, 60, 80, 50, 30],
+        data: data.income_card.chart.data,
         type: 'line',
         smooth: true,
         lineStyle: { color: '#7367f0', width: 2 },
@@ -157,12 +188,10 @@ const Dashboard = () => {
           <Grid item xs={12} md={8}>
             <Paper className="welcome-card">
               <Box className="welcome-content">
-                <Typography variant="h6">Congratulations John! 🎉</Typography>
-                <Typography variant="body2">
-                  You have done 72% more sales today. Check your new badge in your profile.
-                </Typography>
+                <Typography variant="h6">{data.welcome_card.title} 🎉</Typography>
+                <Typography variant="body2">{data.welcome_card.message}</Typography>
                 <Box className="welcome-action">
-                  <Typography variant="button">View Badges</Typography>
+                  <Typography variant="button">{data.welcome_card.action}</Typography>
                 </Box>
               </Box>
               <Box className="welcome-image">
@@ -174,12 +203,13 @@ const Dashboard = () => {
           {/* Order Card */}
           <Grid item xs={12} md={4}>
             <Paper className="order-card">
-              <Typography variant="h6">Order</Typography>
+              <Typography variant="h6">{data.order_card.title}</Typography>
               <Typography variant="h4" className="order-value">
-                276k
+                {data.order_card.value}
               </Typography>
               <Typography variant="body2" className="order-stats">
-                Sales <span className="order-stats-value">4,679</span>
+                {data.order_card.stats.label}{' '}
+                <span className="order-stats-value">{data.order_card.stats.value}</span>
               </Typography>
               <Box className="order-chart">
                 <ReactECharts option={orderChartOption} style={{ height: '80px', width: '100%' }} />
@@ -191,10 +221,10 @@ const Dashboard = () => {
           <Grid item xs={12} md={8}>
             <Paper className="revenue-card">
               <Box className="revenue-header">
-                <Typography variant="h6">Total Revenue</Typography>
+                <Typography variant="h6">{data.total_revenue_card.title}</Typography>
                 <Box>
                   <IconButton onClick={handleOpenYearMenu}>
-                    <Typography variant="body2">2025</Typography>
+                    <Typography variant="body2">{data.total_revenue_card.years[0]}</Typography>
                     <ArrowDropDown />
                   </IconButton>
                   <Menu
@@ -202,9 +232,11 @@ const Dashboard = () => {
                     open={Boolean(yearAnchor)}
                     onClose={handleCloseYearMenu}
                   >
-                    <MenuItem>2025</MenuItem>
-                    <MenuItem>2024</MenuItem>
-                    <MenuItem>2023</MenuItem>
+                    {data.total_revenue_card.years.map((year) => (
+                      <MenuItem key={year} onClick={handleCloseYearMenu}>
+                        {year}
+                      </MenuItem>
+                    ))}
                   </Menu>
                 </Box>
               </Box>
@@ -217,16 +249,23 @@ const Dashboard = () => {
           {/* Company Growth */}
           <Grid item xs={12} md={4}>
             <Paper className="growth-card">
-              <Typography variant="h6">Company Growth</Typography>
+              <Typography variant="h6">{data.company_growth_card.title}</Typography>
               <Box className="growth-progress">
-                <CircularProgress variant="determinate" value={78} size={100} />
+                <CircularProgress
+                  variant="determinate"
+                  value={data.company_growth_card.progress}
+                  size={100}
+                />
                 <Typography variant="h6" className="growth-value">
-                  78%
+                  {data.company_growth_card.progress}%
                 </Typography>
               </Box>
               <Box className="growth-stats">
-                <Typography variant="body2">2024 $32.5k</Typography>
-                <Typography variant="body2">2025 $41.2k</Typography>
+                {data.company_growth_card.stats.map((stat, index) => (
+                  <Typography key={index} variant="body2">
+                    {stat.year} {stat.value}
+                  </Typography>
+                ))}
               </Box>
             </Paper>
           </Grid>
@@ -235,14 +274,14 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <Paper className="profit-card">
               <Box className="profit-header">
-                <Typography variant="h6">Profit Report</Typography>
+                <Typography variant="h6">{data.profit_report_card.title}</Typography>
                 <Typography variant="body2" className="profit-year">
-                  Year 2025
+                  Year {data.profit_report_card.year}
                 </Typography>
               </Box>
-              <Typography variant="h4">$84,686k</Typography>
+              <Typography variant="h4">{data.profit_report_card.value}</Typography>
               <Typography variant="body2" className="profit-growth">
-                68.2% <span className="profit-growth-icon">⬆</span>
+                {data.profit_report_card.growth} <span className="profit-growth-icon">⬆</span>
               </Typography>
               <Box className="profit-chart">
                 <ReactECharts option={profitChartOption} style={{ height: '120px', width: '100%' }} />
@@ -254,14 +293,15 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <Paper className="revenue-stats-card">
               <Box className="revenue-stats-header">
-                <Typography variant="h6">Revenue</Typography>
+                <Typography variant="h6">{data.revenue_stats_card.title}</Typography>
                 <IconButton>
                   <MoreVert />
                 </IconButton>
               </Box>
-              <Typography variant="h4">425k</Typography>
+              <Typography variant="h4">{data.revenue_stats_card.value}</Typography>
               <Typography variant="body2" className="revenue-growth">
-                $2,468 <span className="revenue-growth-icon">+14.82%</span>
+                {data.revenue_stats_card.growth.value}{' '}
+                <span className="revenue-growth-icon">{data.revenue_stats_card.growth.percentage}</span>
               </Typography>
               <Box className="revenue-stats-chart">
                 <ReactECharts option={revenueChartOption} style={{ height: '120px', width: '100%' }} />
@@ -272,30 +312,24 @@ const Dashboard = () => {
           {/* Order Statistics */}
           <Grid item xs={12} md={4}>
             <Paper className="order-stats-card">
-              <Typography variant="h6">Order Statistics</Typography>
-              <Typography variant="h4">8,258</Typography>
+              <Typography variant="h6">{data.order_statistics_card.title}</Typography>
+              <Typography variant="h4">{data.order_statistics_card.total_orders}</Typography>
               <Typography variant="body2">Total Orders</Typography>
               <Box className="order-stats-progress">
-                <CircularProgress variant="determinate" value={38} size={100} />
-                <Typography variant="body2">38%</Typography>
+                <CircularProgress
+                  variant="determinate"
+                  value={data.order_statistics_card.progress}
+                  size={100}
+                />
+                <Typography variant="body2">{data.order_statistics_card.progress}%</Typography>
               </Box>
               <Box className="order-stats-list">
-                <Box className="order-stats-item">
-                  <Typography variant="body2">Electronic</Typography>
-                  <Typography variant="body2">82.5k</Typography>
-                </Box>
-                <Box className="order-stats-item">
-                  <Typography variant="body2">Fashion</Typography>
-                  <Typography variant="body2">23.8k</Typography>
-                </Box>
-                <Box className="order-stats-item">
-                  <Typography variant="body2">Decor</Typography>
-                  <Typography variant="body2">849</Typography>
-                </Box>
-                <Box className="order-stats-item">
-                  <Typography variant="body2">Sports</Typography>
-                  <Typography variant="body2">99</Typography>
-                </Box>
+                {data.order_statistics_card.categories.map((category, index) => (
+                  <Box key={index} className="order-stats-item">
+                    <Typography variant="body2">{category.name}</Typography>
+                    <Typography variant="body2">{category.value}</Typography>
+                  </Box>
+                ))}
               </Box>
             </Paper>
           </Grid>
@@ -304,14 +338,16 @@ const Dashboard = () => {
           <Grid item xs={12} md={8}>
             <Paper className="income-card">
               <Box className="income-tabs">
-                <Typography variant="button">Income</Typography>
-                <Typography variant="button">Expenses</Typography>
-                <Typography variant="button">Profit</Typography>
+                {data.income_card.tabs.map((tab, index) => (
+                  <Typography key={index} variant="button">
+                    {tab}
+                  </Typography>
+                ))}
               </Box>
-              <Typography variant="h6">Total Income</Typography>
-              <Typography variant="h4">$459.1k</Typography>
+              <Typography variant="h6">{data.income_card.title}</Typography>
+              <Typography variant="h4">{data.income_card.value}</Typography>
               <Typography variant="body2" className="income-stats">
-                42.9% <span className="income-stats-icon">⬆</span>
+                {data.income_card.stats} <span className="income-stats-icon">⬆</span>
               </Typography>
               <Box className="income-chart">
                 <ReactECharts option={incomeChartOption} style={{ height: '120px', width: '100%' }} />
@@ -323,10 +359,10 @@ const Dashboard = () => {
           <Grid item xs={12} md={8}>
             <Paper className="income-week-card">
               <Typography variant="body2" className="income-week">
-                Income this week
+                {data.income_week_card.title}
               </Typography>
               <Typography variant="body2" className="income-week-stats">
-                0.5k 39% less than last week
+                {data.income_week_card.value} {data.income_week_card.comparison}
               </Typography>
             </Paper>
           </Grid>
@@ -335,47 +371,22 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <Paper className="transactions-card">
               <Box className="transactions-header">
-                <Typography variant="h6">Transactions</Typography>
+                <Typography variant="h6">{data.transactions_card.title}</Typography>
                 <IconButton>
                   <MoreVert />
                 </IconButton>
               </Box>
               <Box className="transactions-list">
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#7367f0' }} />
-                  <Typography variant="body2">Send Money</Typography>
-                  <Typography variant="body2">+82.6 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#00cfe8' }} />
-                  <Typography variant="body2">Wallet</Typography>
-                  <Typography variant="body2">+270.69 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#28c76f' }} />
-                  <Typography variant="body2">Refund</Typography>
-                  <Typography variant="body2">+637.91 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#ea5455' }} />
-                  <Typography variant="body2">Credit Card</Typography>
-                  <Typography variant="body2">-838.71 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#ff9f43' }} />
-                  <Typography variant="body2">Ordered Food</Typography>
-                  <Typography variant="body2">-92.45 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#ff3e1d' }} />
-                  <Typography variant="body2">Starbucks</Typography>
-                  <Typography variant="body2">+203.33 USD</Typography>
-                </Box>
-                <Box className="transactions-item">
-                  <Box className="transactions-icon" style={{ backgroundColor: '#ff9f43' }} />
-                  <Typography variant="body2">Mastercard</Typography>
-                  <Typography variant="body2">+92.45 USD</Typography>
-                </Box>
+                {data.transactions_card.list.map((transaction, index) => (
+                  <Box key={index} className="transactions-item">
+                    <Box
+                      className="transactions-icon"
+                      style={{ backgroundColor: transaction.color }}
+                    />
+                    <Typography variant="body2">{transaction.type}</Typography>
+                    <Typography variant="body2">{transaction.value}</Typography>
+                  </Box>
+                ))}
               </Box>
             </Paper>
           </Grid>
@@ -383,53 +394,34 @@ const Dashboard = () => {
           {/* Activity Timeline */}
           <Grid item xs={12} md={8}>
             <Paper className="activity-card">
-              <Typography variant="h6">Activity Timeline</Typography>
+              <Typography variant="h6">{data.activity_timeline_card.title}</Typography>
               <Box className="activity-list">
-                <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: '#7367f0' }}>
-                    12
-                  </Avatar>
-                  <Box>
-                    <Typography variant="body2">12 Invoices have been paid</Typography>
-                    <Typography variant="caption">Invoices.pdf</Typography>
-                  </Box>
-                </Box>
-                <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: '#ff9f43' }}>
-                    C
-                  </Avatar>
-                  <Box>
-                    <Typography variant="body2">Client Meeting</Typography>
-                    <Typography variant="caption">
-                      Project meeting with John @10:15am
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: '#00cfe8' }}>
-                    S
-                  </Avatar>
-                  <Box>
-                    <Typography variant="body2">Steven Nash (Client)</Typography>
-                    <Typography variant="caption">CEO of ThemeSelection</Typography>
-                  </Box>
-                </Box>
-                <Box className="activity-item">
-                  <Avatar className="activity-icon" style={{ backgroundColor: '#e0e0e0' }}>
-                    C
-                  </Avatar>
-                  <Box>
-                    <Typography variant="body2">Create a new project for client</Typography>
-                    <Typography variant="caption">5 team members in a project</Typography>
-                    <Box className="activity-avatars">
-                      <Avatar className="activity-avatar" style={{ backgroundColor: '#ff9f43' }} alt="Team Member" />
-                      <Avatar className="activity-avatar" style={{ backgroundColor: '#7367f0' }} alt="Team Member" />
-                      <Avatar className="activity-avatar" style={{ backgroundColor: '#28c76f' }} alt="Team Member" />
-                      <Avatar className="activity-avatar" style={{ backgroundColor: '#00cfe8' }} alt="Team Member" />
-                      <Avatar className="activity-avatar" style={{ backgroundColor: '#ea5455' }} alt="Team Member" />
+                {data.activity_timeline_card.activities.map((activity, index) => (
+                  <Box key={index} className="activity-item">
+                    <Avatar
+                      className="activity-icon"
+                      style={{ backgroundColor: activity.color }}
+                    >
+                      {activity.icon}
+                    </Avatar>
+                    <Box>
+                      <Typography variant="body2">{activity.title}</Typography>
+                      <Typography variant="caption">{activity.description}</Typography>
+                      {activity.avatars && (
+                        <Box className="activity-avatars">
+                          {activity.avatars.map((color, idx) => (
+                            <Avatar
+                              key={idx}
+                              className="activity-avatar"
+                              style={{ backgroundColor: color }}
+                              alt="Team Member"
+                            />
+                          ))}
+                        </Box>
+                      )}
                     </Box>
                   </Box>
-                </Box>
+                ))}
               </Box>
             </Paper>
           </Grid>
@@ -438,71 +430,31 @@ const Dashboard = () => {
           <Grid item xs={12} md={4}>
             <Paper className="browser-card">
               <Box className="browser-header">
-                <Typography variant="h6">Browser</Typography>
-                <Typography variant="h6">Operating System</Typography>
-                <Typography variant="h6">Country</Typography>
+                {data.browser_stats_card.columns.map((column, index) => (
+                  <Typography key={index} variant="h6">
+                    {column}
+                  </Typography>
+                ))}
               </Box>
               <Box className="browser-list">
-                <Box className="browser-item">
-                  <Typography variant="body2">1</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#28c76f' }} />
-                  <Typography variant="body2">Chrome</Typography>
-                  <Typography variant="body2">8.92k</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '64.91%' }} />
+                {data.browser_stats_card.stats.map((stat, index) => (
+                  <Box key={index} className="browser-item">
+                    <Typography variant="body2">{stat.rank}</Typography>
+                    <Avatar
+                      className="browser-icon"
+                      style={{ backgroundColor: stat.color }}
+                    />
+                    <Typography variant="body2">{stat.browser}</Typography>
+                    <Typography variant="body2">{stat.value}</Typography>
+                    <Box className="browser-progress">
+                      <Box
+                        className="browser-progress-bar"
+                        style={{ width: stat.percentage }}
+                      />
+                    </Box>
+                    <Typography variant="body2">{stat.percentage}</Typography>
                   </Box>
-                  <Typography variant="body2">64.91%</Typography>
-                </Box>
-                <Box className="browser-item">
-                  <Typography variant="body2">2</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#00cfe8' }} />
-                  <Typography variant="body2">Safari</Typography>
-                  <Typography variant="body2">1.29k</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '19.03%' }} />
-                  </Box>
-                  <Typography variant="body2">19.03%</Typography>
-                </Box>
-                <Box className="browser-item">
-                  <Typography variant="body2">3</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#ff9f43' }} />
-                  <Typography variant="body2">Firefox</Typography>
-                  <Typography variant="body2">328</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '3.26%' }} />
-                  </Box>
-                  <Typography variant="body2">3.26%</Typography>
-                </Box>
-                <Box className="browser-item">
-                  <Typography variant="body2">4</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#7367f0' }} />
-                  <Typography variant="body2">Edge</Typography>
-                  <Typography variant="body2">142</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '3.89%' }} />
-                  </Box>
-                  <Typography variant="body2">3.89%</Typography>
-                </Box>
-                <Box className="browser-item">
-                  <Typography variant="body2">5</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#ea5455' }} />
-                  <Typography variant="body2">Opera</Typography>
-                  <Typography variant="body2">85</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '2.12%' }} />
-                  </Box>
-                  <Typography variant="body2">2.12%</Typography>
-                </Box>
-                <Box className="browser-item">
-                  <Typography variant="body2">6</Typography>
-                  <Avatar className="browser-icon" style={{ backgroundColor: '#ff3e1d' }} />
-                  <Typography variant="body2">Brave</Typography>
-                  <Typography variant="body2">36</Typography>
-                  <Box className="browser-progress">
-                    <Box className="browser-progress-bar" style={{ width: '1.06%' }} />
-                  </Box>
-                  <Typography variant="body2">1.06%</Typography>
-                </Box>
+                ))}
               </Box>
             </Paper>
           </Grid>
@@ -511,17 +463,16 @@ const Dashboard = () => {
 
       {/* Footer */}
       <Box className="dashboard-footer">
-        <Typography variant="caption">
-          © 2025, Made with ❤️ by ThemeSelection
-        </Typography>
+        <Typography variant="caption">{data.footer.text}</Typography>
         <Box className="footer-links">
-          <Typography variant="caption">License</Typography>
-          <Typography variant="caption">More Themes</Typography>
-          <Typography variant="caption">Documentation</Typography>
-          <Typography variant="caption">Support</Typography>
+          {data.footer.links.map((link, index) => (
+            <Typography key={index} variant="caption">
+              {link}
+            </Typography>
+          ))}
         </Box>
         <Box className="footer-action">
-          <Typography variant="button">Buy Now</Typography>
+          <Typography variant="button">{data.footer.action}</Typography>
         </Box>
       </Box>
     </Box>
