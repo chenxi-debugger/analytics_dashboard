@@ -1,0 +1,253 @@
+{
+  "customer_rating_card": {
+    "title": "Customer Rating",
+    "rating": "4.0",
+    "stars": 4,
+    "change": "+5.0 Points from last month",
+    "chart": {
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      "data": [3.8, 4.0, 4.2, 4.0, 4.1, 3.9, 4.0]
+    }
+  },
+  "overview_sales_card": {
+    "title": "Overview & Sales Activity",
+    "description": "Checkout each column for more details",
+    "stats": [
+      {
+        "label": "Sessions",
+        "value": "2845"
+      },
+      {
+        "label": "Order",
+        "value": "1,286",
+        "growth": "13.24%"
+      }
+    ],
+    "chart": {
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      "series": [
+        {
+          "name": "Sessions",
+          "data": [2000, 2500, 1800, 3000, 2200, 2700, 2845]
+        },
+        {
+          "name": "Orders",
+          "data": [800, 1000, 1200, 900, 1100, 1300, 1286]
+        }
+      ]
+    }
+  },
+  "generated_leads_card": {
+    "title": "Generated Leads",
+    "description": "Monthly Report",
+    "value": "25%",
+    "growth": "12.8%",
+    "chart": {
+      "data": [
+        { "name": "Leads", "value": 25 },
+        { "name": "Remaining", "value": 75 }
+      ]
+    }
+  },
+  "top_products_sales_card": {
+    "title": "Top Products by Sales",
+    "products": [
+      {
+        "name": "Oneplus Nord",
+        "value": "$98,348",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Smart Band 4",
+        "value": "$15,459",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Surface Pro X",
+        "value": "$5,589",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "iPhone 13",
+        "value": "$84,345",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Beats Earphone",
+        "value": "$10,374",
+        "color": "#e0e0e0"
+      }
+    ]
+  },
+  "top_products_volume_card": {
+    "title": "Top Products by Volume",
+    "products": [
+      {
+        "name": "ENVY Laptop",
+        "value": "12.4k",
+        "growth": "-14.2%",
+        "color": "#d3d3d3"
+      },
+      {
+        "name": "Apple iMac Pro",
+        "value": "7.4k",
+        "growth": "-8.5%",
+        "color": "#ffeb3b"
+      },
+      {
+        "name": "Smart Watch Fitbit",
+        "value": "4.2k",
+        "growth": "-17.6%",
+        "color": "#f06292"
+      },
+      {
+        "name": "Oneplus Nord",
+        "value": "12.3k",
+        "growth": "-11.8%",
+        "color": "#e0e0e0"
+      }
+    ]
+  },
+  "earning_report_card": {
+    "title": "Earning Report",
+    "description": "Weekly Earning Overview",
+    "stats": [
+      {
+        "label": "Net Profit",
+        "value": "$1,619",
+        "growth": "18.6%"
+      },
+      {
+        "label": "Total Income",
+        "value": "$3,571",
+        "growth": "38.3%"
+      },
+      {
+        "label": "Sales",
+        "value": "$2,340"
+      },
+      {
+        "label": "Total Expenses",
+        "value": "$430",
+        "growth": "52.8%"
+      }
+    ],
+    "chart": {
+      "xAxis": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+      "data": [300, 400, 500, 600, 700, 800, 900]
+    }
+  },
+  "sales_analytics_card": {
+    "title": "Sales Analytics",
+    "year": "2025",
+    "growth": "+42.6% than last year",
+    "chart": {
+      "calendar_range": "2025",
+      "data": "heatmap_data_for_2025"
+    }
+  },
+  "sales_countries_card": {
+    "title": "Sales by Countries",
+    "description": "Monthly Sales Overview",
+    "countries": [
+      {
+        "name": "United States",
+        "flag": "🇺🇸",
+        "sales": "$8,656k",
+        "volume": "89.4k",
+        "growth": "25.8%"
+      },
+      {
+        "name": "Brazil",
+        "flag": "🇧🇷",
+        "sales": "$2,415k",
+        "volume": "64.5k",
+        "growth": "-6.2%"
+      },
+      {
+        "name": "India",
+        "flag": "🇮🇳",
+        "sales": "$865k",
+        "volume": "14.8k",
+        "growth": "12.4%"
+      },
+      {
+        "name": "Australia",
+        "flag": "🇦🇺",
+        "sales": "$745k",
+        "volume": "8.6k",
+        "growth": "-11.9%"
+      },
+      {
+        "name": "Belgium",
+        "flag": "🇧🇪",
+        "sales": "$312k",
+        "volume": "4.2k",
+        "growth": "14.8%"
+      }
+    ]
+  },
+  "sales_stats_card": {
+    "title": "Sales Stats",
+    "value": "75%",
+    "legend": "Conversion Ratio",
+    "description": "Total Requirements",
+    "chart": {
+      "data": [
+        { "name": "Sales", "value": 75 },
+        { "name": "Remaining", "value": 25 }
+      ]
+    }
+  },
+  "team_members_card": {
+    "title": "Team Members",
+    "columns": ["Name", "Project", "Tasks", "Amount", "Status", "Paid By", "Actions"],
+    "members": [
+      {
+        "name": "Nathan Wagner",
+        "project": "ZIPCAR",
+        "tasks": "87/135",
+        "amount": "$459.65",
+        "status": "Paid",
+        "paid_by": "Mastercard",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Emma Bowen",
+        "project": "BITBANK",
+        "tasks": "340/420",
+        "amount": "$974.31",
+        "status": "Pending",
+        "paid_by": "Visa",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Adrian McGuire",
+        "project": "PAYERS",
+        "tasks": "50/82",
+        "amount": "$794.97",
+        "status": "Paid",
+        "paid_by": "Paypal",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Alma Gonzalez",
+        "project": "BRANDI",
+        "tasks": "98/260",
+        "amount": "$819.49",
+        "status": "Paid",
+        "paid_by": "Mastercard",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Travis Collins",
+        "project": "AVIATO",
+        "tasks": "12/25",
+        "amount": "$636.27",
+        "status": "Failed",
+        "paid_by": "Paypal",
+        "color": "#e0e0e0"
+      }
+    ]
+  }
+}

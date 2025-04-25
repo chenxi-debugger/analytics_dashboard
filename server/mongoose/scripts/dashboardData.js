@@ -12,7 +12,7 @@ const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 const dashboarddata = jsonData.pageProps.apiPricingPlanData;
 
 const uri = 'mongodb://127.0.0.1:27017';
-const dbName = 'chenxilogs'; // Use your active DB from Compass
+const dbName = 'chenxilogs'; 
 
 const insertDashboardData = async () => {
   const client = new MongoClient(uri);
@@ -20,7 +20,7 @@ const insertDashboardData = async () => {
   try {
     await client.connect();
     const db = client.db(dbName);
-    const collection = db.collection('dashboarddata'); // ✅ Use "dashboarddata"
+    const collection = db.collection('dashboarddata'); 
 
     // Optional: clear old data
     await collection.deleteMany({});

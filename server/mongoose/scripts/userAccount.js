@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load JSON data
-const filePath = path.join(__dirname, '../data/user_account.json');
+const filePath = path.join(__dirname, '../../data/user_account.json');
 const rawData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 const userAccounts = rawData.pageProps.invoiceData;
 

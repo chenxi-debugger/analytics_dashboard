@@ -1,0 +1,239 @@
+{
+  "welcome_card": {
+    "title": "Congratulations John!",
+    "message": "You have done 72% more sales today. Check your new badge in your profile.",
+    "action": "View Badges"
+  },
+  "order_card": {
+    "title": "Order",
+    "value": "276k",
+    "stats": {
+      "label": "Sales",
+      "value": "4,679"
+    },
+    "chart": {
+      "xAxis": ["1", "2", "3", "4"],
+      "data": [20, 40, 60, 80]
+    }
+  },
+  "total_revenue_card": {
+    "title": "Total Revenue",
+    "years": ["2025", "2024", "2023"],
+    "chart": {
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      "series": [
+        {
+          "name": "2023",
+          "data": [10, 0, 20, 0, 5, 0]
+        },
+        {
+          "name": "2024",
+          "data": [0, 30, 0, 25, 0, 15]
+        }
+      ]
+    }
+  },
+  "company_growth_card": {
+    "title": "Company Growth",
+    "progress": 78,
+    "stats": [
+      {
+        "year": "2024",
+        "value": "$32.5k"
+      },
+      {
+        "year": "2025",
+        "value": "$41.2k"
+      }
+    ]
+  },
+  "profit_report_card": {
+    "title": "Profit Report",
+    "year": "2025",
+    "value": "$84,686k",
+    "growth": "68.2%",
+    "chart": {
+      "xAxis": ["M", "T", "W", "T", "F"],
+      "data": [30, 50, 70, 40, 60]
+    }
+  },
+  "revenue_stats_card": {
+    "title": "Revenue",
+    "value": "425k",
+    "growth": {
+      "value": "$2,468",
+      "percentage": "+14.82%"
+    },
+    "chart": {
+      "xAxis": ["1", "2", "3", "4", "5"],
+      "data": [20, 40, 60, 30, 50]
+    }
+  },
+  "order_statistics_card": {
+    "title": "Order Statistics",
+    "total_orders": "8,258",
+    "progress": 38,
+    "categories": [
+      {
+        "name": "Electronic",
+        "value": "82.5k"
+      },
+      {
+        "name": "Fashion",
+        "value": "23.8k"
+      },
+      {
+        "name": "Decor",
+        "value": "849"
+      },
+      {
+        "name": "Sports",
+        "value": "99"
+      }
+    ]
+  },
+  "income_card": {
+    "title": "Total Income",
+    "tabs": ["Income", "Expenses", "Profit"],
+    "value": "$459.1k",
+    "stats": "42.9%",
+    "chart": {
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      "data": [20, 40, 60, 80, 50, 30]
+    }
+  },
+  "income_week_card": {
+    "title": "Income this week",
+    "value": "0.5k",
+    "comparison": "39% less than last week"
+  },
+  "transactions_card": {
+    "title": "Transactions",
+    "list": [
+      {
+        "type": "Send Money",
+        "value": "+82.6 USD",
+        "color": "#7367f0"
+      },
+      {
+        "type": "Wallet",
+        "value": "+270.69 USD",
+        "color": "#00cfe8"
+      },
+      {
+        "type": "Refund",
+        "value": "+637.91 USD",
+        "color": "#28c76f"
+      },
+      {
+        "type": "Credit Card",
+        "value": "-838.71 USD",
+        "color": "#ea5455"
+      },
+      {
+        "type": "Ordered Food",
+        "value": "-92.45 USD",
+        "color": "#ff9f43"
+      },
+      {
+        "type": "Starbucks",
+        "value": "+203.33 USD",
+        "color": "#ff3e1d"
+      },
+      {
+        "type": "Mastercard",
+        "value": "+92.45 USD",
+        "color": "#ff9f43"
+      }
+    ]
+  },
+  "activity_timeline_card": {
+    "title": "Activity Timeline",
+    "activities": [
+      {
+        "icon": "12",
+        "color": "#7367f0",
+        "title": "12 Invoices have been paid",
+        "description": "Invoices.pdf"
+      },
+      {
+        "icon": "C",
+        "color": "#ff9f43",
+        "title": "Client Meeting",
+        "description": "Project meeting with John @10:15am"
+      },
+      {
+        "icon": "S",
+        "color": "#00cfe8",
+        "title": "Steven Nash (Client)",
+        "description": "CEO of ThemeSelection"
+      },
+      {
+        "icon": "C",
+        "color": "#e0e0e0",
+        "title": "Create a new project for client",
+        "description": "5 team members in a project",
+        "avatars": [
+          "#ff9f43",
+          "#7367f0",
+          "#28c76f",
+          "#00cfe8",
+          "#ea5455"
+        ]
+      }
+    ]
+  },
+  "browser_stats_card": {
+    "title": "Browser",
+    "columns": ["Browser", "Operating System", "Country"],
+    "stats": [
+      {
+        "rank": 1,
+        "browser": "Chrome",
+        "value": "8.92k",
+        "percentage": "64.91%",
+        "color": "#28c76f"
+      },
+      {
+        "rank": 2,
+        "browser": "Safari",
+        "value": "1.29k",
+        "percentage": "19.03%",
+        "color": "#00cfe8"
+      },
+      {
+        "rank": 3,
+        "browser": "Firefox",
+        "value": "328",
+        "percentage": "3.26%",
+        "color": "#ff9f43"
+      },
+      {
+        "rank": 4,
+        "browser": "Edge",
+        "value": "142",
+        "percentage": "3.89%",
+        "color": "#7367f0"
+      },
+      {
+        "rank": 5,
+        "browser": "Opera",
+        "value": "85",
+        "percentage": "2.12%",
+        "color": "#ea5455"
+      },
+      {
+        "rank": 6,
+        "browser": "Brave",
+        "value": "36",
+        "percentage": "1.06%",
+        "color": "#ff3e1d"
+      }
+    ]
+  },
+  "footer": {
+    "text": "© 2025, Made with ❤️ by ThemeSelection",
+    "links": ["License", "More Themes", "Documentation", "Support"],
+    "action": "Buy Now"
+  }
+}
