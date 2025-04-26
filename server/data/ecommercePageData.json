@@ -3,6 +3,7 @@
     "title": "Congratulations Katie!",
     "message": "Best Seller of the Month",
     "value": "$48.9k",
+    "target": "78% of Target",
     "action": "View Sales"
   },
   "new_visitors_card": {
@@ -11,7 +12,7 @@
     "growth": "-8.75%",
     "chart": {
       "xAxis": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      "data": [40, 60, 30, 50, 70, 20, 80]
+      "data": [10, 50, 30, 20, 80, 5, 40]
     }
   },
   "activity_card": {
@@ -20,25 +21,58 @@
     "growth": "19.6%",
     "chart": {
       "xAxis": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      "data": [20, 40, 60, 30, 50, 70, 80]
+      "data": [20, 15, 30, 50, 80, 70, 60]
     }
   },
+
+  "sales_card": {
+    "title": "Sales",
+    "value": "$4,679",
+    "growth": "+28.14%"
+  },
+
+
   "profit_card": {
     "title": "Profit",
-    "value": "$624k",
-    "growth": "28.14%"
+    "value": "624k",
+    "chart": {
+      "xAxis": ["Jan", "Apr", "Jul", "Oct"],
+      "data": [10, 15, 12, 14]
+  }
+},
+
+  "expenses_card": {
+    "title": "Expenses",
+    "value": "72%",
+    "additional_info": "$2k Expenses more than last",
+    "chart": {
+      "data": [
+        { "name": "Expenses", "value": 72 },
+        { "name": "Remaining", "value": 28 }
+      ]
+    }
   },
+
+  "transactions_card": {
+    "title": "Transactions",
+    "value": "14,854",
+    "growth": "+17.53%"
+  },
+
   "total_income_card": {
     "title": "Total Income",
     "description": "Yearly Report Overview",
     "value": "$45,578k",
     "chart": {
       "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      "data": [10, 20, 15, 25, 30, 20, 35, 40, 30, 50, 60, 45]
+      "data": [3, 5, 4, 4.5, 3, 2, 2.5, 3, 4, 5, 5.5, 6],
+      "unit": "$k"
     }
   },
+
   "report_card": {
     "title": "Report",
+    "description": "Monthly Avg.",
     "items": [
       {
         "label": "Income",
@@ -57,6 +91,7 @@
       }
     ]
   },
+
   "performance_card": {
     "title": "Performance",
     "stats": [
@@ -74,19 +109,21 @@
       "data": [
         {
           "name": "Earning",
-          "values": [70, 60, 80, 50, 90, 40]
+          "values": [80, 60, 90, 50, 70, 40]
         },
         {
-          "name": "Sales",
+          "name": "Income",
           "values": [50, 70, 40, 80, 60, 90]
         }
       ]
     }
   },
+
   "conversion_rate_card": {
     "title": "Conversion Rate",
     "description": "Compared to Last Month",
     "value": "8.72%",
+    "growth": "-4.8%",
     "stats": [
       {
         "label": "Impressions",
@@ -95,102 +132,119 @@
       },
       {
         "label": "Added To Cart",
-        "value": "32%",
+        "value": "32% Product in cart",
         "growth": "-8.3%"
       },
       {
         "label": "Checkout",
-        "value": "21%",
+        "value": "21% Product checkout",
         "growth": "9.12%"
       },
       {
         "label": "Purchased",
-        "value": "2.24%",
+        "value": "12 Orders",
         "growth": "2.24%"
       }
     ],
     "chart": {
       "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-      "data": [2, 4, 8.72, 6, 7, 5, 8]
+      "data": [2, 4, 8.72, 6, 5, 4, 8]
     }
   },
-  "sales_card": {
+ 
+ "revenue_2_card": {
+    "title": "Revenue",
+    "value": "$42,389",
+    "growth": "+52.76%"
+  },
+
+  "sales_2_card": {
     "title": "Sales",
     "value": "482k",
+    "growth": "+34%",
     "stats": [
       {
-        "label": "Revenue",
-        "value": "$42,389"
-      },
-      {
-        "label": "Target",
+        "label": "Sales Target",
         "value": "78%"
       }
     ]
   },
-  "expenses_card": {
+
+  "expenses_2_card": {
     "title": "Expenses",
     "value": "$84.7k",
+    "growth": "-8.2%",
     "chart": {
+      "period": "July 2025",
       "xAxis": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      "data": [50, 30, 60, 40, 70, 20, 80]
+      "data": [20, 10, 70, 50, 80, 30, 60]
     }
   },
-  "top_products_card": {
-    "title": "Top Products",
-    "columns": ["Product", "Category", "Payment", "Order Stat"],
-    "products": [
-      {
-        "name": "OnePlus 7 Pro",
-        "category": "Smart Phone",
-        "payment": "$120/$499",
-        "status": "Confirmed",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "Magic Mouse",
-        "category": "Mouse",
-        "payment": "$149",
-        "status": "Partially Paid",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "iMac Pro",
-        "category": "Computer",
-        "payment": "$0/$899",
-        "status": "Unpaid",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "Note 10",
-        "category": "Smart Phone",
-        "payment": "$169",
-        "status": "Complete",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "iPhone 11 Pro",
-        "category": "Smart Phone",
-        "payment": "$399",
-        "status": "Complete",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "Mi LED TV 4X",
-        "category": "Smart TV",
-        "payment": "$349/$2599",
-        "status": "Partially Paid",
-        "color": "#e0e0e0"
-      },
-      {
-        "name": "Logitech MX",
-        "category": "Mouse",
-        "payment": "$89",
-        "status": "Complete",
-        "color": "#e0e0e0"
-      }
-    ]
-  },
+
+
+    "top_products_card": {
+      "title": "Top Products",
+      "columns": ["Product", "Category", "Payment", "Order Status", "Actions"],
+      "products": [
+        {
+          "name": "OnePlus 7 Pro",
+          "brand": "Oneplus",
+          "category": "Smart Phone",
+          "payment": "$120/$499",
+          "payment_status": "Partially Paid",
+          "status": "CONFIRMED"
+        },
+        {
+          "name": "Magic Mouse",
+          "brand": "Apple",
+          "category": "Mouse",
+          "payment": "$149",
+          "payment_status": "Fully Paid",
+          "status": "COMPLETED"
+        },
+        {
+          "name": "iMac Pro",
+          "brand": "Apple",
+          "category": "Computer",
+          "payment": "$0/$899",
+          "payment_status": "Unpaid",
+          "status": "CANCELLED"
+        },
+        {
+          "name": "Note 10",
+          "brand": "Samsung",
+          "category": "Smart Phone",
+          "payment": "$169",
+          "payment_status": "Fully Paid",
+          "status": "COMPLETED"
+        },
+        {
+          "name": "iPhone 11 Pro",
+          "brand": "Apple",
+          "category": "Smart Phone",
+          "payment": "$399",
+          "payment_status": "Fully Paid",
+          "status": "COMPLETED"
+        },
+        {
+          "name": "Mi LED TV 4X",
+          "brand": "Xiaomi",
+          "category": "Smart TV",
+          "payment": "$349/$2599",
+          "payment_status": "Partially Paid",
+          "status": "CONFIRMED"
+        },
+        {
+          "name": "Logitech MX",
+          "brand": "Logitech",
+          "category": "Mouse",
+          "payment": "$89",
+          "payment_status": "Fully Paid",
+          "status": "COMPLETED"
+        }
+      ]
+    },
+
   "total_balance_card": {
     "title": "Total Balance",
     "value": "$2,541k",
@@ -207,7 +261,8 @@
     "note": "You have done 57.6% more sales. Check your new badge in your profile.",
     "chart": {
       "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      "data": [20, 30, 40, 50, 60, 70]
+      "data": [20, 15, 40, 30, 50, 70]
     }
   }
 }
+

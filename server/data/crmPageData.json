@@ -12,31 +12,26 @@
   "overview_sales_card": {
     "title": "Overview & Sales Activity",
     "description": "Checkout each column for more details",
-    "stats": [
-      {
-        "label": "Sessions",
-        "value": "2845"
-      },
-      {
-        "label": "Order",
-        "value": "1,286",
-        "growth": "13.24%"
-      }
-    ],
-    "chart": {
+   "chart": {
       "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-      "series": [
-        {
-          "name": "Sessions",
-          "data": [2000, 2500, 1800, 3000, 2200, 2700, 2845]
-        },
-        {
-          "name": "Orders",
-          "data": [800, 1000, 1200, 900, 1100, 1300, 1286]
-        }
-      ]
+      "data": [800, 1000, 1200, 900, 1100, 1300, 1286]
     }
   },
+
+  "sessions_card": {
+    "title": "Sessions",
+    "value": 2845,
+    "chart": {
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      "data": [2000, 2500, 1800, 3000, 2200, 2700, 2845]
+    }
+  },
+  "orders_card": {
+    "title": "Orders",
+    "value": "$1,286",
+    "growth": "-13.24%"
+  },
+
   "generated_leads_card": {
     "title": "Generated Leads",
     "description": "Monthly Report",
@@ -44,149 +39,178 @@
     "growth": "12.8%",
     "chart": {
       "data": [
-        { "name": "Leads", "value": 25 },
-        { "name": "Remaining", "value": 75 }
+        { "name": "Average", "value": 25 }
       ]
     }
   },
-  "top_products_sales_card": {
+
+"top_products_sales_card": {
     "title": "Top Products by Sales",
     "products": [
       {
         "name": "Oneplus Nord",
+        "brand": "Oneplus",
         "value": "$98,348",
         "color": "#e0e0e0"
       },
       {
         "name": "Smart Band 4",
+        "brand": "Xiaomi",
         "value": "$15,459",
         "color": "#e0e0e0"
       },
       {
         "name": "Surface Pro X",
-        "value": "$5,589",
+        "brand": "Microsoft",
+        "value": "$4,589",
         "color": "#e0e0e0"
       },
       {
         "name": "iPhone 13",
+        "brand": "Apple",
         "value": "$84,345",
         "color": "#e0e0e0"
       },
       {
         "name": "Beats Earphone",
+        "brand": "Beats",
         "value": "$10,374",
         "color": "#e0e0e0"
       }
     ]
   },
+
   "top_products_volume_card": {
     "title": "Top Products by Volume",
     "products": [
       {
         "name": "ENVY Laptop",
+        "brand": "HP",
         "value": "12.4k",
-        "growth": "-14.2%",
+        "growth": "+12.4%",
         "color": "#d3d3d3"
       },
       {
         "name": "Apple iMac Pro",
+        "brand": "Apple",
         "value": "7.4k",
         "growth": "-8.5%",
         "color": "#ffeb3b"
       },
       {
         "name": "Smart Watch Fitbit",
-        "value": "4.2k",
-        "growth": "-17.6%",
+        "brand": "Fitbit",
+        "value": "4.4k",
+        "growth": "+17.6%",
         "color": "#f06292"
       },
       {
         "name": "Oneplus Nord",
-        "value": "12.3k",
+        "brand": "Oneplus",
+        "value": "12.34k",
+        "growth": "+13.9%",
+        "color": "#e0e0e0"
+      },
+      {
+        "name": "Google Pixel 4a",
+        "brand": "Google",
+        "value": "8.65k",
         "growth": "-11.8%",
         "color": "#e0e0e0"
       }
     ]
   },
+
   "earning_report_card": {
     "title": "Earning Report",
-    "description": "Weekly Earning Overview",
+    "description": "Weekly Earnings Overview",
     "stats": [
       {
         "label": "Net Profit",
         "value": "$1,619",
-        "growth": "18.6%"
+        "growth": "18.6%",
+        "details": "12.4k Sales"
       },
       {
-        "label": "Total Income",
+        "label": "Sales, Affiliation",
         "value": "$3,571",
-        "growth": "38.3%"
+        "growth": "39.6%"
       },
       {
-        "label": "Sales",
-        "value": "$2,340"
-      },
-      {
-        "label": "Total Expenses",
+        "label": "ADVT., MARKETING",
         "value": "$430",
         "growth": "52.8%"
       }
     ],
     "chart": {
       "xAxis": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      "data": [300, 400, 500, 600, 700, 800, 900]
+      "data": [500, 300, 400, 350, 900, 600, 550]
     }
   },
+
   "sales_analytics_card": {
     "title": "Sales Analytics",
-    "year": "2025",
+    "year": ["2025", "2024", "2023", "2022"],
     "growth": "+42.6% than last year",
     "chart": {
       "calendar_range": "2025",
-      "data": "heatmap_data_for_2025"
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+      "yAxis": ["1k", "2k", "3k", "4k", "5k", "6k", "7k", "8k"],
+      "data": [
+        [150, 180, 200, 220, 210, 190, 170, 160], 
+        [200, 220, 250, 270, 260, 230, 210, 200], 
+        [250, 270, 300, 320, 310, 280, 260, 240], 
+        [300, 320, 350, 400, 380, 340, 310, 290], 
+        [350, 380, 400, 450, 430, 390, 360, 340], 
+        [400, 450, 575, 600, 550, 500, 470, 450], 
+        [450, 500, 650, 700, 620, 570, 520, 480], 
+        [500, 550, 700, 800, 680, 600, 550, 500]  
+      ]
     }
   },
-  "sales_countries_card": {
-    "title": "Sales by Countries",
-    "description": "Monthly Sales Overview",
-    "countries": [
-      {
-        "name": "United States",
-        "flag": "🇺🇸",
-        "sales": "$8,656k",
-        "volume": "89.4k",
-        "growth": "25.8%"
-      },
-      {
-        "name": "Brazil",
-        "flag": "🇧🇷",
-        "sales": "$2,415k",
-        "volume": "64.5k",
-        "growth": "-6.2%"
-      },
-      {
-        "name": "India",
-        "flag": "🇮🇳",
-        "sales": "$865k",
-        "volume": "14.8k",
-        "growth": "12.4%"
-      },
-      {
-        "name": "Australia",
-        "flag": "🇦🇺",
-        "sales": "$745k",
-        "volume": "8.6k",
-        "growth": "-11.9%"
-      },
-      {
-        "name": "Belgium",
-        "flag": "🇧🇪",
-        "sales": "$312k",
-        "volume": "4.2k",
-        "growth": "14.8%"
-      }
-    ]
-  },
+  
+    "sales_countries_card": {
+      "title": "Sales by Countries",
+      "description": "Monthly Sales Overview",
+      "countries": [
+        {
+          "name": "United States",
+          "flag": "🇺🇸",
+          "sales": "$8,656k",
+          "volume": "89.4k",
+          "growth": "25.8%"
+        },
+        {
+          "name": "Brazil",
+          "flag": "🇧🇷",
+          "sales": "$2,415k",
+          "volume": "64.5k",
+          "growth": "-6.2%"
+        },
+        {
+          "name": "India",
+          "flag": "🇮🇳",
+          "sales": "$865k",
+          "volume": "14.8k",
+          "growth": "12.4%"
+        },
+        {
+          "name": "Australia",
+          "flag": "🇦🇺",
+          "sales": "$745k",
+          "volume": "8.6k",
+          "growth": "-11.9%"
+        },
+        {
+          "name": "Belgium",
+          "flag": "🇧🇪",
+          "sales": "$312k",
+          "volume": "4.2k",
+          "growth": "14.8%"
+        }
+      ]
+    },
+  
   "sales_stats_card": {
     "title": "Sales Stats",
     "value": "75%",
@@ -194,59 +218,99 @@
     "description": "Total Requirements",
     "chart": {
       "data": [
-        { "name": "Sales", "value": 75 },
-        { "name": "Remaining", "value": 25 }
+        { "name": "Sales", "value": 75, "color": "#34c759" },
+        { "name": "Remaining", "value": 25, "color": "#e0e0e0" }
       ]
     }
   },
-  "team_members_card": {
-    "title": "Team Members",
-    "columns": ["Name", "Project", "Tasks", "Amount", "Status", "Paid By", "Actions"],
-    "members": [
+
+    "team_members_card": {
+      "title": "Team Members",
+      "columns": ["Name", "Project", "Tasks", "Progress"],
+      "members": [
+        {
+          "name": "Nathan Wagner",
+          "role": "iOS Developer",
+          "project": "ZIPCAR",
+          "tasks": "87/135",
+          "progress": 64
+        },
+        {
+          "name": "Emma Bowen",
+          "role": "UI/UX Designer",
+          "project": "BITBANK",
+          "tasks": "340/420",
+          "progress": 81
+        },
+        {
+          "name": "Adrian McGuire",
+          "role": "",
+          "project": "PAYERS",
+          "tasks": "50/82",
+          "progress": 61
+        },
+        {
+          "name": "Alma Gonzalez",
+          "role": "Product Manager",
+          "project": "BRANDI",
+          "tasks": "98/260",
+          "progress": 38
+        },
+        {
+          "name": "Travis Collins",
+          "role": "Vue.js Developer",
+          "project": "AVIATO",
+          "tasks": "12/25",
+          "progress": 48
+        }
+      ]
+    },
+
+    "customer_card": {
+    "title": "Customers",
+    "columns": ["Customer", "Amount", "Status", "Paid By", "Actions"],
+    "customers": [
       {
-        "name": "Nathan Wagner",
-        "project": "ZIPCAR",
-        "tasks": "87/135",
+        "name": "Henry Barnes",
+        "email": "jok@puc.co.uk",
         "amount": "$459.65",
-        "status": "Paid",
-        "paid_by": "Mastercard",
-        "color": "#e0e0e0"
+        "status": "PAID",
+        "paid_by": "Mastercard"
       },
       {
-        "name": "Emma Bowen",
-        "project": "BITBANK",
-        "tasks": "340/420",
-        "amount": "$974.31",
-        "status": "Pending",
-        "paid_by": "Visa",
-        "color": "#e0e0e0"
+        "name": "Herman Holland",
+        "email": "sami@lelo.com",
+        "amount": "$93.81",
+        "status": "PENDING",
+        "paid_by": "Visa"
       },
       {
-        "name": "Adrian McGuire",
-        "project": "PAYERS",
-        "tasks": "50/82",
+        "name": "Hallie Warner",
+        "email": "initus@odemi.com",
+        "amount": "$934.34",
+        "status": "PENDING",
+        "paid_by": "Visa"
+      },
+      {
+        "name": "John Davidson",
+        "email": "tum@upkesja.gov",
         "amount": "$794.97",
-        "status": "Paid",
-        "paid_by": "Paypal",
-        "color": "#e0e0e0"
+        "status": "PAID",
+        "paid_by": "Paypal"
       },
       {
-        "name": "Alma Gonzalez",
-        "project": "BRANDI",
-        "tasks": "98/260",
-        "amount": "$819.49",
-        "status": "Paid",
-        "paid_by": "Mastercard",
-        "color": "#e0e0e0"
+        "name": "Cora Schmidt",
+        "email": "wipare@tin.com",
+        "amount": "$19.49",
+        "status": "PAID",
+        "paid_by": "Mastercard"
       },
       {
-        "name": "Travis Collins",
-        "project": "AVIATO",
-        "tasks": "12/25",
+        "name": "Betty Ross",
+        "email": "nur@kaomr.edu",
         "amount": "$636.27",
-        "status": "Failed",
-        "paid_by": "Paypal",
-        "color": "#e0e0e0"
+        "status": "FAILED",
+        "paid_by": "Paypal"
       }
     ]
   }

@@ -39,7 +39,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/sidebar.css';
 
-const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge, sideBarNestedItems, isActive, onClick }) => {
+const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null }) => {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -93,13 +93,6 @@ SidebarItem.propTypes = {
   ),
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
-};
-
-SidebarItem.defaultProps = {
-  sideBarBadge: null,
-  sideBarNestedItems: null,
-  isActive: false,
-  onClick: null,
 };
 
 const Sidebar = () => {

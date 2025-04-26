@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Grid,
   Typography,
   Paper,
   Avatar,
@@ -9,6 +8,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Grid, // Use Grid (Grid v2 in MUI v7)
 } from '@mui/material';
 import { MoreVert, ArrowDropDown } from '@mui/icons-material';
 import ReactECharts from 'echarts-for-react';
@@ -184,11 +184,14 @@ const Dashboard = () => {
     <Box className="dashboard-main">
       <Box className="dashboard-content">
         <Grid container spacing={3}>
-          {/* Welcome Card */}
-          <Grid item xs={12} md={8}>
+          {/* Row 1: Welcome Card (8) + Order Card (4) */}
+          <Grid size={{ xs: 12, md: 8 }}>
             <Paper className="welcome-card">
               <Box className="welcome-content">
-                <Typography variant="h6">{data.welcome_card.title} 🎉</Typography>
+                <Box display="flex" alignItems="center">
+                  <Avatar src="/user.png" alt="User" className="welcome-avatar" sx={{ mr: 2 }} />
+                  <Typography variant="h6">{data.welcome_card.title} 🎉</Typography>
+                </Box>
                 <Typography variant="body2">{data.welcome_card.message}</Typography>
                 <Box className="welcome-action">
                   <Typography variant="button">{data.welcome_card.action}</Typography>
@@ -200,8 +203,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Order Card */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="order-card">
               <Typography variant="h6">{data.order_card.title}</Typography>
               <Typography variant="h4" className="order-value">
@@ -217,8 +219,8 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Total Revenue */}
-          <Grid item xs={12} md={8}>
+          {/* Row 2: Total Revenue (8) + Company Growth (4) */}
+          <Grid size={{ xs: 12, md: 8 }}>
             <Paper className="revenue-card">
               <Box className="revenue-header">
                 <Typography variant="h6">{data.total_revenue_card.title}</Typography>
@@ -246,8 +248,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Company Growth */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="growth-card">
               <Typography variant="h6">{data.company_growth_card.title}</Typography>
               <Box className="growth-progress">
@@ -270,8 +271,8 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Profit Report */}
-          <Grid item xs={12} md={4}>
+          {/* Row 3: Profit Report (4) + Revenue (4) + Order Statistics (4) */}
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="profit-card">
               <Box className="profit-header">
                 <Typography variant="h6">{data.profit_report_card.title}</Typography>
@@ -289,8 +290,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Revenue */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="revenue-stats-card">
               <Box className="revenue-stats-header">
                 <Typography variant="h6">{data.revenue_stats_card.title}</Typography>
@@ -309,8 +309,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Order Statistics */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="order-stats-card">
               <Typography variant="h6">{data.order_statistics_card.title}</Typography>
               <Typography variant="h4">{data.order_statistics_card.total_orders}</Typography>
@@ -334,8 +333,8 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Income, Expenses, Profit Tabs */}
-          <Grid item xs={12} md={8}>
+          {/* Row 4: Income Card (8) + Transactions (4) */}
+          <Grid size={{ xs: 12, md: 8 }}>
             <Paper className="income-card">
               <Box className="income-tabs">
                 {data.income_card.tabs.map((tab, index) => (
@@ -355,20 +354,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Income This Week */}
-          <Grid item xs={12} md={8}>
-            <Paper className="income-week-card">
-              <Typography variant="body2" className="income-week">
-                {data.income_week_card.title}
-              </Typography>
-              <Typography variant="body2" className="income-week-stats">
-                {data.income_week_card.value} {data.income_week_card.comparison}
-              </Typography>
-            </Paper>
-          </Grid>
-
-          {/* Transactions */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="transactions-card">
               <Box className="transactions-header">
                 <Typography variant="h6">{data.transactions_card.title}</Typography>
@@ -391,8 +377,23 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Activity Timeline */}
-          <Grid item xs={12} md={8}>
+          {/* Row 5: Income This Week (8) + Empty Space (4) */}
+          <Grid size={{ xs: 12, md: 8 }}>
+            <Paper className="income-week-card">
+              <Typography variant="body2" className="income-week">
+                {data.income_week_card.title}
+              </Typography>
+              <Typography variant="body2" className="income-week-stats">
+                {data.income_week_card.value} {data.income_week_card.comparison}
+              </Typography>
+            </Paper>
+          </Grid>
+
+          {/* Empty Space to Maintain Alignment */}
+          <Grid size={{ xs: 12, md: 4 }} />
+
+          {/* Row 6: Activity Timeline (8) + Browser Stats (4) */}
+          <Grid size={{ xs: 12, md: 8 }}>
             <Paper className="activity-card">
               <Typography variant="h6">{data.activity_timeline_card.title}</Typography>
               <Box className="activity-list">
@@ -426,8 +427,7 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* Browser Stats */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper className="browser-card">
               <Box className="browser-header">
                 {data.browser_stats_card.columns.map((column, index) => (
@@ -458,22 +458,24 @@ const Dashboard = () => {
               </Box>
             </Paper>
           </Grid>
-        </Grid>
-      </Box>
 
-      {/* Footer */}
-      <Box className="dashboard-footer">
-        <Typography variant="caption">{data.footer.text}</Typography>
-        <Box className="footer-links">
-          {data.footer.links.map((link, index) => (
-            <Typography key={index} variant="caption">
-              {link}
-            </Typography>
-          ))}
-        </Box>
-        <Box className="footer-action">
-          <Typography variant="button">{data.footer.action}</Typography>
-        </Box>
+          {/* Footer: Full Width */}
+          {/* <Grid size={{ xs: 12, md: 12 }}>
+            <Box className="dashboard-footer">
+              <Typography variant="caption">{data.footer.text}</Typography>
+              <Box className="footer-links">
+                {data.footer.links.map((link, index) => (
+                  <Typography key={index} variant="caption">
+                    {link}
+                  </Typography>
+                ))}
+              </Box>
+              <Box className="footer-action">
+                <Typography variant="button">{data.footer.action}</Typography>
+              </Box>
+            </Box>
+          </Grid> */}
+        </Grid>
       </Box>
     </Box>
   );

@@ -1,41 +1,44 @@
 {
   "welcome_card": {
     "title": "Congratulations John!",
-    "message": "You have done 72% more sales today. Check your new badge in your profile.",
+    "message": "You have done 72% more sales today. Check the new badge in your profile.",
     "action": "View Badges"
   },
   "order_card": {
     "title": "Order",
     "value": "276k",
-    "stats": {
-      "label": "Sales",
-      "value": "4,679"
-    },
     "chart": {
-      "xAxis": ["1", "2", "3", "4"],
-      "data": [20, 40, 60, 80]
+      "xAxis": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "data": [50, 70, 100, 150, 220, 260, 276] 
     }
   },
+  "sales_card": {
+    "title": "Sales",
+    "value": "$4,679",
+    "growth": "+28.14%"
+  },
+  
   "total_revenue_card": {
     "title": "Total Revenue",
-    "years": ["2025", "2024", "2023"],
+    "years": ["2024", "2023"],
     "chart": {
-      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
       "series": [
         {
           "name": "2023",
-          "data": [10, 0, 20, 0, 5, 0]
+          "data": [10, 0, 20, 0, 5, 0, 0]
         },
         {
           "name": "2024",
-          "data": [0, 30, 0, 25, 0, 15]
+          "data": [0, 30, 0, 25, 0, 15, 0]
         }
       ]
     }
   },
   "company_growth_card": {
-    "title": "Company Growth",
+    "years": ["2025", "2024", "2023"],
     "progress": 78,
+    "description": "62% Company Growth",
     "stats": [
       {
         "year": "2024",
@@ -54,186 +57,305 @@
     "growth": "68.2%",
     "chart": {
       "xAxis": ["M", "T", "W", "T", "F"],
-      "data": [30, 50, 70, 40, 60]
+      "data": [10, 20, 30, 45, 60]
     }
+  },
+  "payments_card": {
+    "title": "Payments",
+    "value": "$2,468",
+    "growth": "+14.82%"
   },
   "revenue_stats_card": {
     "title": "Revenue",
     "value": "425k",
-    "growth": {
-      "value": "$2,468",
-      "percentage": "+14.82%"
-    },
     "chart": {
-      "xAxis": ["1", "2", "3", "4", "5"],
-      "data": [20, 40, 60, 30, 50]
+      "xAxis": ["M", "T", "W", "T", "F", "S", "S"],
+      "data": [10, 20, 15, 30, 25, 20, 15]
     }
   },
+  
   "order_statistics_card": {
     "title": "Order Statistics",
+    "total_sales": "42,82k",
     "total_orders": "8,258",
-    "progress": 38,
+    "progress": "38% Weekly",
     "categories": [
       {
         "name": "Electronic",
+        "description": "Mobile, Earbuds, TV",
         "value": "82.5k"
       },
       {
         "name": "Fashion",
+        "description": "Tshirt, Jeans, Shoes",
         "value": "23.8k"
       },
       {
         "name": "Decor",
+        "description": "Fine Art, Dining",
         "value": "849"
       },
       {
         "name": "Sports",
+        "description": "Football, Cricket Kit",
         "value": "99"
       }
     ]
   },
+
   "income_card": {
-    "title": "Total Income",
     "tabs": ["Income", "Expenses", "Profit"],
-    "value": "$459.1k",
-    "stats": "42.9%",
-    "chart": {
-      "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      "data": [20, 40, 60, 80, 50, 30]
+    "income": {
+      "title": "Total Income",
+      "value": "$459.1k",
+      "stats": "+42.9%",
+      "chart": {
+        "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        "data": [20, 25, 40, 50, 30, 45, 35]
+      },
+      "this_week": {
+        "title": "Income This Week",
+        "value": "6.5k",
+        "comparison": "39% less than last week"
+      }
+    },
+    "expenses": {
+      "title": "Total Expenses",
+      "value": "$316.5k",
+      "stats": "+27.8%",
+      "chart": {
+        "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        "data": [15, 20, 35, 45, 25, 40, 30]
+      },
+      "this_week": {
+        "title": "Expenses This Week",
+        "value": "7.2k",
+        "comparison": "16% less than last week"
+      }
+    },
+    "profit": {
+      "title": "Total Profit",
+      "value": "$147.9k",
+      "stats": "+35.1%",
+      "chart": {
+        "xAxis": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        "data": [10, 15, 30, 40, 20, 35, 25]
+      },
+      "this_week": {
+        "title": "Profit This Week",
+        "value": "4.2k",
+        "comparison": "28% less than last week"
+      }
     }
   },
-  "income_week_card": {
-    "title": "Income this week",
-    "value": "0.5k",
-    "comparison": "39% less than last week"
-  },
+
+
   "transactions_card": {
     "title": "Transactions",
     "list": [
       {
-        "type": "Send Money",
+        "type": "Paypal Send Money",
         "value": "+82.6 USD",
-        "color": "#7367f0"
+        "color": "#ff9f43"
       },
       {
-        "type": "Wallet",
+        "type": "Wallet Mac'D",
         "value": "+270.69 USD",
-        "color": "#00cfe8"
-      },
-      {
-        "type": "Refund",
-        "value": "+637.91 USD",
         "color": "#28c76f"
       },
       {
-        "type": "Credit Card",
-        "value": "-838.71 USD",
+        "type": "Transfer Refund",
+        "value": "+637.91 USD",
+        "color": "#00cfe8"
+      },
+      {
+        "type": "Credit Card Ordered Food",
+        "value": "-837.1 USD",
         "color": "#ea5455"
       },
       {
-        "type": "Ordered Food",
-        "value": "-92.45 USD",
-        "color": "#ff9f43"
-      },
-      {
-        "type": "Starbucks",
+        "type": "Wallet Starbucks",
         "value": "+203.33 USD",
-        "color": "#ff3e1d"
+        "color": "#ff9f43"
       },
       {
-        "type": "Mastercard",
-        "value": "+92.45 USD",
-        "color": "#ff9f43"
+        "type": "Mastercard Ordered Food",
+        "value": "-92.45 USD",
+        "color": "#7367f0"
       }
     ]
   },
+
+
   "activity_timeline_card": {
     "title": "Activity Timeline",
     "activities": [
       {
-        "icon": "12",
-        "color": "#7367f0",
         "title": "12 Invoices have been paid",
-        "description": "Invoices.pdf"
+        "description": "12 min ago",
+        "color": "#7367f0",
+        "subtitle": "Invoices have been paid to the company",
+        "attachment": "invoices.pdf"
       },
       {
-        "icon": "C",
-        "color": "#ff9f43",
         "title": "Client Meeting",
-        "description": "Project meeting with John @10:15am"
+        "description": "Project meeting with john @10:15am",
+        "color": "#ff9f43",
+        "client": "Steven Nash (Client)",
+        "avatar_color": "#7367f0"
       },
       {
-        "icon": "S",
-        "color": "#00cfe8",
-        "title": "Steven Nash (Client)",
-        "description": "CEO of ThemeSelection"
-      },
-      {
-        "icon": "C",
-        "color": "#e0e0e0",
         "title": "Create a new project for client",
         "description": "5 team members in a project",
-        "avatars": [
-          "#ff9f43",
-          "#7367f0",
-          "#28c76f",
-          "#00cfe8",
-          "#ea5455"
-        ]
+        "color": "#00cfe8",
+        "avatars": ["#7367f0", "#28c76f", "#00cfe8", "#ea5455", "#ff9f43"]
       }
     ]
   },
+
   "browser_stats_card": {
-    "title": "Browser",
-    "columns": ["Browser", "Operating System", "Country"],
-    "stats": [
-      {
-        "rank": 1,
-        "browser": "Chrome",
-        "value": "8.92k",
-        "percentage": "64.91%",
-        "color": "#28c76f"
-      },
-      {
-        "rank": 2,
-        "browser": "Safari",
-        "value": "1.29k",
-        "percentage": "19.03%",
-        "color": "#00cfe8"
-      },
-      {
-        "rank": 3,
-        "browser": "Firefox",
-        "value": "328",
-        "percentage": "3.26%",
-        "color": "#ff9f43"
-      },
-      {
-        "rank": 4,
-        "browser": "Edge",
-        "value": "142",
-        "percentage": "3.89%",
-        "color": "#7367f0"
-      },
-      {
-        "rank": 5,
-        "browser": "Opera",
-        "value": "85",
-        "percentage": "2.12%",
-        "color": "#ea5455"
-      },
-      {
-        "rank": 6,
-        "browser": "Brave",
-        "value": "36",
-        "percentage": "1.06%",
-        "color": "#ff3e1d"
-      }
-    ]
-  },
-  "footer": {
-    "text": "© 2025, Made with ❤️ by ThemeSelection",
-    "links": ["License", "More Themes", "Documentation", "Support"],
-    "action": "Buy Now"
+    "tabs": ["Browser", "Operating System", "Country"],
+    "browser": {
+      "columns": ["No", "Browser", "Visits", "Data In Percentage"],
+      "stats": [
+        {
+          "rank": "1",
+          "browser": "Chrome",
+          "value": "8.92k",
+          "percentage": "64.91%",
+          "color": "#28c76f"
+        },
+        {
+          "rank": "2",
+          "browser": "Safari",
+          "value": "1.29k",
+          "percentage": "19.03%",
+          "color": "#00cfe8"
+        },
+        {
+          "rank": "3",
+          "browser": "Firefox",
+          "value": "328",
+          "percentage": "3.26%",
+          "color": "#ff9f43"
+        },
+        {
+          "rank": "4",
+          "browser": "Edge",
+          "value": "142",
+          "percentage": "3.99%",
+          "color": "#ea5455"
+        },
+        {
+          "rank": "5",
+          "browser": "Opera",
+          "value": "85",
+          "percentage": "2.12%",
+          "color": "#7367f0"
+        },
+        {
+          "rank": "6",
+          "browser": "Brave",
+          "value": "36",
+          "percentage": "1.06%",
+          "color": "#ff9f43"
+        }
+      ]
+    },
+    "operating_system": {
+      "columns": ["No", "System", "Visits", "Data In Percentage"],
+      "stats": [
+        {
+          "rank": "1",
+          "system": "Windows",
+          "value": "475.26k",
+          "percentage": "61.5%",
+          "color": "#28c76f"
+        },
+        {
+          "rank": "2",
+          "system": "Mac",
+          "value": "89.12k",
+          "percentage": "15.87%",
+          "color": "#00cfe8"
+        },
+        {
+          "rank": "3",
+          "system": "Ubuntu",
+          "value": "38.68k",
+          "percentage": "5.82%",
+          "color": "#ff9f43"
+        },
+        {
+          "rank": "4",
+          "system": "Linux",
+          "value": "30.27k",
+          "percentage": "5.03%",
+          "color": "#ea5455"
+        },
+        {
+          "rank": "5",
+          "system": "Chrome",
+          "value": "8.34k",
+          "percentage": "3.25%",
+          "color": "#7367f0"
+        },
+        {
+          "rank": "6",
+          "system": "Cent",
+          "value": "2.25k",
+          "percentage": "1.76%",
+          "color": "#ff9f43"
+        }
+      ]
+    },
+    "country": {
+      "columns": ["No", "Country", "Visits", "Data In Percentage"],
+      "stats": [
+        {
+          "rank": "1",
+          "country": "USA",
+          "value": "87.24k",
+          "percentage": "38.12%",
+          "color": "#28c76f"
+        },
+        {
+          "rank": "2",
+          "country": "Brazil",
+          "value": "42.69k",
+          "percentage": "28.23%",
+          "color": "#00cfe8"
+        },
+        {
+          "rank": "3",
+          "country": "India",
+          "value": "12.58k",
+          "percentage": "13.82%",
+          "color": "#ff9f43"
+        },
+        {
+          "rank": "4",
+          "country": "Australia",
+          "value": "4.13k",
+          "percentage": "12.7%",
+          "color": "#ea5455"
+        },
+        {
+          "rank": "5",
+          "country": "China",
+          "value": "2.21k",
+          "percentage": "7.11%",
+          "color": "#7367f0"
+        },
+        {
+          "rank": "6",
+          "country": "France",
+          "value": "1.56k",
+          "percentage": "6.59%",
+          "color": "#ff9f43"
+        }
+      ]
+    }
   }
+
 }
