@@ -37,7 +37,15 @@ import {
   Tune,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../styles/sidebar.css';
+import {
+  drawerStyles,
+  typographyTitleStyles,
+  boxContentStyles,
+  typographyCategoryStyles,
+  getListItemButtonStyles,
+  getListItemIconStyles,
+  getNestedListItemButtonStyles,
+} from '../styles/sidebarStyle';
 
 const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null }) => {
   const [open, setOpen] = React.useState(false);
@@ -54,8 +62,11 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
   return (
     <>
       <ListItem disablePadding>
-        <ListItemButton onClick={handleClick} className={isActive ? 'active-item' : ''}>
-          <ListItemIcon>{sideBarIcon}</ListItemIcon>
+        <ListItemButton
+          onClick={handleClick}
+          sx={getListItemButtonStyles(isActive)}
+        >
+          <ListItemIcon sx={getListItemIconStyles(isActive)}>{sideBarIcon}</ListItemIcon>
           <ListItemText primary={sideBarText} />
           {sideBarBadge && <Badge color="secondary" badgeContent={sideBarBadge} />}
           {sideBarNestedItems && (open ? <ExpandLess /> : <ExpandMore />)}
@@ -68,7 +79,7 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
               <ListItemButton
                 key={index}
                 onClick={() => navigate(nested.path)}
-                className={nested.isActive ? 'active-nested-item' : 'sidebar-nested-item'}
+                sx={getNestedListItemButtonStyles(nested.isActive)}
               >
                 <ListItemText primary={nested.text} />
               </ListItemButton>
@@ -100,7 +111,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   const dashboardItems = [
-    { text: 'Analytics', path: '/dashboards/analytics', isActive: location.pathname === '/dashboards/analytics' },
+    { text: 'Analytics', path: '/', isActive: location.pathname === '/' },
     { text: 'CRM', path: '/dashboards/crm', isActive: location.pathname === '/dashboards/crm' },
     { text: 'eCommerce', path: '/dashboards/ecommerce', isActive: location.pathname === '/dashboards/ecommerce' },
   ];
@@ -120,16 +131,22 @@ const Sidebar = () => {
   ];
 
   return (
-    <Drawer variant="permanent" className="sidebar-drawer">
+    <Drawer variant="permanent" css={drawerStyles}>
       <Toolbar>
-        <Typography variant="h6" className="sidebar-title">
+        <Typography
+          variant="h6"
+          sx={typographyTitleStyles}
+        >
           🌀 sneat
         </Typography>
       </Toolbar>
       <Divider />
-      <Box className="sidebar-content">
+      <Box sx={boxContentStyles}>
         <List>
-          <Typography variant="caption" className="sidebar-category">
+          <Typography
+            variant="caption"
+            sx={typographyCategoryStyles}
+          >
             DASHBOARDS
           </Typography>
           <SidebarItem
@@ -139,7 +156,10 @@ const Sidebar = () => {
             sideBarNestedItems={dashboardItems}
           />
 
-          <Typography variant="caption" className="sidebar-category">
+          <Typography
+            variant="caption"
+            sx={typographyCategoryStyles}
+          >
             APPS & PAGES
           </Typography>
           <SidebarItem sideBarIcon={<Email />} sideBarText="Email" onClick={() => navigate('/apps/email')} />
@@ -189,7 +209,10 @@ const Sidebar = () => {
           <SidebarItem sideBarIcon={<AutoAwesome />} sideBarText="Wizard Examples" onClick={() => navigate('/wizard-examples')} />
           <SidebarItem sideBarIcon={<Apps />} sideBarText="Dialog Examples" onClick={() => navigate('/dialog-examples')} />
 
-          <Typography variant="caption" className="sidebar-category">
+          <Typography
+            variant="caption"
+            sx={typographyCategoryStyles}
+          >
             USER INTERFACE
           </Typography>
           <SidebarItem sideBarIcon={<TextFields />} sideBarText="Typography" onClick={() => navigate('/ui/typography')} />
@@ -214,7 +237,10 @@ const Sidebar = () => {
             onClick={() => navigate('/ui/components')}
           />
 
-          <Typography variant="caption" className="sidebar-category">
+          <Typography
+            variant="caption"
+            sx={typographyCategoryStyles}
+          >
             FORMS & TABLES
           </Typography>
           <SidebarItem sideBarIcon={<CreditCard />} sideBarText="Form Elements" onClick={() => navigate('/forms/elements')} />
@@ -224,7 +250,10 @@ const Sidebar = () => {
           <SidebarItem sideBarIcon={<TableView />} sideBarText="Table" onClick={() => navigate('/tables/table')} />
           <SidebarItem sideBarIcon={<Apps />} sideBarText="Mui DataGrid" onClick={() => navigate('/tables/mui-datagrid')} />
 
-          <Typography variant="caption" className="sidebar-category">
+          <Typography
+            variant="caption"
+            sx={typographyCategoryStyles}
+          >
             CHARTS & MISC
           </Typography>
           <SidebarItem sideBarIcon={<BarChart />} sideBarText="Charts" onClick={() => navigate('/charts')} />
