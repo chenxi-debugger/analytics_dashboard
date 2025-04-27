@@ -198,10 +198,10 @@ const CrmPage = () => {
   return (
     <Box sx={getCrmStyle('crmMain')}>
       <Box sx={getCrmStyle('crmContent')}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ alignItems: 'stretch' }}>
           {/* Customer Rating */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('customerRatingCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('customerRatingCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.customer_rating_card.title}</Typography>
               <Box sx={getCrmStyle('ratingValue')}>
                 <Typography variant="h4">{data.customer_rating_card.rating}</Typography>
@@ -225,8 +225,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Overview & Sales Activity */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('overviewSalesCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('overviewSalesCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('overviewSalesHeader')}>
                 <Typography variant="h6">{data.overview_sales_card.title}</Typography>
                 <Typography variant="body2">{data.overview_sales_card.description}</Typography>
@@ -252,8 +252,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Generated Leads */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getCrmStyle('generatedLeadsCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('generatedLeadsCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.generated_leads_card.title}</Typography>
               <Typography variant="body2">{data.generated_leads_card.description}</Typography>
               <Box sx={getCrmStyle('generatedLeadsChart')}>
@@ -269,9 +269,9 @@ const CrmPage = () => {
             </Paper>
           </Grid>
 
-          {/* Orders (Previously part of Overview & Sales Activity) */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getCrmStyle('ordersCard')}>
+          {/* Orders */}
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('ordersCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.orders_card.title}</Typography>
               <Typography variant="h4">{data.orders_card.value}</Typography>
               <Box display="flex" alignItems="center">
@@ -282,8 +282,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Top Products by Sales */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('topProductsSalesCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('topProductsSalesCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('topProductsHeader')}>
                 <Typography variant="h6">{data.top_products_sales_card.title}</Typography>
                 <IconButton>
@@ -303,8 +303,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Top Products by Volume */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('topProductsVolumeCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('topProductsVolumeCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('topProductsHeader')}>
                 <Typography variant="h6">{data.top_products_volume_card.title}</Typography>
                 <IconButton>
@@ -332,8 +332,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Earning Report */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getCrmStyle('earningReportCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('earningReportCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('earningReportHeader')}>
                 <Typography variant="h6">{data.earning_report_card.stats[0].label}</Typography>
                 <Typography variant="body2">{data.earning_report_card.description}</Typography>
@@ -350,9 +350,9 @@ const CrmPage = () => {
             </Paper>
           </Grid>
 
-          {/* Generated Leads (Moved to match screenshot layout) */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getCrmStyle('generatedLeadsCard')}>
+          {/* Generated Leads (Moved) */}
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('generatedLeadsCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.earning_report_card.stats[1].label}</Typography>
               <Typography variant="body2">{data.earning_report_card.description}</Typography>
               <Box sx={getCrmStyle('generatedLeadsChart')}>
@@ -366,8 +366,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Sales Analytics */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('salesAnalyticsCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('salesAnalyticsCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('salesAnalyticsHeader')}>
                 <Typography variant="h6">{data.sales_analytics_card.title}</Typography>
                 <Select
@@ -388,8 +388,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Sales by Countries */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('salesCountriesCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('salesCountriesCard'), flexGrow: 1 }}>
               <Box sx={getCrmStyle('salesCountriesHeader')}>
                 <Typography variant="h6">{data.sales_countries_card.title}</Typography>
                 <Typography variant="body2">{data.sales_countries_card.description}</Typography>
@@ -410,8 +410,8 @@ const CrmPage = () => {
           </Grid>
 
           {/* Sales Stats */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getCrmStyle('salesStatsCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('salesStatsCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.sales_stats_card.title}</Typography>
               <Box sx={getCrmStyle('salesStatsChart')}>
                 <ReactECharts option={salesStatsChartOption} style={{ height: '100px', width: '100px' }} />
@@ -427,9 +427,9 @@ const CrmPage = () => {
             </Paper>
           </Grid>
 
-          {/* Customers (Previously Team Members) */}
-          <Grid item xs={12}>
-            <Paper sx={getCrmStyle('teamMembersCard')}>
+          {/* Customers */}
+          <Grid size={{ xs: 12, md: 12, lg: 12 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getCrmStyle('teamMembersCard'), flexGrow: 1 }}>
               <Typography variant="h6">{data.customer_card.title}</Typography>
               <Box sx={getCrmStyle('teamMembersList')}>
                 <Box sx={[getCrmStyle('teamMemberItem'), { header: true }]}>

@@ -130,7 +130,7 @@ const AnalyticsPage = () => {
         lineStyle: { color: '#28c76f', width: 2 },
         itemStyle: { color: '#28c76f' },
         showSymbol: true,
-        symbolSize: (val, params) => (params.dataIndex === data.order_card.chart.data.length - 1 ? 12 : 8), // Larger dot for the last point
+        symbolSize: (val, params) => (params.dataIndex === data.order_card.chart.data.length - 1 ? 12 : 8),
         symbol: 'circle',
         areaStyle: { color: 'rgba(40, 199, 111, 0.1)' },
       },
@@ -257,10 +257,10 @@ const AnalyticsPage = () => {
   return (
     <Box sx={getAnalyticsStyle('analyticsMain')}>
       <Box sx={getAnalyticsStyle('analyticsContent')}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ alignItems: 'stretch' }}>
           {/* Welcome Card */}
-          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
-            <Paper sx={getAnalyticsStyle('welcomeCard')}>
+          <Grid size={{ xs: 12, md: 6, lg: 8 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('welcomeCard'), flexGrow: 1 }}>
               <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('welcomeContent')}>
                 <Box>
                   <Typography variant="h6" sx={getAnalyticsStyle('welcomeTypographyH6')}>
@@ -281,8 +281,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Order Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Paper sx={getAnalyticsStyle('orderCard')}>
+          <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('orderCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('orderHeader')}>
                   <Typography variant="h6">{data.order_card.title}</Typography>
@@ -301,8 +301,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Sales Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Paper sx={getAnalyticsStyle('salesCard')}>
+          <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('salesCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('salesHeader')}>
                   <Typography variant="h6">{data.sales_card.title}</Typography>
@@ -321,8 +321,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Total Revenue + Company Growth */}
-          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
-            <Paper sx={getAnalyticsStyle('revenueGrowthCombined')}>
+          <Grid size={{ xs: 12, md: 12, lg: 8 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('revenueGrowthCombined'), flexGrow: 1 }}>
               <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('revenueGrowthContent')}>
                 <Box sx={getAnalyticsStyle('revenueSection')}>
                   <Box sx={getAnalyticsStyle('revenueHeader')}>
@@ -384,78 +384,80 @@ const AnalyticsPage = () => {
             </Paper>
           </Grid>
 
-          {/* Payments Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Paper sx={getAnalyticsStyle('paymentsCard')}>
-              <Stack spacing={0.5}>
-                <Box sx={getAnalyticsStyle('paymentsHeader')}>
-                  <Typography variant="h6" sx={{ fontSize: '12px' }}>
-                    {data.payments_card.title}
-                  </Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
-                </Box>
-                <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
-                  {data.payments_card.value}
-                </Typography>
-                <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth')}>
-                  <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> {data.payments_card.growth}
-                </Typography>
-              </Stack>
-            </Paper>
-          </Grid>
+          {/* Right Section: Payments, Revenue Stats, and Profit Report Cards */}
+<Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>
+  <Stack spacing={3} sx={{ flexGrow: 1 }}>
+    {/* Top Stack: Payments Card and Revenue Stats Card */}
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+      {/* Payments Card */}
+      <Paper sx={{ ...getAnalyticsStyle('paymentsCard'), flex: 1 }}>
+        <Stack spacing={0.5}>
+          <Box sx={getAnalyticsStyle('paymentsHeader')}>
+            <Typography variant="h6" sx={{ fontSize: '12px' }}>
+              {data.payments_card.title}
+            </Typography>
+            <IconButton>
+              <MoreVert />
+            </IconButton>
+          </Box>
+          <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
+            {data.payments_card.value}
+          </Typography>
+          <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth')}>
+            <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> {data.payments_card.growth}
+          </Typography>
+        </Stack>
+      </Paper>
 
-          {/* Revenue Stats Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
-            <Paper sx={getAnalyticsStyle('revenueStatsCard')}>
-              <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('revenueStatsHeader')}>
-                  <Typography variant="h6" sx={{ fontSize: '12px' }}>
-                    {data.revenue_stats_card.title}
-                  </Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
-                </Box>
-                <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
-                  {data.revenue_stats_card.value}
-                </Typography>
-                <Box sx={getAnalyticsStyle('revenueStatsChart')}>
-                  <ReactECharts option={revenueChartOption} />
-                </Box>
-              </Stack>
-            </Paper>
-          </Grid>
+      {/* Revenue Stats Card */}
+      <Paper sx={{ ...getAnalyticsStyle('revenueStatsCard'), flex: 1 }}>
+        <Stack spacing={1}>
+          <Box sx={getAnalyticsStyle('revenueStatsHeader')}>
+            <Typography variant="h6" sx={{ fontSize: '12px' }}>
+              {data.revenue_stats_card.title}
+            </Typography>
+            <IconButton>
+              <MoreVert />
+            </IconButton>
+          </Box>
+          <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
+            {data.revenue_stats_card.value}
+          </Typography>
+          <Box sx={getAnalyticsStyle('revenueStatsChart')}>
+            <ReactECharts option={revenueChartOption} />
+          </Box>
+        </Stack>
+      </Paper>
+    </Stack>
 
-          {/* Profit Report Card */}
-          <Grid size={{ xs: 12, md: 8, lg: 4 }}>
-            <Paper sx={getAnalyticsStyle('profitCard')}>
-              <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('profitHeader')}>
-                  <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
-                    {data.profit_report_card.title}
-                  </Typography>
-                  <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
-                    Year {data.profit_report_card.year}
-                  </Typography>
-                </Box>
-                <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
-                  {data.profit_report_card.value}
-                </Typography>
-                <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
-                  <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
-                </Typography>
-                <Box sx={getAnalyticsStyle('profitChart')}>
-                  <ReactECharts option={profitChartOption} />
-                </Box>
-              </Stack>
-            </Paper>
-          </Grid>
+    {/* Bottom Stack: Profit Report Card */}
+    <Paper sx={{ ...getAnalyticsStyle('profitCard'), flexGrow: 1 }}>
+      <Stack spacing={1}>
+        <Box sx={getAnalyticsStyle('profitHeader')}>
+          <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
+            {data.profit_report_card.title}
+          </Typography>
+          <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
+            Year {data.profit_report_card.year}
+          </Typography>
+        </Box>
+        <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
+          {data.profit_report_card.value}
+        </Typography>
+        <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
+          <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
+        </Typography>
+        <Box sx={getAnalyticsStyle('profitChart')}>
+          <ReactECharts option={profitChartOption} />
+        </Box>
+      </Stack>
+    </Paper>
+  </Stack>
+</Grid>
 
           {/* Order Statistics Card */}
-          <Grid item xs={6} md={4} lg={4}>
-            <Paper sx={getAnalyticsStyle('orderStatsCard')}>
+          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('orderStatsCard'), flexGrow: 1 }}>
               <Stack spacing={1} alignItems="center">
                 <Box sx={getAnalyticsStyle('orderStatsHeader')}>
                   <Typography variant="h6" sx={getAnalyticsStyle('orderStatsTypographyH6')}>
@@ -504,8 +506,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Income/Expenses/Profit Card */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper sx={getAnalyticsStyle('incomeCard')}>
+          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('incomeCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('incomeTabs')}>
                   {data.income_card.tabs.map((tab, index) => (
@@ -536,8 +538,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Transactions Card */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper sx={getAnalyticsStyle('transactionsCard')}>
+          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('transactionsCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('transactionsHeader')}>
                   <Typography variant="h6" sx={getAnalyticsStyle('transactionsTypographyH6')}>
@@ -565,8 +567,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Activity Timeline Card */}
-          <Grid item xs={12} md={8} lg={8}>
-            <Paper sx={getAnalyticsStyle('activityCard')}>
+          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('activityCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('activityHeader')}>
                   <Typography variant="h6" sx={getAnalyticsStyle('activityTypographyH6')}>
@@ -629,8 +631,8 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Browser/Country Stats Card */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper sx={getAnalyticsStyle('browserCard')}>
+          <Grid size={{ xs: 6, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getAnalyticsStyle('browserCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('browserTabs')}>
                   {data.browser_stats_card.tabs.map((tab, index) => (

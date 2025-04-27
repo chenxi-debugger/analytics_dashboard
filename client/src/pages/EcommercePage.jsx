@@ -277,10 +277,10 @@ const EcommercePage = () => {
   return (
     <Box sx={getEcommerceStyle('ecommerceMain')}>
       <Box sx={getEcommerceStyle('ecommerceContent')}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ alignItems: 'stretch' }}>
           {/* Congratulations Banner */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('congratulationsCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('congratulationsCard'), flexGrow: 1 }}>
               <Box sx={getEcommerceStyle('congratulationsContent')}>
                 <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                   {data.congratulations_card.title} 🎉
@@ -305,8 +305,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* New Visitors */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('newVisitorsCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('newVisitorsCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.new_visitors_card.title}
               </Typography>
@@ -324,8 +324,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Activity */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('activityCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('activityCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.activity_card.title}
               </Typography>
@@ -343,8 +343,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Sales */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('salesCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('salesCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.sales_card.title}
               </Typography>
@@ -359,8 +359,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Profit */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('profitCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('profitCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.profit_card.title}
               </Typography>
@@ -374,8 +374,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Total Income */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('totalIncomeCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('totalIncomeCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.total_income_card.title}
               </Typography>
@@ -392,8 +392,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Report */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('reportCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('reportCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.report_card.title}
               </Typography>
@@ -428,8 +428,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Expenses */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('expensesCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('expensesCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.expenses_card.title}
               </Typography>
@@ -446,8 +446,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Transactions */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('transactionsCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('transactionsCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.transactions_card.title}
               </Typography>
@@ -462,8 +462,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Performance */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('performanceCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('performanceCard'), flexGrow: 1 }}>
               <Box sx={getEcommerceStyle('performanceHeader')}>
                 <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                   {data.performance_card.title}
@@ -487,8 +487,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Conversion Rate */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('conversionRateCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('conversionRateCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.conversion_rate_card.title}
               </Typography>
@@ -504,7 +504,7 @@ const EcommercePage = () => {
                   <Typography variant="body2">{data.conversion_rate_card.stats[0].value}</Typography>
                   <Box display="flex" alignItems="center">
                     <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
-                    <Typography variant="body2">{data.conversion_rate_card.stats[0].growth}</Typography>
+                    <Typography variant="body2">{data.conversion_rate_card.stats[0].value}</Typography>
                   </Box>
                 </Box>
                 <Box>
@@ -539,8 +539,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Revenue */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('revenueCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('revenueCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.revenue_2_card.title}
               </Typography>
@@ -555,8 +555,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Sales */}
-          <Grid item xs={12} md={2}>
-            <Paper sx={getEcommerceStyle('salesCard')}>
+          <Grid size={{ xs: 12, md: 2, lg: 2 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('salesCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.sales_2_card.title}
               </Typography>
@@ -575,8 +575,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Expenses */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('expensesCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('expensesCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.expenses_2_card.title}
               </Typography>
@@ -597,8 +597,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Top Products */}
-          <Grid item xs={12} md={8}>
-            <Paper sx={getEcommerceStyle('topProductsCard')}>
+          <Grid size={{ xs: 12, md: 8, lg: 8 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('topProductsCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.top_products_card.title}
               </Typography>
@@ -634,8 +634,8 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Total Balance */}
-          <Grid item xs={12} md={4}>
-            <Paper sx={getEcommerceStyle('totalBalanceCard')}>
+          <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+            <Paper sx={{ ...getEcommerceStyle('totalBalanceCard'), flexGrow: 1 }}>
               <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
                 {data.total_balance_card.title}
               </Typography>
