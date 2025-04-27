@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem,
   Grid,
+  Stack,
 } from '@mui/material';
 import {
   MoreVert,
@@ -24,7 +25,7 @@ import {
   Group,
 } from '@mui/icons-material';
 import ReactECharts from 'echarts-for-react';
-import '../styles/analyticsPage.css';
+import getAnalyticsStyle from '../styles/analyticsPageStyle';
 
 const AnalyticsPage = () => {
   const [data, setData] = useState(null);
@@ -59,7 +60,7 @@ const AnalyticsPage = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <CircularProgress />
       </Box>
     );
@@ -67,7 +68,7 @@ const AnalyticsPage = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Typography color="error">Error: {error}</Typography>
       </Box>
     );
@@ -75,13 +76,12 @@ const AnalyticsPage = () => {
 
   if (!data) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Typography>No data available</Typography>
       </Box>
     );
   }
 
-  // Map category names to icons
   const getCategoryIcon = (categoryName) => {
     switch (categoryName) {
       case 'Electronic':
@@ -97,7 +97,6 @@ const AnalyticsPage = () => {
     }
   };
 
-  // Map activity titles to icons
   const getActivityIcon = (activityTitle) => {
     switch (activityTitle) {
       case '12 Invoices have been paid':
@@ -111,7 +110,6 @@ const AnalyticsPage = () => {
     }
   };
 
-  // ECharts configurations with responsive heights
   const orderChartOption = {
     xAxis: {
       type: 'category',
@@ -132,7 +130,7 @@ const AnalyticsPage = () => {
         lineStyle: { color: '#28c76f', width: 2 },
         itemStyle: { color: '#28c76f' },
         showSymbol: true,
-        symbolSize: 8,
+        symbolSize: (val, params) => (params.dataIndex === data.order_card.chart.data.length - 1 ? 12 : 8), // Larger dot for the last point
         symbol: 'circle',
         areaStyle: { color: 'rgba(40, 199, 111, 0.1)' },
       },
@@ -257,352 +255,415 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <Box className="dashboard-main">
-      <Box className="dashboard-content">
+    <Box sx={getAnalyticsStyle('analyticsMain')}>
+      <Box sx={getAnalyticsStyle('analyticsContent')}>
         <Grid container spacing={3}>
-          {/* Row 1: Welcome Card (8) + Order Card (2) + Sales Card (2) */}
-          <Box className="row-1-container">
-            <Grid container spacing={3} className="row-grid">
-              <Grid size={{ xs: 12, md: 8, lg: 8 }}>
-                <Paper className="welcome-card">
-                  <Box className="welcome-content">
-                    <Typography variant="h6">{data.welcome_card.title} 🎉</Typography>
-                    <Typography variant="body2">{data.welcome_card.message}</Typography>
-                    <Box className="welcome-action">
-                      <Typography variant="button">{data.welcome_card.action}</Typography>
-                    </Box>
-                  </Box>
-                  <Box className="welcome-image">
-                    <img src="/welcome-image.png" alt="Welcome" />
-                  </Box>
-                </Paper>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4, lg: 2 }}>
-                <Paper className="order-card">
-                  <Box className="order-header">
-                    <Typography variant="h6">{data.order_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="h4" className="order-value">
-                    {data.order_card.value}
+          {/* Welcome Card */}
+          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
+            <Paper sx={getAnalyticsStyle('welcomeCard')}>
+              <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('welcomeContent')}>
+                <Box>
+                  <Typography variant="h6" sx={getAnalyticsStyle('welcomeTypographyH6')}>
+                    {data.welcome_card.title} 🎉
                   </Typography>
-                  <Box className="order-chart">
-                    <ReactECharts option={orderChartOption} className="order-chart-responsive" />
-                  </Box>
-                </Paper>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4, lg: 2 }}>
-                <Paper className="sales-card">
-                  <Box className="sales-header">
-                    <Typography variant="h6">{data.sales_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="h4" className="sales-value">
-                    {data.sales_card.value}
+                  <Typography variant="body2" sx={getAnalyticsStyle('welcomeTypographyBody2')}>
+                    {data.welcome_card.message}
                   </Typography>
-                  <Typography variant="body2" className="sales-growth">
-                    <ArrowUpward style={{ fontSize: '12px', color: '#28c76f' }} /> {data.sales_card.growth}
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
-
-          {/* Row 2: Total Revenue + Company Growth (8) + Payments (2) + Revenue Stats (2) + Profit Report (4) */}
-          <Box className="row-2-container">
-            <Grid container spacing={3} className="row-grid">
-              <Grid size={{ xs: 12, md: 8, lg: 8 }}>
-                <Paper className="revenue-growth-combined">
-                  <Box className="revenue-growth-content">
-                    {/* Total Revenue */}
-                    <Box className="revenue-section">
-                      <Box className="revenue-header">
-                        <Typography variant="h6">{data.total_revenue_card.title}</Typography>
-                        <Box>
-                          <IconButton onClick={handleOpenYearMenu}>
-                            <Typography variant="body2">{data.total_revenue_card.years[0]}</Typography>
-                            <ArrowDropDown />
-                          </IconButton>
-                          <Menu
-                            anchorEl={yearAnchor}
-                            open={Boolean(yearAnchor)}
-                            onClose={handleCloseYearMenu}
-                          >
-                            {data.total_revenue_card.years.map((year) => (
-                              <MenuItem key={year} onClick={handleCloseYearMenu}>
-                                {year}
-                              </MenuItem>
-                            ))}
-                          </Menu>
-                        </Box>
-                      </Box>
-                      <Box className="revenue-chart">
-                        <ReactECharts option={totalRevenueChartOption} className="revenue-chart-responsive" />
-                      </Box>
-                    </Box>
-
-                    {/* Company Growth */}
-                    <Box className="growth-section">
-                      <Typography variant="h6">{data.company_growth_card.description}</Typography>
-                      <Box className="growth-progress">
-                        <CircularProgress
-                          variant="determinate"
-                          value={Number(data.company_growth_card.progress)}
-                          size={80}
-                        />
-                        <Typography variant="h6" className="growth-value">
-                          {data.company_growth_card.progress}% Growth
-                        </Typography>
-                      </Box>
-                      <Box className="growth-stats">
-                        {data.company_growth_card.stats.map((stat, index) => (
-                          <Box key={index} className="growth-stat-item">
-                            <Typography variant="body2">{stat.year}</Typography>
-                            <Typography variant="body2">{stat.value}</Typography>
-                          </Box>
-                        ))}
-                      </Box>
-                    </Box>
+                  <Box sx={getAnalyticsStyle('welcomeAction')}>
+                    <Typography variant="button">{data.welcome_card.action}</Typography>
                   </Box>
-                </Paper>
-              </Grid>
+                </Box>
+                <Box sx={getAnalyticsStyle('welcomeImage')}>
+                  <img src="/welcome-image.png" alt="Welcome" />
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
 
-              <Grid size={{ xs: 12, md: 4, lg: 2 }}>
-                <Paper className="payments-card">
-                  <Box className="payments-header">
-                    <Typography variant="h6" style={{ fontSize: '12px' }}>{data.payments_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="h4" className="payments-value">{data.payments_card.value}</Typography>
-                  <Typography variant="body2" className="payments-growth">
-                    <ArrowDownward style={{ fontSize: '10px', color: '#ea5455' }} /> {data.payments_card.growth}
-                  </Typography>
-                </Paper>
-              </Grid>
+          {/* Order Card */}
+          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
+            <Paper sx={getAnalyticsStyle('orderCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('orderHeader')}>
+                  <Typography variant="h6">{data.order_card.title}</Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('orderValue')}>
+                  {data.order_card.value}
+                </Typography>
+                <Box sx={getAnalyticsStyle('orderChart')}>
+                  <ReactECharts option={orderChartOption} />
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
 
-              <Grid size={{ xs: 12, md: 4, lg: 2 }}>
-                <Paper className="revenue-stats-card">
-                  <Box className="revenue-stats-header">
-                    <Typography variant="h6" style={{ fontSize: '12px' }}>{data.revenue_stats_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="h4" className="revenue-stats-value">{data.revenue_stats_card.value}</Typography>
-                  <Box className="revenue-stats-chart">
-                    <ReactECharts option={revenueChartOption} className="revenue-stats-chart-responsive" />
-                  </Box>
-                </Paper>
-              </Grid>
+          {/* Sales Card */}
+          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
+            <Paper sx={getAnalyticsStyle('salesCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('salesHeader')}>
+                  <Typography variant="h6">{data.sales_card.title}</Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('salesValue')}>
+                  {data.sales_card.value}
+                </Typography>
+                <Typography variant="body2" sx={getAnalyticsStyle('salesGrowth')}>
+                  <ArrowUpward sx={{ fontSize: '12px', color: '#28c76f' }} /> {data.sales_card.growth}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Grid>
 
-              <Grid size={{ xs: 12, md: 6, lg: 4 }}>
-                <Paper className="profit-card">
-                  <Box className="profit-header">
-                    <Typography variant="h6" style={{ fontSize: '12px' }}>{data.profit_report_card.title}</Typography>
-                    <Typography variant="body2" className="profit-year" style={{ fontSize: '10px' }}>
-                      Year {data.profit_report_card.year}
+          {/* Total Revenue + Company Growth */}
+          <Grid size={{ xs: 12, md: 6, lg: 8 }}>
+            <Paper sx={getAnalyticsStyle('revenueGrowthCombined')}>
+              <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('revenueGrowthContent')}>
+                <Box sx={getAnalyticsStyle('revenueSection')}>
+                  <Box sx={getAnalyticsStyle('revenueHeader')}>
+                    <Typography variant="h6" sx={getAnalyticsStyle('revenueHeaderTypographyH6')}>
+                      {data.total_revenue_card.title}
                     </Typography>
+                    <Box>
+                      <IconButton onClick={handleOpenYearMenu}>
+                        <Typography variant="body2" sx={getAnalyticsStyle('revenueHeaderTypographyBody2')}>
+                          {data.total_revenue_card.years[0]}
+                        </Typography>
+                        <ArrowDropDown />
+                      </IconButton>
+                      <Menu
+                        anchorEl={yearAnchor}
+                        open={Boolean(yearAnchor)}
+                        onClose={handleCloseYearMenu}
+                      >
+                        {data.total_revenue_card.years.map((year) => (
+                          <MenuItem key={year} onClick={handleCloseYearMenu}>
+                            {year}
+                          </MenuItem>
+                        ))}
+                      </Menu>
+                    </Box>
                   </Box>
-                  <Typography variant="h4" className="profit-value">{data.profit_report_card.value}</Typography>
-                  <Typography variant="body2" className="profit-growth">
-                    <ArrowUpward style={{ fontSize: '10px', color: '#28c76f' }} /> {data.profit_report_card.growth}
+                  <Box sx={getAnalyticsStyle('revenueChart')}>
+                    <ReactECharts option={totalRevenueChartOption} />
+                  </Box>
+                </Box>
+                <Box sx={getAnalyticsStyle('growthSection')}>
+                  <Typography variant="h6" sx={getAnalyticsStyle('growthTypographyH6')}>
+                    {data.company_growth_card.description}
                   </Typography>
-                  <Box className="profit-chart">
-                    <ReactECharts option={profitChartOption} className="profit-chart-responsive" />
-                  </Box>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
-
-          {/* Row 3: Order Statistics (2) + Income/Expenses/Profit (2) + Transactions (4) */}
-          <Box className="row-3-container">
-            <Grid container spacing={3} className="row-grid">
-              <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-                <Paper className="order-stats-card">
-                  <Box className="order-stats-header">
-                    <Typography variant="h6">{data.order_statistics_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="h4" className="order-stats-value">{data.order_statistics_card.total_orders}</Typography>
-                  <Typography variant="body2">Total Orders</Typography>
-                  <Box className="order-stats-progress">
+                  <Box sx={getAnalyticsStyle('growthProgress')}>
                     <CircularProgress
                       variant="determinate"
-                      value={parseFloat(data.order_statistics_card.progress)}
-                      size={40}
+                      value={Number(data.company_growth_card.progress)}
+                      size={80}
                     />
-                    <Typography variant="body2">{parseFloat(data.order_statistics_card.progress)}%</Typography>
+                    <Typography variant="h6" sx={getAnalyticsStyle('growthValue')}>
+                      {data.company_growth_card.progress}% Growth
+                    </Typography>
                   </Box>
-                  <Box className="order-stats-list">
-                    {data.order_statistics_card.categories.map((category, index) => (
-                      <Box key={index} className="order-stats-item">
-                        <Box className="order-stats-icon">
-                          {getCategoryIcon(category.name)}
-                        </Box>
-                        <Box>
-                          <Typography variant="body2">{category.name}</Typography>
-                          <Typography variant="caption">{category.description}</Typography>
-                        </Box>
-                        <Typography variant="body2">{category.value}</Typography>
+                  <Stack direction="row" spacing={2} sx={getAnalyticsStyle('growthStats')}>
+                    {data.company_growth_card.stats.map((stat, index) => (
+                      <Box key={index} sx={getAnalyticsStyle('growthStatItem')}>
+                        <Typography variant="body2" sx={getAnalyticsStyle('growthStatTypographyBody2')}>
+                          {stat.year}
+                        </Typography>
+                        <Typography variant="body2" sx={getAnalyticsStyle('growthStatTypographyBody2')}>
+                          {stat.value}
+                        </Typography>
                       </Box>
                     ))}
-                  </Box>
-                </Paper>
-              </Grid>
+                  </Stack>
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
 
-              <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-                <Paper className="income-card">
-                  <Box className="income-tabs">
-                    {data.income_card.tabs.map((tab, index) => (
-                      <Typography
-                        key={index}
-                        variant="button"
-                        className={selectedTab === tab ? 'active-tab' : ''}
-                        onClick={() => handleTabChange(tab)}
-                      >
-                        {tab}
-                      </Typography>
-                    ))}
-                  </Box>
-                  <Typography variant="h6">{data.income_card[selectedTab.toLowerCase()].title}</Typography>
-                  <Typography variant="h4" className="income-value">{data.income_card[selectedTab.toLowerCase()].value}</Typography>
-                  <Typography variant="body2" className="income-stats">
-                    <ArrowUpward style={{ color: '#28c76f' }} /> {data.income_card[selectedTab.toLowerCase()].stats}
+          {/* Payments Card */}
+          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
+            <Paper sx={getAnalyticsStyle('paymentsCard')}>
+              <Stack spacing={0.5}>
+                <Box sx={getAnalyticsStyle('paymentsHeader')}>
+                  <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                    {data.payments_card.title}
                   </Typography>
-                  <Box className="income-chart">
-                    <ReactECharts option={incomeChartOption} className="income-chart-responsive" />
-                  </Box>
-                </Paper>
-              </Grid>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
+                  {data.payments_card.value}
+                </Typography>
+                <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth')}>
+                  <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> {data.payments_card.growth}
+                </Typography>
+              </Stack>
+            </Paper>
+          </Grid>
 
-              <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-                <Paper className="transactions-card">
-                  <Box className="transactions-header">
-                    <Typography variant="h6">{data.transactions_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Box className="transactions-list">
-                    {data.transactions_card.list.map((transaction, index) => (
-                      <Box key={index} className="transactions-item">
-                        <Box
-                          className="transactions-icon"
-                          style={{ backgroundColor: transaction.color }}
-                        />
-                        <Typography variant="body2">{transaction.type}</Typography>
-                        <Typography variant="body2">{transaction.value}</Typography>
+          {/* Revenue Stats Card */}
+          <Grid size={{ xs: 6, md: 4, lg: 2 }}>
+            <Paper sx={getAnalyticsStyle('revenueStatsCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('revenueStatsHeader')}>
+                  <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                    {data.revenue_stats_card.title}
+                  </Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
+                  {data.revenue_stats_card.value}
+                </Typography>
+                <Box sx={getAnalyticsStyle('revenueStatsChart')}>
+                  <ReactECharts option={revenueChartOption} />
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Profit Report Card */}
+          <Grid size={{ xs: 12, md: 8, lg: 4 }}>
+            <Paper sx={getAnalyticsStyle('profitCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('profitHeader')}>
+                  <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
+                    {data.profit_report_card.title}
+                  </Typography>
+                  <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
+                    Year {data.profit_report_card.year}
+                  </Typography>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
+                  {data.profit_report_card.value}
+                </Typography>
+                <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
+                  <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
+                </Typography>
+                <Box sx={getAnalyticsStyle('profitChart')}>
+                  <ReactECharts option={profitChartOption} />
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Order Statistics Card */}
+          <Grid item xs={6} md={4} lg={4}>
+            <Paper sx={getAnalyticsStyle('orderStatsCard')}>
+              <Stack spacing={1} alignItems="center">
+                <Box sx={getAnalyticsStyle('orderStatsHeader')}>
+                  <Typography variant="h6" sx={getAnalyticsStyle('orderStatsTypographyH6')}>
+                    {data.order_statistics_card.title}
+                  </Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Typography variant="h4" sx={getAnalyticsStyle('orderStatsValue')}>
+                  {data.order_statistics_card.total_sales.replace(',', '.')}
+                </Typography>
+                <Typography variant="body2" sx={getAnalyticsStyle('orderStatsTypographyBody2')}>
+                  Total Orders: {data.order_statistics_card.total_orders}
+                </Typography>
+                <Box sx={getAnalyticsStyle('orderStatsProgress')}>
+                  <CircularProgress
+                    variant="determinate"
+                    value={parseFloat(data.order_statistics_card.progress)}
+                    size={40}
+                  />
+                  <Typography variant="body2" sx={getAnalyticsStyle('orderStatsProgressTypographyBody2')}>
+                    {parseFloat(data.order_statistics_card.progress)}%
+                  </Typography>
+                </Box>
+                <Stack spacing={1} sx={getAnalyticsStyle('orderStatsList')}>
+                  {data.order_statistics_card.categories.map((category, index) => (
+                    <Box key={index} sx={getAnalyticsStyle('orderStatsItem')}>
+                      <Box sx={getAnalyticsStyle('orderStatsIcon')}>{getCategoryIcon(category.name)}</Box>
+                      <Box>
+                        <Typography variant="body2" sx={getAnalyticsStyle('orderStatsItemTypographyBody2')}>
+                          {category.name}
+                        </Typography>
+                        <Typography variant="caption" sx={getAnalyticsStyle('orderStatsItemTypographyCaption')}>
+                          {category.description}
+                        </Typography>
                       </Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
-
-          {/* Row 4: Activity Timeline (8) + Browser/Country Stats (4) */}
-          <Box className="row-4-container">
-            <Grid container spacing={3} className="row-grid">
-              <Grid size={{ xs: 12, md: 8, lg: 8 }}>
-                <Paper className="activity-card">
-                  <Box className="activity-header">
-                    <Typography variant="h6">{data.activity_timeline_card.title}</Typography>
-                    <IconButton>
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <Box className="activity-list">
-                    {data.activity_timeline_card.activities.map((activity, index) => (
-                      <Box key={index} className="activity-item">
-                        <Avatar
-                          className="activity-icon"
-                          style={{ backgroundColor: activity.color }}
-                        >
-                          {getActivityIcon(activity.title)}
-                        </Avatar>
-                        <Box>
-                          <Typography variant="body2">{activity.title}</Typography>
-                          <Typography variant="caption">{activity.subtitle || activity.description}</Typography>
-                          {activity.attachment && (
-                            <Typography variant="caption" className="activity-attachment">
-                              {activity.attachment}
-                            </Typography>
-                          )}
-                          {activity.client && (
-                            <Box className="activity-client">
-                              <Avatar
-                                className="activity-avatar"
-                                style={{ backgroundColor: activity.avatar_color }}
-                              />
-                              <Box>
-                                <Typography variant="body2">{activity.client}</Typography>
-                                <Typography variant="caption">CEO of ThemeSelection</Typography>
-                              </Box>
-                            </Box>
-                          )}
-                          {activity.avatars && (
-                            <Box className="activity-avatars">
-                              {activity.avatars.map((color, idx) => (
-                                <Avatar
-                                  key={idx}
-                                  className="activity-avatar"
-                                  style={{ backgroundColor: color }}
-                                />
-                              ))}
-                            </Box>
-                          )}
-                        </Box>
-                        <Typography variant="caption">{activity.description}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-                <Paper className="browser-card">
-                  <Box className="browser-tabs">
-                    {data.browser_stats_card.tabs.map((tab, index) => (
-                      <Typography key={index} variant="button">
-                        {tab}
+                      <Typography variant="body2" sx={[getAnalyticsStyle('orderStatsItemTypographyBody2'), { fontWeight: 600 }]}>
+                        {category.value}
                       </Typography>
-                    ))}
-                  </Box>
-                  <Box className="browser-list">
-                    {data.browser_stats_card.country.stats.map((stat, index) => (
-                      <Box key={index} className="browser-item">
-                        <Typography variant="body2">{stat.rank}</Typography>
-                        <Avatar
-                          className="browser-icon"
-                          style={{ backgroundColor: stat.color }}
-                        />
-                        <Typography variant="body2">{stat.country}</Typography>
-                        <Typography variant="body2">{stat.value}</Typography>
-                        <Box className="browser-progress">
-                          <Box
-                            className="browser-progress-bar"
-                            style={{ width: stat.percentage, backgroundColor: stat.color }}
-                          />
-                        </Box>
-                        <Typography variant="body2">{stat.percentage}</Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Income/Expenses/Profit Card */}
+          <Grid item xs={12} md={4} lg={4}>
+            <Paper sx={getAnalyticsStyle('incomeCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('incomeTabs')}>
+                  {data.income_card.tabs.map((tab, index) => (
+                    <Typography
+                      key={index}
+                      variant="button"
+                      sx={selectedTab === tab ? [getAnalyticsStyle('incomeTabTypographyButton'), getAnalyticsStyle('incomeActiveTab')] : getAnalyticsStyle('incomeTabTypographyButton')}
+                      onClick={() => handleTabChange(tab)}
+                    >
+                      {tab}
+                    </Typography>
+                  ))}
+                </Box>
+                <Typography variant="h6" sx={getAnalyticsStyle('incomeTypographyH6')}>
+                  {data.income_card[selectedTab.toLowerCase()].title}
+                </Typography>
+                <Typography variant="h4" sx={getAnalyticsStyle('incomeValue')}>
+                  {data.income_card[selectedTab.toLowerCase()].value}
+                </Typography>
+                <Typography variant="body2" sx={getAnalyticsStyle('incomeStats')}>
+                  <ArrowDownward sx={{ color: '#ea5455' }} /> 6.5% less than last week
+                </Typography>
+                <Box sx={getAnalyticsStyle('incomeChart')}>
+                  <ReactECharts option={incomeChartOption} />
+                </Box>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Transactions Card */}
+          <Grid item xs={12} md={4} lg={4}>
+            <Paper sx={getAnalyticsStyle('transactionsCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('transactionsHeader')}>
+                  <Typography variant="h6" sx={getAnalyticsStyle('transactionsTypographyH6')}>
+                    {data.transactions_card.title}
+                  </Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Stack spacing={1.5} sx={getAnalyticsStyle('transactionsList')}>
+                  {data.transactions_card.list.map((transaction, index) => (
+                    <Box key={index} sx={getAnalyticsStyle('transactionsItem')}>
+                      <Box sx={[getAnalyticsStyle('transactionsIcon'), { backgroundColor: transaction.color }]} />
+                      <Typography variant="body2" sx={getAnalyticsStyle('transactionsItemTypographyBody2')}>
+                        {transaction.type}
+                      </Typography>
+                      <Typography variant="body2" sx={[getAnalyticsStyle('transactionsItemTypographyBody2'), { fontWeight: 600 }]}>
+                        {transaction.value}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Activity Timeline Card */}
+          <Grid item xs={12} md={8} lg={8}>
+            <Paper sx={getAnalyticsStyle('activityCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('activityHeader')}>
+                  <Typography variant="h6" sx={getAnalyticsStyle('activityTypographyH6')}>
+                    {data.activity_timeline_card.title}
+                  </Typography>
+                  <IconButton>
+                    <MoreVert />
+                  </IconButton>
+                </Box>
+                <Stack spacing={1.5} sx={getAnalyticsStyle('activityList')}>
+                  {data.activity_timeline_card.activities.map((activity, index) => (
+                    <Box key={index} sx={getAnalyticsStyle('activityItem')}>
+                      <Avatar sx={[getAnalyticsStyle('activityIcon'), { bgcolor: activity.color }]}>
+                        {getActivityIcon(activity.title)}
+                      </Avatar>
+                      <Box>
+                        <Typography variant="body2" sx={getAnalyticsStyle('activityItemTypographyBody2')}>
+                          {activity.title}
+                        </Typography>
+                        <Typography variant="caption" sx={getAnalyticsStyle('activityItemTypographyCaption')}>
+                          {activity.subtitle || activity.description}
+                        </Typography>
+                        {activity.attachment && (
+                          <Typography variant="caption" sx={getAnalyticsStyle('activityAttachment')}>
+                            {activity.attachment}
+                          </Typography>
+                        )}
+                        {activity.client && (
+                          <Box sx={getAnalyticsStyle('activityClient')}>
+                            <Avatar sx={[getAnalyticsStyle('activityAvatar'), { bgcolor: activity.avatar_color }]} />
+                            <Box>
+                              <Typography variant="body2" sx={getAnalyticsStyle('activityClientTypographyBody2')}>
+                                {activity.client}
+                              </Typography>
+                              <Typography variant="caption" sx={getAnalyticsStyle('activityClientTypographyCaption')}>
+                                CEO of ThemeSelection
+                              </Typography>
+                            </Box>
+                          </Box>
+                        )}
+                        {activity.avatars && (
+                          <Box sx={getAnalyticsStyle('activityAvatars')}>
+                            {activity.avatars.map((color, idx) => (
+                              <Avatar
+                                key={idx}
+                                sx={[getAnalyticsStyle('activityAvatar'), { bgcolor: color }]}
+                              />
+                            ))}
+                          </Box>
+                        )}
                       </Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
+                      <Typography variant="caption" sx={getAnalyticsStyle('activityItemTypographyCaption')}>
+                        {activity.description}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Stack>
+            </Paper>
+          </Grid>
+
+          {/* Browser/Country Stats Card */}
+          <Grid item xs={12} md={4} lg={4}>
+            <Paper sx={getAnalyticsStyle('browserCard')}>
+              <Stack spacing={1}>
+                <Box sx={getAnalyticsStyle('browserTabs')}>
+                  {data.browser_stats_card.tabs.map((tab, index) => (
+                    <Typography key={index} variant="button" sx={getAnalyticsStyle('browserTabTypographyButton')}>
+                      {tab}
+                    </Typography>
+                  ))}
+                </Box>
+                <Stack spacing={1.5} sx={getAnalyticsStyle('browserList')}>
+                  {data.browser_stats_card.browser.stats.map((stat, index) => (
+                    <Box key={index} sx={getAnalyticsStyle('browserItem')}>
+                      <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
+                        {stat.rank}
+                      </Typography>
+                      <Avatar sx={[getAnalyticsStyle('browserIcon'), { bgcolor: stat.color }]} />
+                      <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2'), { color: '#1a1a1a', fontWeight: 600 }]}>
+                        {stat.browser}
+                      </Typography>
+                      <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
+                        {stat.value}
+                      </Typography>
+                      <Box sx={getAnalyticsStyle('browserProgress')}>
+                        <Box sx={[getAnalyticsStyle('browserProgressBar'), { width: stat.percentage, bgcolor: stat.color }]} />
+                      </Box>
+                      <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2'), { fontWeight: 600 }]}>
+                        {stat.percentage}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Stack>
+            </Paper>
+          </Grid>
         </Grid>
       </Box>
     </Box>

@@ -4,18 +4,19 @@ import {
   Typography,
   Paper,
   IconButton,
-  Grid, // Use Grid (Grid v2 in MUI v7)
+  Grid,
+  Stack,
+  CircularProgress,
 } from '@mui/material';
 import { MoreVert, ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import ReactECharts from 'echarts-for-react';
-import '../styles/EcommercePage.css';
+import getEcommerceStyle from '../styles/ecommercepageStyle';
 
 const EcommercePage = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch data from API
   useEffect(() => {
     async function fetchEcommerceData() {
       try {
@@ -36,10 +37,9 @@ const EcommercePage = () => {
     fetchEcommerceData();
   }, []);
 
-  // Loading and error states
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <CircularProgress />
       </Box>
     );
@@ -47,13 +47,20 @@ const EcommercePage = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Typography color="error">Error: {error}</Typography>
       </Box>
     );
   }
 
-  // New Visitors Bar Chart
+  if (!data) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography>No data available</Typography>
+      </Box>
+    );
+  }
+
   const newVisitorsChartOption = {
     xAxis: {
       type: 'category',
@@ -76,7 +83,6 @@ const EcommercePage = () => {
     grid: { left: 5, right: 5, top: 5, bottom: 15 },
   };
 
-  // Activity Line Chart
   const activityChartOption = {
     xAxis: {
       type: 'category',
@@ -101,11 +107,10 @@ const EcommercePage = () => {
     grid: { left: 5, right: 5, top: 5, bottom: 15 },
   };
 
-  // Total Income Line Chart
-  const totalIncomeChartOption = {
+  const profitChartOption = {
     xAxis: {
       type: 'category',
-      data: data.total_income_card.chart.xAxis,
+      data: data.profit_card.chart.xAxis,
       axisLabel: { color: '#6e6b7b', fontSize: 10 },
       axisLine: { lineStyle: { color: '#e0e0e0' } },
     },
@@ -115,18 +120,56 @@ const EcommercePage = () => {
     },
     series: [
       {
-        data: data.total_income_card.chart.data,
-        type: 'line',
-        smooth: true,
-        lineStyle: { color: '#7367f0', width: 2 },
-        itemStyle: { color: '#7367f0' },
-        showSymbol: false,
+        data: data.profit_card.chart.data,
+        type: 'bar',
+        barWidth: 6,
+        itemStyle: { color: '#28c76f', borderRadius: 4 },
       },
     ],
     grid: { left: 5, right: 5, top: 5, bottom: 15 },
   };
 
-  // Performance Radar Chart
+  const totalIncomeChartOption = {
+    xAxis: {
+      type: 'category',
+      data: data.total_income_card.chart.xAxis,
+      axisLabel: { color: '#6e6b7b', fontSize: 10 },
+      axisLine: { lineStyle: { color: '#e0e0e0' } },
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: { formatter: '{value}k', color: '#6e6b7b', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#e0e0e0' } },
+    },
+    series: [
+      {
+        data: data.total_income_card.chart.data,
+        type: 'line',
+        smooth: true,
+        lineStyle: { color: '#7367f0', width: 2 },
+        areaStyle: { color: 'rgba(115, 103, 240, 0.1)' },
+        itemStyle: { color: '#7367f0' },
+        showSymbol: true,
+        symbolSize: 8,
+      },
+    ],
+    grid: { left: 5, right: 5, top: 5, bottom: 15 },
+  };
+
+  const expensesChartOption = {
+    series: [
+      {
+        type: 'pie',
+        radius: ['70%', '90%'],
+        data: [
+          { name: 'Expenses', value: 72, itemStyle: { color: '#ff9f43' } },
+          { name: 'Remaining', value: 28, itemStyle: { color: '#e0e0e0' } },
+        ],
+        label: { show: false },
+      },
+    ],
+  };
+
   const performanceChartOption = {
     radar: {
       indicator: data.performance_card.chart.indicators.map((indicator) => ({
@@ -139,18 +182,26 @@ const EcommercePage = () => {
     series: [
       {
         type: 'radar',
-        data: data.performance_card.chart.data.map((serie) => ({
-          value: serie.values,
-          name: serie.name,
-          areaStyle: { color: serie.name === 'Earning' ? 'rgba(0, 207, 232, 0.2)' : 'rgba(115, 103, 240, 0.2)' },
-          lineStyle: { color: serie.name === 'Earning' ? '#00cfe8' : '#7367f0', width: 2 },
-          itemStyle: { color: serie.name === 'Earning' ? '#00cfe8' : '#7367f0' },
-        })),
+        data: [
+          {
+            value: data.performance_card.chart.data[0].values,
+            name: 'Income',
+            areaStyle: { color: 'rgba(115, 103, 240, 0.2)' },
+            lineStyle: { color: '#7367f0', width: 2 },
+            itemStyle: { color: '#7367f0' },
+          },
+          {
+            value: data.performance_card.chart.data[1].values,
+            name: 'Earning',
+            areaStyle: { color: 'rgba(0, 207, 232, 0.2)' },
+            lineStyle: { color: '#00cfe8', width: 2 },
+            itemStyle: { color: '#00cfe8' },
+          },
+        ],
       },
     ],
   };
 
-  // Conversion Rate Line Chart
   const conversionRateChartOption = {
     xAxis: {
       type: 'category',
@@ -169,17 +220,17 @@ const EcommercePage = () => {
         smooth: true,
         lineStyle: { color: '#28c76f', width: 2 },
         itemStyle: { color: '#28c76f' },
-        showSymbol: false,
+        showSymbol: true,
+        symbolSize: 8,
       },
     ],
     grid: { left: 5, right: 5, top: 5, bottom: 15 },
   };
 
-  // Expenses Bar Chart
-  const expensesChartOption = {
+  const expenses2ChartOption = {
     xAxis: {
       type: 'category',
-      data: data.expenses_card.chart.xAxis,
+      data: data.expenses_2_card.chart.xAxis,
       axisLabel: { color: '#6e6b7b', fontSize: 10 },
       axisLine: { lineStyle: { color: '#e0e0e0' } },
     },
@@ -189,16 +240,15 @@ const EcommercePage = () => {
     },
     series: [
       {
+        data: data.expenses_2_card.chart.data,
         type: 'bar',
-        data: data.expenses_card.chart.data,
         barWidth: 6,
-        itemStyle: { color: '#ff9f43', borderRadius: 4 },
+        itemStyle: { color: '#7367f0', borderRadius: 4 },
       },
     ],
     grid: { left: 5, right: 5, top: 5, bottom: 15 },
   };
 
-  // Total Balance Line Chart
   const totalBalanceChartOption = {
     xAxis: {
       type: 'category',
@@ -225,174 +275,235 @@ const EcommercePage = () => {
   };
 
   return (
-    <Box className="ecommerce-main">
-      <Box className="ecommerce-content">
-        <Grid spacing={2}>
+    <Box sx={getEcommerceStyle('ecommerceMain')}>
+      <Box sx={getEcommerceStyle('ecommerceContent')}>
+        <Grid container spacing={2}>
           {/* Congratulations Banner */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="congratulations-card">
-              <Box className="congratulations-content">
-                <Typography variant="h6">{data.congratulations_card.title} 🎉</Typography>
-                <Typography variant="body2">{data.congratulations_card.message}</Typography>
-                <Typography variant="h4">{data.congratulations_card.value}</Typography>
-                <Box className="congratulations-action">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('congratulationsCard')}>
+              <Box sx={getEcommerceStyle('congratulationsContent')}>
+                <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                  {data.congratulations_card.title} 🎉
+                </Typography>
+                <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                  {data.congratulations_card.message}
+                </Typography>
+                <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                  {data.congratulations_card.value}
+                </Typography>
+                <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                  {data.congratulations_card.target}
+                </Typography>
+                <Box sx={getEcommerceStyle('congratulationsAction')}>
                   <Typography variant="button">{data.congratulations_card.action}</Typography>
                 </Box>
               </Box>
-              <Box className="congratulations-image">
+              <Box sx={getEcommerceStyle('congratulationsImage')}>
                 <img src="/congratulations-image.png" alt="Congratulations" />
               </Box>
             </Paper>
           </Grid>
 
           {/* New Visitors */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="new-visitors-card">
-              <Typography variant="h6">{data.new_visitors_card.title}</Typography>
-              <Typography variant="h4" className="visitors-value">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('newVisitorsCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.new_visitors_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('visitorsValue')}>
                 {data.new_visitors_card.value}
               </Typography>
-              <Box display="flex" alignItems="center" className="visitors-stats">
-                {data.new_visitors_card.growth.startsWith('-') ? (
-                  <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                ) : (
-                  <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                )}
+              <Box sx={getEcommerceStyle('visitorsStats')}>
+                <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
                 <Typography variant="body2">{data.new_visitors_card.growth}</Typography>
               </Box>
-              <Box className="new-visitors-chart">
+              <Box sx={getEcommerceStyle('newVisitorsChart')}>
                 <ReactECharts option={newVisitorsChartOption} style={{ height: '60px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
           {/* Activity */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="activity-card">
-              <Typography variant="h6">{data.activity_card.title}</Typography>
-              <Typography variant="h4" className="activity-value">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('activityCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.activity_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('activityValue')}>
                 {data.activity_card.value}
               </Typography>
-              <Box display="flex" alignItems="center" className="activity-stats">
-                {data.activity_card.growth.startsWith('-') ? (
-                  <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                ) : (
-                  <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                )}
+              <Box sx={getEcommerceStyle('activityStats')}>
+                <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
                 <Typography variant="body2">{data.activity_card.growth}</Typography>
               </Box>
-              <Box className="activity-chart">
+              <Box sx={getEcommerceStyle('activityChart')}>
                 <ReactECharts option={activityChartOption} style={{ height: '60px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
+          {/* Sales */}
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('salesCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.sales_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.sales_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
+                <Typography variant="body2">{data.sales_card.growth}</Typography>
+              </Box>
+            </Paper>
+          </Grid>
+
           {/* Profit */}
-          <Grid size={{ xs: 12, md: 2 }}>
-            <Paper className="profit-card">
-              <Typography variant="h6">{data.profit_card.title}</Typography>
-              <Typography variant="h4">{data.profit_card.value}</Typography>
-              <Box display="flex" alignItems="center" className="profit-stats">
-                {data.profit_card.growth.startsWith('-') ? (
-                  <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                ) : (
-                  <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                )}
-                <Typography variant="body2">{data.profit_card.growth}</Typography>
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('profitCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.profit_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.profit_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('newVisitorsChart')}>
+                <ReactECharts option={profitChartOption} style={{ height: '60px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
           {/* Total Income */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper className="total-income-card">
-              <Typography variant="h6">{data.total_income_card.title}</Typography>
-              <Typography variant="body2">{data.total_income_card.description}</Typography>
-              <Typography variant="h4">{data.total_income_card.value}</Typography>
-              <Box className="total-income-chart">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('totalIncomeCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.total_income_card.title}
+              </Typography>
+              <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                {data.total_income_card.description}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.total_income_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('totalIncomeChart')}>
                 <ReactECharts option={totalIncomeChartOption} style={{ height: '120px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
           {/* Report */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="report-card">
-              <Typography variant="h6">{data.report_card.title}</Typography>
-              <Box className="report-item">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('reportCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.report_card.title}
+              </Typography>
+              <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                {data.report_card.description}
+              </Typography>
+              <Box sx={getEcommerceStyle('reportItem')}>
                 <Typography variant="body2">{data.report_card.items[0].label}</Typography>
                 <Typography variant="body2">{data.report_card.items[0].value}</Typography>
-                <Box display="flex" alignItems="center" className="report-growth">
-                  {data.report_card.items[0].growth.startsWith('-') ? (
-                    <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                  ) : (
-                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                  )}
+                <Box sx={getEcommerceStyle('reportGrowth')}>
+                  <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
                   <Typography variant="body2">{data.report_card.items[0].growth}</Typography>
                 </Box>
               </Box>
-              <Box className="report-item">
+              <Box sx={getEcommerceStyle('reportItem')}>
                 <Typography variant="body2">{data.report_card.items[1].label}</Typography>
                 <Typography variant="body2">{data.report_card.items[1].value}</Typography>
-                <Box display="flex" alignItems="center" className="report-growth">
-                  {data.report_card.items[1].growth.startsWith('-') ? (
-                    <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                  ) : (
-                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                  )}
+                <Box sx={getEcommerceStyle('reportGrowth')}>
+                  <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
                   <Typography variant="body2">{data.report_card.items[1].growth}</Typography>
                 </Box>
               </Box>
-              <Box className="report-item">
+              <Box sx={getEcommerceStyle('reportItem')}>
                 <Typography variant="body2">{data.report_card.items[2].label}</Typography>
                 <Typography variant="body2">{data.report_card.items[2].value}</Typography>
-                <Box display="flex" alignItems="center" className="report-growth">
-                  {data.report_card.items[2].growth.startsWith('-') ? (
-                    <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
-                  ) : (
-                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
-                  )}
+                <Box sx={getEcommerceStyle('reportGrowth')}>
+                  <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
                   <Typography variant="body2">{data.report_card.items[2].growth}</Typography>
                 </Box>
               </Box>
             </Paper>
           </Grid>
 
+          {/* Expenses */}
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('expensesCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.expenses_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.expenses_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('expensesChart')}>
+                <ReactECharts option={expensesChartOption} style={{ height: '100px', width: '100px' }} />
+              </Box>
+              <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                {data.expenses_card.additional_info}
+              </Typography>
+            </Paper>
+          </Grid>
+
+          {/* Transactions */}
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('transactionsCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.transactions_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.transactions_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
+                <Typography variant="body2">{data.transactions_card.growth}</Typography>
+              </Box>
+            </Paper>
+          </Grid>
+
           {/* Performance */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="performance-card">
-              <Box className="performance-header">
-                <Typography variant="h6">{data.performance_card.title}</Typography>
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('performanceCard')}>
+              <Box sx={getEcommerceStyle('performanceHeader')}>
+                <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                  {data.performance_card.title}
+                </Typography>
                 <IconButton>
                   <MoreVert />
                 </IconButton>
               </Box>
-              <Box className="performance-stats">
-                <Typography variant="body2">{data.performance_card.stats[0].label}: {data.performance_card.stats[0].value}</Typography>
-                <Typography variant="body2">{data.performance_card.stats[1].label}: {data.performance_card.stats[1].value}</Typography>
+              <Box sx={getEcommerceStyle('performanceStats')}>
+                <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                  {data.performance_card.stats[0].label}: {data.performance_card.stats[0].value}
+                </Typography>
+                <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                  {data.performance_card.stats[1].label}: {data.performance_card.stats[1].value}
+                </Typography>
               </Box>
-              <Box className="performance-chart">
-                <ReactECharts option={performanceChartOption} style={{ height: '200px', width: '100%' }} />
+              <Box sx={getEcommerceStyle('performanceChart')}>
+                <ReactECharts option={performanceChartOption} style={{ height: '180px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
           {/* Conversion Rate */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="conversion-rate-card">
-              <Typography variant="h6">{data.conversion_rate_card.title}</Typography>
-              <Typography variant="body2">{data.conversion_rate_card.description}</Typography>
-              <Typography variant="h4">{data.conversion_rate_card.value}</Typography>
-              <Box className="conversion-rate-stats">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('conversionRateCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.conversion_rate_card.title}
+              </Typography>
+              <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                {data.conversion_rate_card.description}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.conversion_rate_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('conversionRateStats')}>
                 <Box>
                   <Typography variant="body2">{data.conversion_rate_card.stats[0].label}</Typography>
                   <Typography variant="body2">{data.conversion_rate_card.stats[0].value}</Typography>
                   <Box display="flex" alignItems="center">
-                    {data.conversion_rate_card.stats[0].growth.startsWith('-') ? (
-                      <ArrowDownward sx={{ color: '#ea5455', fontSize: '12px' }} />
-                    ) : (
-                      <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
-                    )}
+                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
                     <Typography variant="body2">{data.conversion_rate_card.stats[0].growth}</Typography>
                   </Box>
                 </Box>
@@ -400,11 +511,7 @@ const EcommercePage = () => {
                   <Typography variant="body2">{data.conversion_rate_card.stats[1].label}</Typography>
                   <Typography variant="body2">{data.conversion_rate_card.stats[1].value}</Typography>
                   <Box display="flex" alignItems="center">
-                    {data.conversion_rate_card.stats[1].growth.startsWith('-') ? (
-                      <ArrowDownward sx={{ color: '#ea5455', fontSize: '12px' }} />
-                    ) : (
-                      <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
-                    )}
+                    <ArrowDownward sx={{ color: '#ea5455', fontSize: '12px' }} />
                     <Typography variant="body2">{data.conversion_rate_card.stats[1].growth}</Typography>
                   </Box>
                 </Box>
@@ -412,11 +519,7 @@ const EcommercePage = () => {
                   <Typography variant="body2">{data.conversion_rate_card.stats[2].label}</Typography>
                   <Typography variant="body2">{data.conversion_rate_card.stats[2].value}</Typography>
                   <Box display="flex" alignItems="center">
-                    {data.conversion_rate_card.stats[2].growth.startsWith('-') ? (
-                      <ArrowDownward sx={{ color: '#ea5455', fontSize: '12px' }} />
-                    ) : (
-                      <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
-                    )}
+                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
                     <Typography variant="body2">{data.conversion_rate_card.stats[2].growth}</Typography>
                   </Box>
                 </Box>
@@ -424,72 +527,106 @@ const EcommercePage = () => {
                   <Typography variant="body2">{data.conversion_rate_card.stats[3].label}</Typography>
                   <Typography variant="body2">{data.conversion_rate_card.stats[3].value}</Typography>
                   <Box display="flex" alignItems="center">
-                    {data.conversion_rate_card.stats[3].growth.startsWith('-') ? (
-                      <ArrowDownward sx={{ color: '#ea5455', fontSize: '12px' }} />
-                    ) : (
-                      <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
-                    )}
+                    <ArrowUpward sx={{ color: '#28c76f', fontSize: '12px' }} />
                     <Typography variant="body2">{data.conversion_rate_card.stats[3].growth}</Typography>
                   </Box>
                 </Box>
               </Box>
-              <Box className="conversion-rate-chart">
+              <Box sx={getEcommerceStyle('conversionRateChart')}>
                 <ReactECharts option={conversionRateChartOption} style={{ height: '90px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
+          {/* Revenue */}
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('revenueCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.revenue_2_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.revenue_2_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
+                <Typography variant="body2">{data.revenue_2_card.growth}</Typography>
+              </Box>
+            </Paper>
+          </Grid>
+
           {/* Sales */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="sales-card">
-              <Typography variant="h6">{data.sales_card.title}</Typography>
-              <Typography variant="h4">{data.sales_card.value}</Typography>
-              <Box className="sales-stats">
-                <Box>
-                  <Typography variant="body2">{data.sales_card.stats[0].label}</Typography>
-                  <Typography variant="body2">{data.sales_card.stats[0].value}</Typography>
-                </Box>
-                <Box>
-                  <Typography variant="body2">{data.sales_card.stats[1].label}</Typography>
-                  <Typography variant="body2">{data.sales_card.stats[1].value}</Typography>
-                </Box>
+          <Grid item xs={12} md={2}>
+            <Paper sx={getEcommerceStyle('salesCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.sales_2_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.sales_2_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <ArrowUpward sx={{ color: '#28c76f', fontSize: '16px' }} />
+                <Typography variant="body2">{data.sales_2_card.growth}</Typography>
+              </Box>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <Typography variant="body2">{data.sales_2_card.stats[0].label}</Typography>
+                <Typography variant="body2">{data.sales_2_card.stats[0].value}</Typography>
               </Box>
             </Paper>
           </Grid>
 
           {/* Expenses */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="expenses-card">
-              <Typography variant="h6">{data.expenses_card.title}</Typography>
-              <Typography variant="h4">{data.expenses_card.value}</Typography>
-              <Box className="expenses-chart">
-                <ReactECharts option={expensesChartOption} style={{ height: '90px', width: '100%' }} />
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('expensesCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.expenses_2_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.expenses_2_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('salesStats')}>
+                <ArrowDownward sx={{ color: '#ea5455', fontSize: '16px' }} />
+                <Typography variant="body2">{data.expenses_2_card.growth}</Typography>
+              </Box>
+              <Typography variant="body2" sx={getEcommerceStyle('typographyBody2')}>
+                {data.expenses_2_card.chart.period}
+              </Typography>
+              <Box sx={getEcommerceStyle('expensesChart')}>
+                <ReactECharts option={expenses2ChartOption} style={{ height: '60px', width: '100%' }} />
               </Box>
             </Paper>
           </Grid>
 
           {/* Top Products */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="top-products-card">
-              <Typography variant="h6">{data.top_products_card.title}</Typography>
-              <Box className="products-list">
-                <Box className="product-item header">
-                  <Typography variant="body2">{data.top_products_card.columns[0]}</Typography>
-                  <Typography variant="body2">{data.top_products_card.columns[1]}</Typography>
-                  <Typography variant="body2">{data.top_products_card.columns[2]}</Typography>
-                  <Typography variant="body2">{data.top_products_card.columns[3]}</Typography>
+          <Grid item xs={12} md={8}>
+            <Paper sx={getEcommerceStyle('topProductsCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.top_products_card.title}
+              </Typography>
+              <Box sx={getEcommerceStyle('productsList')}>
+                <Box sx={[getEcommerceStyle('productItem'), { header: true }]}>
+                  {data.top_products_card.columns.map((column, index) => (
+                    <Typography key={index} variant="body2">{column}</Typography>
+                  ))}
                 </Box>
                 {data.top_products_card.products.map((product, index) => (
-                  <Box key={index} className="product-item">
+                  <Box key={index} sx={getEcommerceStyle('productItem')}>
                     <Box display="flex" alignItems="center">
-                      <Box className="product-icon" style={{ backgroundColor: product.color }} />
+                      <Box sx={getEcommerceStyle('productIcon')} style={{ backgroundColor: '#e0e0e0' }} />
                       <Typography variant="body2">{product.name}</Typography>
                     </Box>
                     <Typography variant="body2">{product.category}</Typography>
                     <Typography variant="body2">{product.payment}</Typography>
-                    <Typography variant="body2" sx={{ color: product.status === 'Complete' || product.status === 'Confirmed' ? '#28c76f' : product.status === 'Partially Paid' ? '#ff9f43' : '#ea5455' }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: product.status === 'COMPLETED' || product.status === 'CONFIRMED' ? '#28c76f' : '#ff9f43',
+                      }}
+                    >
                       {product.status}
                     </Typography>
+                    <IconButton>
+                      <MoreVert />
+                    </IconButton>
                   </Box>
                 ))}
               </Box>
@@ -497,11 +634,15 @@ const EcommercePage = () => {
           </Grid>
 
           {/* Total Balance */}
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Paper className="total-balance-card">
-              <Typography variant="h6">{data.total_balance_card.title}</Typography>
-              <Typography variant="h4">{data.total_balance_card.value}</Typography>
-              <Box className="total-balance-stats">
+          <Grid item xs={12} md={4}>
+            <Paper sx={getEcommerceStyle('totalBalanceCard')}>
+              <Typography variant="h6" sx={getEcommerceStyle('typographyH6')}>
+                {data.total_balance_card.title}
+              </Typography>
+              <Typography variant="h4" sx={getEcommerceStyle('typographyH4')}>
+                {data.total_balance_card.value}
+              </Typography>
+              <Box sx={getEcommerceStyle('totalBalanceStats')}>
                 <Box>
                   <Typography variant="body2">{data.total_balance_card.stats[0].label}</Typography>
                   <Typography variant="body2">{data.total_balance_card.stats[0].value}</Typography>
@@ -511,10 +652,10 @@ const EcommercePage = () => {
                   <Typography variant="body2">{data.total_balance_card.stats[1].value}</Typography>
                 </Box>
               </Box>
-              <Box className="total-balance-chart">
+              <Box sx={getEcommerceStyle('totalBalanceChart')}>
                 <ReactECharts option={totalBalanceChartOption} style={{ height: '90px', width: '100%' }} />
               </Box>
-              <Typography variant="body2" className="total-balance-note">
+              <Typography variant="body2" sx={getEcommerceStyle('totalBalanceNote')}>
                 {data.total_balance_card.note}
               </Typography>
             </Paper>

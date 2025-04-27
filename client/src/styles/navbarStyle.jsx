@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 export const navbarContainerStyles = {
   position: 'relative',
   width: '100%',
-  
   backgroundColor: 'rgb(245, 245, 249)',
   color: 'rgba(50, 71, 92, 0.87)',
   display: 'flex',
