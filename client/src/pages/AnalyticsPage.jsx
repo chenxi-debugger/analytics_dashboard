@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -34,6 +34,18 @@ const AnalyticsPage = () => {
   const [yearAnchor, setYearAnchor] = useState(null);
   const [selectedTab, setSelectedTab] = useState('Income');
 
+  // Refs for chart instances and their containers
+  const orderChartRef = useRef(null);
+  const orderChartContainerRef = useRef(null);
+  const totalRevenueChartRef = useRef(null);
+  const totalRevenueChartContainerRef = useRef(null);
+  const revenueChartRef = useRef(null);
+  const revenueChartContainerRef = useRef(null);
+  const incomeChartRef = useRef(null);
+  const incomeChartContainerRef = useRef(null);
+  const profitChartRef = useRef(null);
+  const profitChartContainerRef = useRef(null);
+
   useEffect(() => {
     async function fetchAnalyticsData() {
       try {
@@ -46,13 +58,53 @@ const AnalyticsPage = () => {
         const result = await response.json();
         setData(result);
         setLoading(false);
+        console.log('Data fetched successfully:', result);
       } catch (err) {
         setError(err.message);
         setLoading(false);
+        console.error('Error fetching data:', err);
       }
     }
     fetchAnalyticsData();
   }, []);
+
+  // Resize charts based on container size using ResizeObserver
+  useEffect(() => {
+    const resizeChart = (chartRef, containerRef) => {
+      if (chartRef.current && containerRef.current) {
+        const chartInstance = chartRef.current.getEchartsInstance();
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        chartInstance.resize({ width, height });
+        console.log(`Resized chart: width=${width}, height=${height}`);
+      }
+    };
+
+    const observers = [];
+
+    // Create ResizeObserver for each chart
+    const createObserver = (chartRef, containerRef) => {
+      if (containerRef.current) {
+        const observer = new ResizeObserver(() => {
+          resizeChart(chartRef, containerRef);
+        });
+        observer.observe(containerRef.current);
+        observers.push(observer);
+        // Initial resize
+        resizeChart(chartRef, containerRef);
+      }
+    };
+
+    createObserver(orderChartRef, orderChartContainerRef);
+    createObserver(totalRevenueChartRef, totalRevenueChartContainerRef);
+    createObserver(revenueChartRef, revenueChartContainerRef);
+    createObserver(incomeChartRef, incomeChartContainerRef);
+    createObserver(profitChartRef, profitChartContainerRef);
+
+    // Cleanup observers on unmount
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [data, selectedTab]);
 
   const handleOpenYearMenu = (event) => setYearAnchor(event.currentTarget);
   const handleCloseYearMenu = () => setYearAnchor(null);
@@ -293,8 +345,8 @@ const AnalyticsPage = () => {
                 <Typography variant="h4" sx={getAnalyticsStyle('orderValue')}>
                   {data.order_card.value}
                 </Typography>
-                <Box sx={getAnalyticsStyle('orderChart')}>
-                  <ReactECharts option={orderChartOption} />
+                <Box ref={orderChartContainerRef} sx={getAnalyticsStyle('orderChart')}>
+                  <ReactECharts ref={orderChartRef} option={orderChartOption} />
                 </Box>
               </Stack>
             </Paper>
@@ -349,8 +401,8 @@ const AnalyticsPage = () => {
                       </Menu>
                     </Box>
                   </Box>
-                  <Box sx={getAnalyticsStyle('revenueChart')}>
-                    <ReactECharts option={totalRevenueChartOption} />
+                  <Box ref={totalRevenueChartContainerRef} sx={getAnalyticsStyle('revenueChart')}>
+                    <ReactECharts ref={totalRevenueChartRef} option={totalRevenueChartOption} />
                   </Box>
                 </Box>
                 <Box sx={getAnalyticsStyle('growthSection')}>
@@ -385,75 +437,75 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Right Section: Payments, Revenue Stats, and Profit Report Cards */}
-<Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>
-  <Stack spacing={3} sx={{ flexGrow: 1 }}>
-    {/* Top Stack: Payments Card and Revenue Stats Card */}
-    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-      {/* Payments Card */}
-      <Paper sx={{ ...getAnalyticsStyle('paymentsCard'), flex: 1 }}>
-        <Stack spacing={0.5}>
-          <Box sx={getAnalyticsStyle('paymentsHeader')}>
-            <Typography variant="h6" sx={{ fontSize: '12px' }}>
-              {data.payments_card.title}
-            </Typography>
-            <IconButton>
-              <MoreVert />
-            </IconButton>
-          </Box>
-          <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
-            {data.payments_card.value}
-          </Typography>
-          <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth')}>
-            <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> {data.payments_card.growth}
-          </Typography>
-        </Stack>
-      </Paper>
+          <Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>
+            <Stack spacing={3} sx={{ width: '100%' }}>
+              {/* Top Stack: Payments Card and Revenue Stats Card */}
+              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3 }}>
+                {/* Payments Card */}
+                <Paper sx={getAnalyticsStyle('paymentsCard')}>
+                  <Stack spacing={0.5}>
+                    <Box sx={getAnalyticsStyle('paymentsHeader')}>
+                      <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                        {data.payments_card.title}
+                      </Typography>
+                      <IconButton>
+                        <MoreVert />
+                      </IconButton>
+                    </Box>
+                    <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
+                      {data.payments_card.value}
+                    </Typography>
+                    <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth')}>
+                      <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> {data.payments_card.growth}
+                    </Typography>
+                  </Stack>
+                </Paper>
 
-      {/* Revenue Stats Card */}
-      <Paper sx={{ ...getAnalyticsStyle('revenueStatsCard'), flex: 1 }}>
-        <Stack spacing={1}>
-          <Box sx={getAnalyticsStyle('revenueStatsHeader')}>
-            <Typography variant="h6" sx={{ fontSize: '12px' }}>
-              {data.revenue_stats_card.title}
-            </Typography>
-            <IconButton>
-              <MoreVert />
-            </IconButton>
-          </Box>
-          <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
-            {data.revenue_stats_card.value}
-          </Typography>
-          <Box sx={getAnalyticsStyle('revenueStatsChart')}>
-            <ReactECharts option={revenueChartOption} />
-          </Box>
-        </Stack>
-      </Paper>
-    </Stack>
+                {/* Revenue Stats Card */}
+                <Paper sx={getAnalyticsStyle('revenueStatsCard')}>
+                  <Stack spacing={1}>
+                    <Box sx={getAnalyticsStyle('revenueStatsHeader')}>
+                      <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                        {data.revenue_stats_card.title}
+                      </Typography>
+                      <IconButton>
+                        <MoreVert />
+                      </IconButton>
+                    </Box>
+                    <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
+                      {data.revenue_stats_card.value}
+                    </Typography>
+                    <Box ref={revenueChartContainerRef} sx={getAnalyticsStyle('revenueStatsChart')}>
+                      <ReactECharts ref={revenueChartRef} option={revenueChartOption} />
+                    </Box>
+                  </Stack>
+                </Paper>
+              </Box>
 
-    {/* Bottom Stack: Profit Report Card */}
-    <Paper sx={{ ...getAnalyticsStyle('profitCard'), flexGrow: 1 }}>
-      <Stack spacing={1}>
-        <Box sx={getAnalyticsStyle('profitHeader')}>
-          <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
-            {data.profit_report_card.title}
-          </Typography>
-          <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
-            Year {data.profit_report_card.year}
-          </Typography>
-        </Box>
-        <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
-          {data.profit_report_card.value}
-        </Typography>
-        <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
-          <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
-        </Typography>
-        <Box sx={getAnalyticsStyle('profitChart')}>
-          <ReactECharts option={profitChartOption} />
-        </Box>
-      </Stack>
-    </Paper>
-  </Stack>
-</Grid>
+              {/* Bottom Stack: Profit Report Card */}
+              <Paper sx={{ ...getAnalyticsStyle('profitCard'), flexGrow: 1 }}>
+                <Stack spacing={1}>
+                  <Box sx={getAnalyticsStyle('profitHeader')}>
+                    <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
+                      {data.profit_report_card.title}
+                    </Typography>
+                    <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
+                      Year {data.profit_report_card.year}
+                    </Typography>
+                  </Box>
+                  <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
+                    {data.profit_report_card.value}
+                  </Typography>
+                  <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
+                    <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
+                  </Typography>
+                  <Box ref={profitChartContainerRef} sx={getAnalyticsStyle('profitChart')}>
+                    <ReactECharts ref={profitChartRef} option={profitChartOption} />
+                  </Box>
+                </Stack>
+              </Paper>
+            </Stack>
+          </Grid>
 
           {/* Order Statistics Card */}
           <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
@@ -530,8 +582,8 @@ const AnalyticsPage = () => {
                 <Typography variant="body2" sx={getAnalyticsStyle('incomeStats')}>
                   <ArrowDownward sx={{ color: '#ea5455' }} /> 6.5% less than last week
                 </Typography>
-                <Box sx={getAnalyticsStyle('incomeChart')}>
-                  <ReactECharts option={incomeChartOption} />
+                <Box ref={incomeChartContainerRef} sx={getAnalyticsStyle('incomeChart')}>
+                  <ReactECharts ref={incomeChartRef} option={incomeChartOption} />
                 </Box>
               </Stack>
             </Paper>
@@ -611,7 +663,7 @@ const AnalyticsPage = () => {
                         )}
                         {activity.avatars && (
                           <Box sx={getAnalyticsStyle('activityAvatars')}>
-                            {activity.avatars.map((color, idx) => (
+                            {data.activity_timeline_card.activities[2].avatars.map((color, idx) => (
                               <Avatar
                                 key={idx}
                                 sx={[getAnalyticsStyle('activityAvatar'), { bgcolor: color }]}

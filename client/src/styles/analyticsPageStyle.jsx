@@ -1,4 +1,6 @@
 import { css } from '@emotion/react';
+import { Padding } from '@mui/icons-material';
+import { color } from 'echarts';
 
 const getAnalyticsStyle = (className) => {
   switch (className) {
@@ -23,11 +25,11 @@ const getAnalyticsStyle = (className) => {
     case 'welcomeCard':
       return {
         p: { xs: 1.5, md: 2.5 },
-        bgcolor: 'linear-gradient(135deg, #7367f0 0%, #9c93ff 100%)',
-        color: 'black',
+        color: '#7367f0',
         borderRadius: '10px',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
+        Padding: '50px',
       };
 
     case 'welcomeContent':
@@ -39,13 +41,15 @@ const getAnalyticsStyle = (className) => {
 
     case 'welcomeTypographyH6':
       return {
-        fontSize: { xs: '14px', md: '16px' },
-        fontWeight: 600,
+        fontSize: '24px',
+        fontWeight: 500,
       };
 
     case 'welcomeTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
+        fontSize: '18px',
+        width: '65%',
+        color: 'grey',
         mt: 1,
         opacity: 0.9,
       };
@@ -53,8 +57,9 @@ const getAnalyticsStyle = (className) => {
     case 'welcomeAction':
       return {
         mt: { xs: 1, md: 1.5 },
-        bgcolor: '#3b82f6',
-        color: '#fff',
+        bgcolor: 'white',
+        color: ' #7367f0',
+        border: '1px solid #7367f0',
         p: { xs: '5px 10px', md: '6px 12px' },
         borderRadius: '6px',
         display: 'inline-block',
@@ -68,7 +73,7 @@ const getAnalyticsStyle = (className) => {
       return {
         mt: { xs: 1.5, md: 0 },
         '& img': {
-          height: { xs: '80px', sm: '100px', md: '120px' },
+          height: { xs: '80px', sm: '100px', md: '120px', lg: '160px' },
           width: 'auto',
           filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))',
         },
@@ -85,6 +90,7 @@ const getAnalyticsStyle = (className) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
+        width: '100%',
       };
 
     case 'orderHeader':
@@ -104,7 +110,9 @@ const getAnalyticsStyle = (className) => {
 
     case 'orderChart':
       return {
-        height: { xs: '80px', md: '100px' },
+        flex: 1,
+        width: '100%',
+        maxHeight: '80px',
       };
 
     // Sales Card
@@ -116,8 +124,9 @@ const getAnalyticsStyle = (className) => {
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         overflow: 'hidden',
+        width: '100%',
       };
 
     case 'salesHeader':
@@ -152,16 +161,23 @@ const getAnalyticsStyle = (className) => {
         borderRadius: '10px',
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'revenueGrowthContent':
       return {
         gap: { xs: 1.5, md: 2.5 },
+        height: '100%',
       };
 
     case 'revenueSection':
       return {
         flex: 2,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       };
 
     case 'revenueHeader':
@@ -186,13 +202,18 @@ const getAnalyticsStyle = (className) => {
 
     case 'revenueChart':
       return {
-        height: { xs: '160px', sm: '180px', md: '200px' },
+        flex: 1,
+        width: '100%',
+        maxHeight: '260px',
       };
 
     case 'growthSection':
       return {
         flex: 1,
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
       };
 
     case 'growthTypographyH6':
@@ -250,10 +271,10 @@ const getAnalyticsStyle = (className) => {
         borderRadius: '10px',
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
+        flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
       };
 
     case 'paymentsHeader':
@@ -292,6 +313,9 @@ const getAnalyticsStyle = (className) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
+        flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
       };
 
     case 'revenueStatsHeader':
@@ -312,7 +336,9 @@ const getAnalyticsStyle = (className) => {
 
     case 'revenueStatsChart':
       return {
-        height: { xs: '50px', md: '60px' },
+        flex: 1,
+        width: '100%',
+        maxHeight: '50px',
       };
 
     // Profit Report Card
@@ -326,6 +352,8 @@ const getAnalyticsStyle = (className) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'profitHeader':
@@ -368,7 +396,9 @@ const getAnalyticsStyle = (className) => {
 
     case 'profitChart':
       return {
-        height: { xs: '50px', md: '60px' },
+        flex: 1,
+        width: '100%',
+        minHeight: '50px',
       };
 
     // Order Statistics Card
@@ -382,6 +412,8 @@ const getAnalyticsStyle = (className) => {
         flexDirection: 'column',
         textAlign: 'center',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'orderStatsHeader':
@@ -477,6 +509,8 @@ const getAnalyticsStyle = (className) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'incomeTabs':
@@ -532,7 +566,9 @@ const getAnalyticsStyle = (className) => {
 
     case 'incomeChart':
       return {
-        height: { xs: '50px', md: '60px' },
+        flex: 1,
+        width: '100%',
+        minHeight: '50px',
       };
 
     // Transactions Card
@@ -543,6 +579,8 @@ const getAnalyticsStyle = (className) => {
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'transactionsHeader':
@@ -595,6 +633,8 @@ const getAnalyticsStyle = (className) => {
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'activityHeader':
@@ -694,13 +734,15 @@ const getAnalyticsStyle = (className) => {
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
+        width: '100%',
+        height: '100%',
       };
 
     case 'browserTabs':
       return {
         display: 'flex',
         gap: { xs: 1, md: 1.5 },
-        mb: { xs: 1, md: 1.5 },
+        mb: { xs: 1, md: '1.5' },
       };
 
     case 'browserTabTypographyButton':
