@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { Padding } from '@mui/icons-material';
+import { Margin, Padding } from '@mui/icons-material';
 import { color } from 'echarts';
 
 const getAnalyticsStyle = (className) => {
@@ -156,113 +156,128 @@ const getAnalyticsStyle = (className) => {
 
     // Total Revenue + Company Growth
     case 'revenueGrowthCombined':
-      return {
-        p: { xs: 1.5, md: 2.5 },
-        borderRadius: '10px',
-        bgcolor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-        overflow: 'hidden',
-        width: '100%',
-        height: '100%',
-      };
+  return {
+    p: { xs: 1.5, md: 2.5 },
+    borderRadius: '10px',
+    bgcolor: '#fff',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+    overflow: 'hidden',
+    width: '100%',
+  };
 
-    case 'revenueGrowthContent':
-      return {
-        gap: { xs: 1.5, md: 2.5 },
-        height: '100%',
-      };
+case 'revenueGrowthContent':
+  return {
+    gap: { xs: 1.5, md: 2.5 },
+    height: '100%',
+  };
 
-    case 'revenueSection':
-      return {
-        flex: 2,
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-      };
+case 'revenueSection':
+  return {
+    flex: 2,
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+  };
 
-    case 'revenueHeader':
-      return {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        mb: 1.5,
-      };
+case 'revenueHeader':
+  return {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    mb: 1.5,
+  };
 
-    case 'revenueHeaderTypographyH6':
-      return {
-        fontSize: { xs: '14px', md: '16px' },
-        fontWeight: 600,
-      };
+case 'revenueHeaderTypographyH6':
+  return {
+    fontSize: { xs: '14px', md: '16px' },
+    fontWeight: 600,
+    color: '#1a1a1a',
+  };
 
-    case 'revenueHeaderTypographyBody2':
-      return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: '#6e6b7b',
-      };
+case 'revenueHeaderTypographyBody2':
+  return {
+    fontSize: { xs: '11px', md: '12px' },
+    color: '#6e6b7b',
+    bgcolor: '#f5f5f9',
+    borderRadius: '6px',
+    px: 1,
+    py: 0.5,
+  };
 
-    case 'revenueChart':
-      return {
-        flex: 1,
-        width: '100%',
-        maxHeight: '260px',
-      };
+case 'revenueChart':
+  return {
+    flex: 1,
+    width: '100%',
+    maxHeight: '300px',
+  };
 
-    case 'growthSection':
-      return {
-        flex: 1,
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      };
+case 'growthSection':
+  return {
+    flex: 1,
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
 
-    case 'growthTypographyH6':
-      return {
-        fontSize: { xs: '14px', md: '16px' },
-        fontWeight: 600,
-      };
+case 'growthTypographyH6':
+  return {
+    fontSize: { xs: '14px', md: '16px' },
+    fontWeight: 600,
+    color: '#6e6b7b',
+    mb: 1,
+  };
 
-    case 'growthProgress':
-      return {
-        position: 'relative',
-        display: 'inline-flex',
-        my: { xs: 1, md: 1.5 },
-        '& .MuiCircularProgress-root': {
-          color: '#7367f0',
-          size: { xs: '60px', md: '80px' },
-        },
-      };
+case 'growthProgress':
+  return {
+    position: 'relative',
+    display: 'inline-flex',
+    my: { xs: 1, md: 1.5 },
+    '& .MuiCircularProgress-root': {
+      color: '#7367f0', // Fallback color
+      size: { xs: '60px', md: '80px' },
+      thickness: 6,
+      background: 'linear-gradient(90deg, #e0e0e0 0%, #e0e0e0 100%)',
+      borderRadius: '50%',
+    },
+  };
 
-    case 'growthValue':
-      return {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        fontSize: { xs: '18px', md: '20px' },
-        fontWeight: 600,
-        color: '#1a1a1a',
-      };
+case 'growthValue':
+  return {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    fontSize: { xs: '18px', md: '20px' },
+    fontWeight: 600,
+    color: '#1a1a1a',
+  };
 
-    case 'growthStats':
-      return {
-        justifyContent: 'space-around',
-        mt: 1,
-      };
+case 'growthStats':
+  return {
+    justifyContent: 'center',
+    gap: { xs: 1, md: 2 },
+    mt: 1,
+  };
 
-    case 'growthStatItem':
-      return {
-        bgcolor: '#f5f5f9',
-        p: { xs: 0.75, md: 1 },
-        borderRadius: '6px',
-        textAlign: 'center',
-      };
+case 'growthStatItem':
+  return {
+    bgcolor: '#f5f5f9',
+    p: { xs: 0.75, md: 1 },
+    borderRadius: '6px',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minWidth: '80px',
+  };
 
-    case 'growthStatTypographyBody2':
-      return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: '#6e6b7b',
-      };
+case 'growthStatTypographyBody2':
+  return {
+    fontSize: { xs: '11px', md: '12px' },
+    color: '#6e6b7b',
+  };
 
     // Payments Card
     case 'paymentsCard':
@@ -273,7 +288,7 @@ const getAnalyticsStyle = (className) => {
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+       
         flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
       };
 
@@ -314,7 +329,6 @@ const getAnalyticsStyle = (className) => {
         justifyContent: 'space-between',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
         flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
       };
 
@@ -348,42 +362,51 @@ const getAnalyticsStyle = (className) => {
         borderRadius: '10px',
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
-      };
-
-    case 'profitHeader':
-      return {
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        mb: 1,
+        flexDirection: 'row',
       };
-
+    
+    case 'profitTextSection':
+      return {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginLeft: '30px',
+        gap: 2,
+      };
+    
     case 'profitTypographyH6':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
+        mb: 0.5,
       };
-
+    
     case 'profitYear':
       return {
+        bgcolor: '#ffe4b5', // Light orange background as in the image
+        borderRadius: '6px',
+        width: 'fit-content',
+        px: 1.5,
+        py: 0.5,
         color: '#6e6b7b',
         fontSize: { xs: '11px', md: '12px' },
+        fontWeight: 500,
+        textTransform: 'uppercase',
+        mb: 1,
       };
-
+    
     case 'profitValue':
       return {
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
         color: '#1a1a1a',
-        my: 0.5,
+        mb: 0.5,
       };
-
+    
     case 'profitGrowth':
       return {
         color: '#28c76f',
@@ -393,12 +416,13 @@ const getAnalyticsStyle = (className) => {
         alignItems: 'center',
         gap: '4px',
       };
-
+    
     case 'profitChart':
       return {
         flex: 1,
-        width: '100%',
-        minHeight: '50px',
+        width: '150px',
+        height: '200px', // Stretch to fit the card height
+        // minWidth: '100px', 
       };
 
     // Order Statistics Card

@@ -10,6 +10,9 @@ import {
   MenuItem,
   Grid,
   Stack,
+  Divider,
+  Tabs,
+  Tab,
 } from '@mui/material';
 import {
   MoreVert,
@@ -32,7 +35,8 @@ const AnalyticsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [yearAnchor, setYearAnchor] = useState(null);
-  const [selectedTab, setSelectedTab] = useState('Income');
+  const [selectedTab, setSelectedTab] = useState('Income'); // For Income/Expenses/Profit Card
+  const [statsTab, setStatsTab] = useState('browser'); // For Browser/Country Stats Card
 
   // Refs for chart instances and their containers
   const orderChartRef = useRef(null);
@@ -357,11 +361,14 @@ const AnalyticsPage = () => {
             <Paper sx={{ ...getAnalyticsStyle('salesCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('salesHeader')}>
-                  <Typography variant="h6">{data.sales_card.title}</Typography>
+                  <Box>
+                    <img src="/stats-vertical-wallet.png" alt="Welcome" style={{ width: '40px' }} />
+                  </Box>
                   <IconButton>
                     <MoreVert />
                   </IconButton>
                 </Box>
+                <Typography variant="h6">{data.sales_card.title}</Typography>
                 <Typography variant="h4" sx={getAnalyticsStyle('salesValue')}>
                   {data.sales_card.value}
                 </Typography>
@@ -376,6 +383,7 @@ const AnalyticsPage = () => {
           <Grid size={{ xs: 12, md: 12, lg: 8 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('revenueGrowthCombined'), flexGrow: 1 }}>
               <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('revenueGrowthContent')}>
+                {/* Total Revenue Section */}
                 <Box sx={getAnalyticsStyle('revenueSection')}>
                   <Box sx={getAnalyticsStyle('revenueHeader')}>
                     <Typography variant="h6" sx={getAnalyticsStyle('revenueHeaderTypographyH6')}>
@@ -405,26 +413,50 @@ const AnalyticsPage = () => {
                     <ReactECharts ref={totalRevenueChartRef} option={totalRevenueChartOption} />
                   </Box>
                 </Box>
+                {/* Vertical Divider (only on md and larger screens) */}
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    display: { xs: 'none', md: 'block' },
+                    bgcolor: '#e0e0e0',
+                    mx: 2,
+                  }}
+                />
+                {/* Company Growth Section */}
                 <Box sx={getAnalyticsStyle('growthSection')}>
                   <Typography variant="h6" sx={getAnalyticsStyle('growthTypographyH6')}>
-                    {data.company_growth_card.description}
+                    {data.company_growth_card.progress}% Company Growth
                   </Typography>
                   <Box sx={getAnalyticsStyle('growthProgress')}>
                     <CircularProgress
                       variant="determinate"
                       value={Number(data.company_growth_card.progress)}
                       size={80}
+                      thickness={6}
+                      sx={{
+                        color: 'linear-gradient(90deg, #7367f0 0%, #9c93ff 100%)',
+                        backgroundColor: '#e0e0e0',
+                        borderRadius: '50%',
+                      }}
                     />
                     <Typography variant="h6" sx={getAnalyticsStyle('growthValue')}>
-                      {data.company_growth_card.progress}% Growth
+                      {data.company_growth_card.progress}%
                     </Typography>
                   </Box>
                   <Stack direction="row" spacing={2} sx={getAnalyticsStyle('growthStats')}>
                     {data.company_growth_card.stats.map((stat, index) => (
                       <Box key={index} sx={getAnalyticsStyle('growthStatItem')}>
-                        <Typography variant="body2" sx={getAnalyticsStyle('growthStatTypographyBody2')}>
-                          {stat.year}
-                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                          {index === 0 ? (
+                            <Typography variant="body2" sx={{ color: '#7367f0' }}>$</Typography>
+                          ) : (
+                            <Box sx={{ width: '12px', height: '12px', bgcolor: '#00cfe8', borderRadius: '2px' }} />
+                          )}
+                          <Typography variant="body2" sx={getAnalyticsStyle('growthStatTypographyBody2')}>
+                            {stat.year}
+                          </Typography>
+                        </Box>
                         <Typography variant="body2" sx={getAnalyticsStyle('growthStatTypographyBody2')}>
                           {stat.value}
                         </Typography>
@@ -445,13 +477,16 @@ const AnalyticsPage = () => {
                 <Paper sx={getAnalyticsStyle('paymentsCard')}>
                   <Stack spacing={0.5}>
                     <Box sx={getAnalyticsStyle('paymentsHeader')}>
-                      <Typography variant="h6" sx={{ fontSize: '12px' }}>
-                        {data.payments_card.title}
-                      </Typography>
+                      <Box>
+                        <img src="/paypal.png" alt="paypal" style={{ width: '40px' }} />
+                      </Box>
                       <IconButton>
                         <MoreVert />
                       </IconButton>
                     </Box>
+                    <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                      {data.payments_card.title}
+                    </Typography>
                     <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue')}>
                       {data.payments_card.value}
                     </Typography>
@@ -468,9 +503,6 @@ const AnalyticsPage = () => {
                       <Typography variant="h6" sx={{ fontSize: '12px' }}>
                         {data.revenue_stats_card.title}
                       </Typography>
-                      <IconButton>
-                        <MoreVert />
-                      </IconButton>
                     </Box>
                     <Typography variant="h4" sx={getAnalyticsStyle('revenueStatsValue')}>
                       {data.revenue_stats_card.value}
@@ -484,25 +516,27 @@ const AnalyticsPage = () => {
 
               {/* Bottom Stack: Profit Report Card */}
               <Paper sx={{ ...getAnalyticsStyle('profitCard'), flexGrow: 1 }}>
-                <Stack spacing={1}>
-                  <Box sx={getAnalyticsStyle('profitHeader')}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+                  {/* Text Section */}
+                  <Box sx={getAnalyticsStyle('profitTextSection')}>
                     <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6')}>
                       {data.profit_report_card.title}
                     </Typography>
-                    <Typography variant="body2" sx={getAnalyticsStyle('profitYear')}>
+                    <Typography variant="button" sx={getAnalyticsStyle('profitYear')}>
                       Year {data.profit_report_card.year}
                     </Typography>
+                    <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
+                      {data.profit_report_card.value}
+                    </Typography>
+                    <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
+                      <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
+                    </Typography>
                   </Box>
-                  <Typography variant="h4" sx={getAnalyticsStyle('profitValue')}>
-                    {data.profit_report_card.value}
-                  </Typography>
-                  <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth')}>
-                    <ArrowUpward sx={{ fontSize: '10px', color: '#28c76f' }} /> +{data.profit_report_card.growth}
-                  </Typography>
+                  {/* Chart Section */}
                   <Box ref={profitChartContainerRef} sx={getAnalyticsStyle('profitChart')}>
                     <ReactECharts ref={profitChartRef} option={profitChartOption} />
                   </Box>
-                </Stack>
+                </Box>
               </Paper>
             </Stack>
           </Grid>
@@ -686,35 +720,75 @@ const AnalyticsPage = () => {
           <Grid size={{ xs: 6, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('browserCard'), flexGrow: 1 }}>
               <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('browserTabs')}>
+                {/* Tabs */}
+                <Tabs
+                  value={statsTab}
+                  onChange={(event, newValue) => setStatsTab(newValue)}
+                  sx={getAnalyticsStyle('browserTabs')}
+                >
                   {data.browser_stats_card.tabs.map((tab, index) => (
-                    <Typography key={index} variant="button" sx={getAnalyticsStyle('browserTabTypographyButton')}>
-                      {tab}
-                    </Typography>
+                    <Tab
+                      key={index}
+                      label={tab}
+                      value={tab.toLowerCase().replace(' ', '_')} // e.g., "browser", "operating_system", "country"
+                      sx={
+                        statsTab === tab.toLowerCase().replace(' ', '_')
+                          ? [getAnalyticsStyle('browserTab'), getAnalyticsStyle('browserTabActive')]
+                          : getAnalyticsStyle('browserTab')
+                      }
+                    />
                   ))}
-                </Box>
-                <Stack spacing={1.5} sx={getAnalyticsStyle('browserList')}>
-                  {data.browser_stats_card.browser.stats.map((stat, index) => (
-                    <Box key={index} sx={getAnalyticsStyle('browserItem')}>
-                      <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
-                        {stat.rank}
+                </Tabs>
+                {/* Column Headers */}
+                {data.browser_stats_card[statsTab] && data.browser_stats_card[statsTab].columns ? (
+                  <Box sx={getAnalyticsStyle('browserColumns')}>
+                    {data.browser_stats_card[statsTab].columns.map((column, index) => (
+                      <Typography key={index} variant="body2" sx={getAnalyticsStyle('browserColumnTypography')}>
+                        {column}
                       </Typography>
-                      <Avatar sx={[getAnalyticsStyle('browserIcon'), { bgcolor: stat.color }]} />
-                      <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2'), { color: '#1a1a1a', fontWeight: 600 }]}>
-                        {stat.browser}
-                      </Typography>
-                      <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
-                        {stat.value}
-                      </Typography>
-                      <Box sx={getAnalyticsStyle('browserProgress')}>
-                        <Box sx={[getAnalyticsStyle('browserProgressBar'), { width: stat.percentage, bgcolor: stat.color }]} />
+                    ))}
+                  </Box>
+                ) : null}
+                {/* Stats List */}
+                {data.browser_stats_card[statsTab] && data.browser_stats_card[statsTab].stats ? (
+                  <Stack spacing={1.5} sx={getAnalyticsStyle('browserList')}>
+                    {data.browser_stats_card[statsTab].stats.map((stat, index) => (
+                      <Box key={index} sx={getAnalyticsStyle('browserItem')}>
+                        <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
+                          {stat.rank}
+                        </Typography>
+                        <Avatar
+                          sx={[getAnalyticsStyle('browserIcon'), { bgcolor: 'transparent' }]}
+                          src={
+                            // Add icons for browsers (you can use real icons or placeholders)
+                            stat.browser === 'Chrome' ? '/icons/chrome.png' :
+                            stat.browser === 'Safari' ? '/icons/safari.png' :
+                            stat.browser === 'Firefox' ? '/icons/firefox.png' :
+                            stat.browser === 'Edge' ? '/icons/edge.png' :
+                            stat.browser === 'Opera' ? '/icons/opera.png' :
+                            stat.browser === 'Brave' ? '/icons/brave.png' :
+                            null
+                          }
+                        />
+                        <Typography
+                          variant="body2"
+                          sx={[getAnalyticsStyle('browserItemTypographyBody2'), { color: '#1a1a1a', fontWeight: 600 }]}
+                        >
+                          {stat[statsTab === 'browser' ? 'browser' : statsTab === 'operating_system' ? 'system' : 'country']}
+                        </Typography>
+                        <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2')}>
+                          {stat.value}
+                        </Typography>
+                        <Box sx={getAnalyticsStyle('browserProgress')}>
+                          <Box sx={[getAnalyticsStyle('browserProgressBar'), { width: stat.percentage, bgcolor: stat.color }]} />
+                        </Box>
+                        <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2'), { fontWeight: 600 }]}>
+                          {stat.percentage}
+                        </Typography>
                       </Box>
-                      <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2'), { fontWeight: 600 }]}>
-                        {stat.percentage}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
+                    ))}
+                  </Stack>
+                ) : null}
               </Stack>
             </Paper>
           </Grid>
