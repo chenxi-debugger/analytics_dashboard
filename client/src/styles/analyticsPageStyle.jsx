@@ -437,7 +437,7 @@ case 'growthStatTypographyBody2':
         textAlign: 'center',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+        // height: '100%',
       };
 
     case 'orderStatsHeader':
@@ -534,7 +534,7 @@ case 'growthStatTypographyBody2':
         justifyContent: 'space-between',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+        // height: '100%',
       };
 
     case 'incomeTabs':
@@ -604,7 +604,7 @@ case 'growthStatTypographyBody2':
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+        // height: '100%',
       };
 
     case 'transactionsHeader':
@@ -658,7 +658,7 @@ case 'growthStatTypographyBody2':
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+        // height: '100%',
       };
 
     case 'activityHeader':
