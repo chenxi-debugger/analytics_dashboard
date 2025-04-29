@@ -217,7 +217,7 @@ case 'growthSection':
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   };
 
@@ -363,7 +363,7 @@ case 'growthStatTypographyBody2':
         bgcolor: '#fff',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
-        width: '100%',
+        // width: '100%',
         display: 'flex',
         flexDirection: 'row',
       };
@@ -759,7 +759,7 @@ case 'growthStatTypographyBody2':
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        height: '100%',
+        // height: '100%',
       };
 
     case 'browserTabs':

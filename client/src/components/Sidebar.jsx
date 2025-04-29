@@ -130,6 +130,13 @@ const Sidebar = () => {
     { text: 'Miscellaneous', path: '/pages/miscellaneous', isActive: location.pathname === '/pages/miscellaneous' },
   ];
 
+  const invoiceItems = [
+    { text: 'List', path: '/apps/invoice/list', isActive: location.pathname === '/apps/invoice/list' },
+    { text: 'Preview', path: '/apps/invoice/preview', isActive: location.pathname === '/apps/invoice/preview' },
+    { text: 'Edit', path: '/apps/invoice/edit', isActive: location.pathname === '/apps/invoice/edit' },
+    { text: 'Add', path: '/apps/invoice/add', isActive: location.pathname === '/apps/invoice/add' },
+  ];
+
   return (
     <Drawer variant="permanent" css={drawerStyles}>
       <Toolbar>
@@ -168,12 +175,7 @@ const Sidebar = () => {
           <SidebarItem
             sideBarIcon={<ReceiptLong />}
             sideBarText="Invoice"
-            sideBarNestedItems={[
-              { text: 'List', path: '/apps/invoice/list', isActive: location.pathname === '/apps/invoice/list' },
-              { text: 'Preview', path: '/apps/invoice/preview', isActive: location.pathname === '/apps/invoice/preview' },
-              { text: 'Edit', path: '/apps/invoice/edit', isActive: location.pathname === '/apps/invoice/edit' },
-              { text: 'Add', path: '/apps/invoice/add', isActive: location.pathname === '/apps/invoice/add' },
-            ]}
+            sideBarNestedItems={invoiceItems}
           />
           <SidebarItem
             sideBarIcon={<People />}

@@ -130,7 +130,7 @@ const AnalyticsPage = () => {
     );
   }
 
-  if (!data) {
+  if (!data || Object.keys(data).length === 0) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Typography>No data available</Typography>
