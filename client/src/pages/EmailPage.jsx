@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -39,7 +38,39 @@ import {
   Forward as ForwardIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
-import getEmailPageStyle from '../styles/EmailPageStyle';
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <Typography color="error">Something went wrong.</Typography>;
+    }
+    return this.props.children;
+  }
+}
+
+// Fix getEmailPageStyle to avoid circular references
+const getEmailPageStyle = (key, options = {}) => {
+  const styles = {
+    mainContainer: { display: 'flex', height: '100vh' },
+    sidebar: { width: '250px', borderRight: '1px solid #ddd' },
+    // ...other styles...
+  };
+  return styles[key] || {};
+};
 
 // Utility functions for sorting
 const descendingComparator = (a, b, orderBy) => {
@@ -100,60 +131,6 @@ const iconMap = {
   TrashIcon: <TrashIcon />,
 };
 
-// Custom hook to fetch email data
-const useEmailData = () => {
-  const { data: emails, isLoading: emailsLoading, error: emailsError } = useQuery({
-    queryKey: ['emails'],
-    queryFn: async () => {
-      const response = await fetch('http://localhost:5001/api/email/emails', {
-        mode: 'cors',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    },
-  });
-
-  const { data: tabs, isLoading: tabsLoading, error: tabsError } = useQuery({
-    queryKey: ['tabs'],
-    queryFn: async () => {
-      const response = await fetch('http://localhost:5001/api/email/tabs', {
-        mode: 'cors',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.map((tab) => ({
-        ...tab,
-        icon: iconMap[tab.icon],
-      }));
-    },
-  });
-
-  const { data: labels, isLoading: labelsLoading, error: labelsError } = useQuery({
-    queryKey: ['labels'],
-    queryFn: async () => {
-      const response = await fetch('http://localhost:5001/api/email/labels', {
-        mode: 'cors',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    },
-  });
-
-  return {
-    emails,
-    tabs,
-    labels,
-    isLoading: emailsLoading || tabsLoading || labelsLoading,
-    error: emailsError || tabsError || labelsError,
-  };
-};
-
 const EmailPage = () => {
   const { tab, labelName } = useParams();
   const navigate = useNavigate();
@@ -161,10 +138,62 @@ const EmailPage = () => {
   const [hoveredEmail, setHoveredEmail] = useState(null);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('sender');
-
-  const { emails, tabs, labels, isLoading, error } = useEmailData();
+  const [emails, setEmails] = useState([]);
+  const [tabs, setTabs] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const selectedTab = tab || (labelName ? `label/${labelName}` : 'inbox');
+
+  // Fetch email data using useEffect
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        // Fetch emails
+        const emailsResponse = await fetch('http://localhost:5001/api/email/emails', {
+          mode: 'cors',
+        });
+        if (!emailsResponse.ok) {
+          throw new Error(`HTTP error! Status: ${emailsResponse.status}`);
+        }
+        const emailsData = await emailsResponse.json();
+        setEmails(emailsData);
+
+        // Fetch tabs
+        const tabsResponse = await fetch('http://localhost:5001/api/email/tabs', {
+          mode: 'cors',
+        });
+        if (!tabsResponse.ok) {
+          throw new Error(`HTTP error! Status: ${tabsResponse.status}`);
+        }
+        const tabsData = await tabsResponse.json();
+        setTabs(tabsData.map((tab) => ({
+          ...tab,
+          icon: iconMap[tab.icon],
+        })));
+
+        // Fetch labels
+        const labelsResponse = await fetch('http://localhost:5001/api/email/labels', {
+          mode: 'cors',
+        });
+        if (!labelsResponse.ok) {
+          throw new Error(`HTTP error! Status: ${labelsResponse.status}`);
+        }
+        const labelsData = await labelsResponse.json();
+        setLabels(labelsData);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to fetch data once on mount
 
   const headCells = [
     { id: 'sender', numeric: false, disablePadding: true, label: 'Sender' },
@@ -235,229 +264,231 @@ const EmailPage = () => {
   }
 
   return (
-    <Box sx={getEmailPageStyle('mainContainer')}>
-      {/* Email Sidebar */}
-      <Box sx={getEmailPageStyle('sidebar')}>
-        <Box sx={{ p: 2 }}>
-          <Button variant="contained" sx={getEmailPageStyle('composeButton')}>
-            Compose
-          </Button>
-        </Box>
-        <List>
-          {tabs.map((tab) => (
-            <ListItem key={tab.value} disablePadding>
-              <ListItemButton
-                selected={selectedTab === tab.value}
-                onClick={() => handleTabChange(tab.value)}
-                sx={getEmailPageStyle('navItem', { selected: selectedTab === tab.value })}
-              >
-                <ListItemIcon sx={getEmailPageStyle('navIcon', { selected: selectedTab === tab.value })}>
-                  {tab.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={tab.label}
-                  primaryTypographyProps={{
-                    sx: getEmailPageStyle('navText', { selected: selectedTab === tab.value }),
-                  }}
-                />
-                {tab.count && (
-                  <Box sx={getEmailPageStyle('tabCount')}>
-                    <Typography variant="caption">{tab.count}</Typography>
-                  </Box>
-                )}
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <Box sx={getEmailPageStyle('labelsSection')}>
-          <Typography variant="caption" sx={getEmailPageStyle('labelsTitle')}>
-            LABELS
-          </Typography>
+    <ErrorBoundary>
+      <Box sx={getEmailPageStyle('mainContainer')}>
+        {/* Email Sidebar */}
+        <Box sx={getEmailPageStyle('sidebar')}>
+          <Box sx={{ p: 2 }}>
+            <Button variant="contained" sx={getEmailPageStyle('composeButton')}>
+              Compose
+            </Button>
+          </Box>
           <List>
-            {labels.map((label) => (
-              <ListItem key={label.label} disablePadding>
+            {tabs.map((tab) => (
+              <ListItem key={tab.value} disablePadding>
                 <ListItemButton
-                  sx={getEmailPageStyle('labelItem', { selected: selectedTab === `label/${label.label.toLowerCase()}` })}
-                  onClick={() => handleTabChange(`label/${label.label.toLowerCase()}`)}
+                  selected={selectedTab === tab.value}
+                  onClick={() => handleTabChange(tab.value)}
+                  sx={getEmailPageStyle('navItem', { selected: selectedTab === tab.value })}
                 >
-                  <Box sx={getEmailPageStyle('labelDot', { color: label.color })} />
+                  <ListItemIcon sx={getEmailPageStyle('navIcon', { selected: selectedTab === tab.value })}>
+                    {tab.icon}
+                  </ListItemIcon>
                   <ListItemText
-                    primary={label.label}
+                    primary={tab.label}
                     primaryTypographyProps={{
-                      sx: getEmailPageStyle('labelText', { selected: selectedTab === `label/${label.label.toLowerCase()}` }),
+                      sx: getEmailPageStyle('navText', { selected: selectedTab === tab.value }),
                     }}
                   />
+                  {tab.count && (
+                    <Box sx={getEmailPageStyle('tabCount')}>
+                      <Typography variant="caption">{tab.count}</Typography>
+                    </Box>
+                  )}
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
-        </Box>
-      </Box>
-
-      {/* Email Page (Main Content) */}
-      <Box sx={getEmailPageStyle('content')}>
-        {/* Breadcrumbs */}
-        <Box sx={getEmailPageStyle('breadcrumbs')}>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Typography sx={getEmailPageStyle('breadcrumbItem')}>
-              Apps
+          <Divider />
+          <Box sx={getEmailPageStyle('labelsSection')}>
+            <Typography variant="caption" sx={getEmailPageStyle('labelsTitle')}>
+              LABELS
             </Typography>
-            <Typography sx={getEmailPageStyle('breadcrumbItem', { active: true })}>
-              Email
-            </Typography>
-          </Breadcrumbs>
-        </Box>
-        {/* Search Bar */}
-        <Box sx={getEmailPageStyle('searchBarContainer')}>
-          <TextField
-            placeholder="Search mail"
-            variant="outlined"
-            size="small"
-            InputProps={{
-              startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
-            }}
-            sx={getEmailPageStyle('searchField')}
-          />
-        </Box>
-        {/* Email List with Sorting & Selecting */}
-        <Box sx={getEmailPageStyle('emailList')}>
-          {selectedEmails.length > 0 && (
-            <EnhancedTableToolbar numSelected={selectedEmails.length} onAction={handleAction} />
-          )}
-          <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      color="primary"
-                      indeterminate={selectedEmails.length > 0 && selectedEmails.length < filteredEmails.length}
-                      checked={filteredEmails.length > 0 && selectedEmails.length === filteredEmails.length}
-                      onChange={handleSelectAllClick}
-                      sx={getEmailPageStyle('emailCheckbox')}
+            <List>
+              {labels.map((label) => (
+                <ListItem key={label.label} disablePadding>
+                  <ListItemButton
+                    sx={getEmailPageStyle('labelItem', { selected: selectedTab === `label/${label.label.toLowerCase()}` })}
+                    onClick={() => handleTabChange(`label/${label.label.toLowerCase()}`)}
+                  >
+                    <Box sx={getEmailPageStyle('labelDot', { color: label.color })} />
+                    <ListItemText
+                      primary={label.label}
+                      primaryTypographyProps={{
+                        sx: getEmailPageStyle('labelText', { selected: selectedTab === `label/${label.label.toLowerCase()}` }),
+                      }}
                     />
-                  </TableCell>
-                  <TableCell padding="checkbox">
-                    <Typography variant="body2" sx={{ color: '#6e6b7b' }}></Typography>
-                  </TableCell>
-                  {headCells.map((headCell) => (
-                    <TableCell
-                      key={headCell.id}
-                      align={headCell.numeric ? 'right' : 'left'}
-                      padding={headCell.disablePadding ? 'none' : 'normal'}
-                      sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                      <TableSortLabel
-                        active={orderBy === headCell.id}
-                        direction={orderBy === headCell.id ? order : 'asc'}
-                        onClick={() => handleRequestSort(headCell.id)}
-                      >
-                        {headCell.label}
-                        {orderBy === headCell.id ? (
-                          <Box component="span" sx={{ display: 'none' }}>
-                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                          </Box>
-                        ) : null}
-                      </TableSortLabel>
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Box>
+
+        {/* Email Page (Main Content) */}
+        <Box sx={getEmailPageStyle('content')}>
+          {/* Breadcrumbs */}
+          <Box sx={getEmailPageStyle('breadcrumbs')}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Typography sx={getEmailPageStyle('breadcrumbItem')}>
+                Apps
+              </Typography>
+              <Typography sx={getEmailPageStyle('breadcrumbItem', { active: true })}>
+                Email
+              </Typography>
+            </Breadcrumbs>
+          </Box>
+          {/* Search Bar */}
+          <Box sx={getEmailPageStyle('searchBarContainer')}>
+            <TextField
+              placeholder="Search mail"
+              variant="outlined"
+              size="small"
+              InputProps={{
+                startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
+              }}
+              sx={getEmailPageStyle('searchField')}
+            />
+          </Box>
+          {/* Email List with Sorting & Selecting */}
+          <Box sx={getEmailPageStyle('emailList')}>
+            {selectedEmails.length > 0 && (
+              <EnhancedTableToolbar numSelected={selectedEmails.length} onAction={handleAction} />
+            )}
+            <TableContainer>
+              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <TableHead>
+                  <TableRow>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        indeterminate={selectedEmails.length > 0 && selectedEmails.length < filteredEmails.length}
+                        checked={filteredEmails.length > 0 && selectedEmails.length === filteredEmails.length}
+                        onChange={handleSelectAllClick}
+                        sx={getEmailPageStyle('emailCheckbox')}
+                      />
                     </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {stableSort(filteredEmails, getComparator(order, orderBy)).map((email) => {
-                  const isItemSelected = selectedEmails.includes(email.id);
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={email.id}
-                      selected={isItemSelected}
-                      onMouseEnter={() => setHoveredEmail(email.id)}
-                      onMouseLeave={() => setHoveredEmail(null)}
-                      sx={getEmailPageStyle('emailItem')}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          onChange={() => handleSelectEmail(email.id)}
-                          sx={getEmailPageStyle('emailCheckbox')}
-                        />
-                      </TableCell>
-                      <TableCell padding="checkbox">
-                        <IconButton
-                          size="small"
-                          onClick={() => {
-                            email.starred = !email.starred;
-                          }}
+                    <TableCell padding="checkbox">
+                      <Typography variant="body2" sx={{ color: '#6e6b7b' }}></Typography>
+                    </TableCell>
+                    {headCells.map((headCell) => (
+                      <TableCell
+                        key={headCell.id}
+                        align={headCell.numeric ? 'right' : 'left'}
+                        padding={headCell.disablePadding ? 'none' : 'normal'}
+                        sortDirection={orderBy === headCell.id ? order : false}
+                      >
+                        <TableSortLabel
+                          active={orderBy === headCell.id}
+                          direction={orderBy === headCell.id ? order : 'asc'}
+                          onClick={() => handleRequestSort(headCell.id)}
                         >
-                          <StarIcon
-                            sx={getEmailPageStyle('emailStarIcon', { starred: email.starred })}
-                          />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Avatar sx={getEmailPageStyle('emailAvatar')}>
-                            {email.sender[0]}
-                          </Avatar>
-                          <Typography variant="body2" sx={getEmailPageStyle('emailSender')}>
-                            {email.sender}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
-                          {email.subject}
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
-                            {email.snippet}
-                          </Typography>
-                          <Box sx={getEmailPageStyle('emailLabels')}>
-                            {email.labels.map((label, idx) => (
-                              <Box
-                                key={idx}
-                                sx={getEmailPageStyle('emailLabelDot', {
-                                  color: labels.find((l) => l.label.toLowerCase() === label)?.color,
-                                })}
-                              />
-                            ))}
-                          </Box>
-                        </Box>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Box sx={getEmailPageStyle('emailActions')}>
-                          <Typography variant="caption" sx={getEmailPageStyle('emailTime')}>
-                            {email.time}
-                          </Typography>
-                          {hoveredEmail === email.id && selectedEmails.length === 0 && (
-                            <Box sx={{ display: 'flex', gap: 1 }}>
-                              <IconButton size="small">
-                                <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
-                              </IconButton>
-                              <IconButton size="small">
-                                <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
-                              </IconButton>
-                              <IconButton size="small">
-                                <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
-                              </IconButton>
+                          {headCell.label}
+                          {orderBy === headCell.id ? (
+                            <Box component="span" sx={{ display: 'none' }}>
+                              {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                             </Box>
-                          )}
-                        </Box>
+                          ) : null}
+                        </TableSortLabel>
                       </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {stableSort(filteredEmails, getComparator(order, orderBy)).map((email) => {
+                    const isItemSelected = selectedEmails.includes(email.id);
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={email.id}
+                        selected={isItemSelected}
+                        onMouseEnter={() => setHoveredEmail(email.id)}
+                        onMouseLeave={() => setHoveredEmail(null)}
+                        sx={getEmailPageStyle('emailItem')}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            onChange={() => handleSelectEmail(email.id)}
+                            sx={getEmailPageStyle('emailCheckbox')}
+                          />
+                        </TableCell>
+                        <TableCell padding="checkbox">
+                          <IconButton
+                            size="small"
+                            onClick={() => {
+                              email.starred = !email.starred;
+                            }}
+                          >
+                            <StarIcon
+                              sx={getEmailPageStyle('emailStarIcon', { starred: email.starred })}
+                            />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell component="th" scope="row" padding="none">
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Avatar sx={getEmailPageStyle('emailAvatar')}>
+                              {email.sender[0]}
+                            </Avatar>
+                            <Typography variant="body2" sx={getEmailPageStyle('emailSender')}>
+                              {email.sender}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
+                            {email.subject}
+                          </Typography>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
+                              {email.snippet}
+                            </Typography>
+                            <Box sx={getEmailPageStyle('emailLabels')}>
+                              {email.labels.map((label, idx) => (
+                                <Box
+                                  key={idx}
+                                  sx={getEmailPageStyle('emailLabelDot', {
+                                    color: labels.find((l) => l.label.toLowerCase() === label)?.color,
+                                  })}
+                                />
+                              ))}
+                            </Box>
+                          </Box>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Box sx={getEmailPageStyle('emailActions')}>
+                            <Typography variant="caption" sx={getEmailPageStyle('emailTime')}>
+                              {email.time}
+                            </Typography>
+                            {hoveredEmail === email.id && selectedEmails.length === 0 && (
+                              <Box sx={{ display: 'flex', gap: 1 }}>
+                                <IconButton size="small">
+                                  <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
+                                </IconButton>
+                                <IconButton size="small">
+                                  <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
+                                </IconButton>
+                                <IconButton size="small">
+                                  <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
+                                </IconButton>
+                              </Box>
+                            )}
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </ErrorBoundary>
   );
 };
 
