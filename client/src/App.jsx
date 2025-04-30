@@ -62,7 +62,9 @@ const App = () => {
                 <Route path="/" element={<AnalyticsPage />} />
                 <Route path="/dashboards/crm" element={<CrmPage />} />
                 <Route path="/dashboards/ecommerce" element={<EcommercePage />} />
-                <Route path="/apps/email" element={<EmailPage />} /> {/* Ensure this route is defined */}
+                <Route path="/apps/email" element={<EmailPage />} />   
+                <Route path=":tab" element={<EmailPage />} />
+                <Route path="label/:labelName" element={<EmailPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Box>

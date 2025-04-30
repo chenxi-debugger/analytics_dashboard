@@ -12,20 +12,16 @@ const __dirname = path.dirname(__filename);
 // Configuration defaults
 const DEFAULT_CONFIG = {
   mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/chenxilogs',
-  dbName: 'chenxilogs', // Default to your database name
-  jsonFilePath: null, // Must be provided
-  collectionName: null, // Must be provided if using MongoClient
-  model: null, // Mongoose model (optional, if using Mongoose)
-  dataKey: null, // e.g., 'data.items' for nested JSON
-  clearCollection: false, // Whether to delete existing data
-  useMongoose: true, // Use Mongoose or MongoClient
+  dbName: 'chenxilogs',
+  jsonFilePath: null,
+  collectionName: null,
+  model: null,
+  dataKey: null,
+  clearCollection: false,
+  useMongoose: true,
 };
 
-/**
- * Seeds MongoDB with data from a JSON file
- * @param {Object} config - Configuration object
- * @returns {Promise<void>}
- */
+// Seeds MongoDB with data from a JSON file
 async function seedMongo(config) {
   const {
     mongoUri,
@@ -48,7 +44,6 @@ async function seedMongo(config) {
   try {
     const rawData = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8'));
     if (dataKey) {
-      // Navigate nested keys (e.g., 'data.items')
       data = dataKey.split('.').reduce((obj, key) => {
         if (!obj || !obj[key]) throw new Error(`Invalid data key: ${key}`);
         return obj[key];
@@ -61,7 +56,6 @@ async function seedMongo(config) {
   }
 
   if (useMongoose) {
-    // Mongoose-based seeding
     try {
       await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
@@ -86,7 +80,6 @@ async function seedMongo(config) {
       await mongoose.connection.close();
     }
   } else {
-    // MongoClient-based seeding
     const client = new MongoClient(mongoUri);
     try {
       await client.connect();
@@ -113,7 +106,7 @@ async function seedMongo(config) {
   }
 }
 
-// Seed the three JSON files
+// Seed the four JSON files
 async function main() {
   try {
     // Seed analyticsPageData.json (MongoClient)
@@ -138,6 +131,15 @@ async function main() {
     await seedMongo({
       jsonFilePath: path.join(__dirname, '../../data/crmPageData.json'),
       collectionName: 'crmPageData',
+      dataKey: null,
+      clearCollection: true,
+      useMongoose: false,
+    });
+
+    // Seed email.json (MongoClient)
+    await seedMongo({
+      jsonFilePath: path.join(__dirname, '../../data/email.json'),
+      collectionName: 'emailData',
       dataKey: null,
       clearCollection: true,
       useMongoose: false,

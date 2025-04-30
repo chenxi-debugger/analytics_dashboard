@@ -761,12 +761,12 @@ const AnalyticsPage = () => {
                           sx={[getAnalyticsStyle('browserIcon'), { bgcolor: 'transparent' }]}
                           src={
                             // Add icons for browsers (you can use real icons or placeholders)
-                            stat.browser === 'Chrome' ? '/icons/chrome.png' :
-                            stat.browser === 'Safari' ? '/icons/safari.png' :
-                            stat.browser === 'Firefox' ? '/icons/firefox.png' :
-                            stat.browser === 'Edge' ? '/icons/edge.png' :
-                            stat.browser === 'Opera' ? '/icons/opera.png' :
-                            stat.browser === 'Brave' ? '/icons/brave.png' :
+                            stat.browser === 'Chrome' ? '/chrome.png' :
+                            stat.browser === 'Safari' ? '/safari.png' :
+                            stat.browser === 'Firefox' ? '/firefox.png' :
+                            stat.browser === 'Edge' ? '/edge.png' :
+                            stat.browser === 'Opera' ? '/opera.png' :
+                            stat.browser === 'Brave' ? '/brave.png' :
                             null
                           }
                         />

@@ -12,6 +12,7 @@ import dashboardRoutes from './mongoose/routes/dashboarddata.js';
 import analyticsRouter from './mongoose/routes/analytics.js';
 import ecommerceRouter from './mongoose/routes/ecommerce.js';
 import crmRouter from './mongoose/routes/crm.js';
+import emailRouter from './mongoose/routes/emailRoutes.js';
 
 
 // Resolve __dirname in ES Modules
@@ -37,6 +38,7 @@ app.use('/api/dashboarddata', dashboardRoutes);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/ecommerce', ecommerceRouter);
 app.use('/api/crm', crmRouter);
+app.use('/api/email', emailRouter);
 
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 
