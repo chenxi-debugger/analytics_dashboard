@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   List,
@@ -13,32 +12,18 @@ import {
   Divider,
   Button,
   CircularProgress,
-  Checkbox,
+  Badge,
   IconButton,
-  Breadcrumbs,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Tooltip,
+  Drawer,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
-import {
-  Email as EmailIcon,
-  Send as SendIcon,
-  Edit as DraftIcon,
-  Star as StarIcon,
-  Report as SpamIcon,
-  Delete as TrashIcon,
-  Search as SearchIcon,
-  Reply as ReplyIcon,
-  Forward as ForwardIcon,
-  Delete as DeleteIcon,
-} from '@mui/icons-material';
-import getEmailPageStyle from '../styles/getEmailPageStyle'; // Import the styles
+import { Search as SearchIcon, Chat as ChatIcon, Mic as MicIcon, AttachFile as AttachFileIcon } from '@mui/icons-material';
+import getChatpageStyle from '../styles/ChatpageStyle';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -63,179 +48,126 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// Utility functions for sorting
-const descendingComparator = (a, b, orderBy) => {
-  if (b[orderBy] < a[orderBy]) return -1;
-  if (b[orderBy] > a[orderBy]) return 1;
-  return 0;
-};
+const ChatPage = () => {
+  const [chats, setChats] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [messageInput, setMessageInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const messageContainerRef = useRef(null);
 
-const getComparator = (order, orderBy) => {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-};
+  // Drawer state
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [status, setStatus] = useState('Online'); // Status state
+  const [twoStepVerification, setTwoStepVerification] = useState(false); // Two-step verification state
+  const [notifications, setNotifications] = useState(true); // Notification state
 
-const stableSort = (array, comparator) => {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-};
+  // Status dot colors
+  const statusColors = {
+    Online: '#28c76f', // Green
+    Away: '#ff9f43', // Orange
+    'Do Not Disturb': '#ea5455', // Red
+    Offline: '#b9b9c3', // Gray
+  };
 
-// Custom Toolbar for selected emails
-const EnhancedTableToolbar = ({ numSelected, onAction }) => {
-  return (
-    <Toolbar sx={getEmailPageStyle('enhancedTableToolbar')}>
-      <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
-        {numSelected} selected
-      </Typography>
-      <Tooltip title="Reply">
-        <IconButton onClick={() => onAction('reply')}>
-          <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Forward">
-        <IconButton onClick={() => onAction('forward')}>
-          <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Delete">
-        <IconButton onClick={() => onAction('delete')}>
-          <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
-        </IconButton>
-      </Tooltip>
-    </Toolbar>
-  );
-};
-
-// Icon mapping for tabs
-const iconMap = {
-  EmailIcon: <EmailIcon />,
-  SendIcon: <SendIcon />,
-  DraftIcon: <DraftIcon />,
-  StarIcon: <StarIcon />,
-  SpamIcon: <SpamIcon />,
-  TrashIcon: <TrashIcon />,
-};
-
-const EmailPage = () => {
-    const { tab, labelName } = useParams();
-    const navigate = useNavigate();
-    const [selectedEmails, setSelectedEmails] = useState([]);
-    const [hoveredEmail, setHoveredEmail] = useState(null);
-    const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('sender');
-    const [emails, setEmails] = useState([]);
-    const [tabs, setTabs] = useState([]);
-    const [labels, setLabels] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-  
-    const selectedTab = tab || (labelName ? `label/${labelName}` : 'inbox');
-  
-    // Fetch email data
-    useEffect(() => {
-      const fetchData = async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-          const emailsResponse = await fetch('http://localhost:5001/api/email/emails', {
-            mode: 'cors',
-          });
-          if (!emailsResponse.ok) {
-            throw new Error(`HTTP error! Status: ${emailsResponse.status}`);
-          }
-          const emailsData = await emailsResponse.json();
-          console.log('Emails:', emailsData); // Log emails
-          console.log('Sent Emails:', emailsData.filter((email) => email.tab.includes('sent'))); // Log sent emails
-          setEmails(emailsData);
-  
-          const tabsResponse = await fetch('http://localhost:5001/api/email/tabs', {
-            mode: 'cors',
-          });
-          if (!tabsResponse.ok) {
-            throw new Error(`HTTP error! Status: ${tabsResponse.status}`);
-          }
-          const tabsData = await tabsResponse.json();
-          console.log('Tabs:', tabsData); // Log tabs
-          setTabs(tabsData.map((tab) => ({
-            ...tab,
-            icon: iconMap[tab.icon],
-          })));
-  
-          const labelsResponse = await fetch('http://localhost:5001/api/email/labels', {
-            mode: 'cors',
-          });
-          if (!labelsResponse.ok) {
-            throw new Error(`HTTP error! Status: ${labelsResponse.status}`);
-          }
-          const labelsData = await labelsResponse.json();
-          setLabels(labelsData);
-        } catch (err) {
-          setError(err);
-          console.error('Fetch error:', err);
-        } finally {
-          setIsLoading(false);
+  // Fetch chat data
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch('http://localhost:5001/api/chat', {
+          mode: 'cors',
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      };
-      fetchData();
-    }, []);// Empty dependency array to fetch data once on mount
+        const data = await response.json();
+        console.log('Chat Data:', data);
+        setChats(data.chats || []);
+        setContacts(data.contacts || []);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const headCells = [
-    { id: 'sender', numeric: false, disablePadding: true, label: 'Sender' },
-    { id: 'subject', numeric: false, disablePadding: false, label: 'Subject' },
-    { id: 'time', numeric: true, disablePadding: false, label: 'Time' },
-  ];
+  // Scroll to the bottom of the message container when messages change
+  useEffect(() => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  }, [selectedChat]);
 
-  const handleRequestSort = (property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleSelectEmail = (emailId) => {
-    setSelectedEmails((prev) =>
-      prev.includes(emailId)
-        ? prev.filter((id) => id !== emailId)
-        : [...prev, emailId]
+  const handleChatSelect = (chat) => {
+    const updatedChats = chats.map((c) =>
+      c.id === chat.id ? { ...c, unreadCount: 0 } : c
     );
+    setChats(updatedChats);
+    setSelectedChat({ ...chat, unreadCount: 0 });
+    setSelectedContact(null);
+    setMessageInput('');
   };
 
-  const handleSelectAllClick = () => {
-    if (selectedEmails.length === filteredEmails.length) {
-      setSelectedEmails([]);
+  const handleContactSelect = (contact) => {
+    const tempChat = {
+      id: contact.id + 1000,
+      name: contact.name,
+      avatar: '',
+      snippet: '',
+      time: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      unreadCount: 0,
+      messages: [],
+    };
+    setSelectedChat(tempChat);
+    setSelectedContact(contact);
+    setMessageInput('');
+  };
+
+  const handleSendMessage = () => {
+    if (!messageInput.trim() || !selectedChat) return;
+
+    const newMessage = {
+      id: (selectedChat.messages.length + 1) * 1000 + Date.now(),
+      sender: 'You',
+      content: messageInput,
+      time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+    };
+
+    const updatedChat = {
+      ...selectedChat,
+      messages: [...selectedChat.messages, newMessage],
+      snippet: messageInput,
+      time: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    };
+
+    if (selectedContact) {
+      setChats([updatedChat, ...chats]);
+      setContacts(contacts.filter((c) => c.id !== selectedContact.id));
+      setSelectedContact(null);
     } else {
-      setSelectedEmails(filteredEmails.map((email) => email.id));
+      setChats(chats.map((chat) => (chat.id === selectedChat.id ? updatedChat : chat)));
+    }
+
+    setSelectedChat(updatedChat);
+    setMessageInput('');
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
     }
   };
 
-  const handleAction = (action) => {
-    console.log(`Action: ${action} on selected emails:`, selectedEmails);
-    // Implement action logic here (e.g., delete via API)
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
   };
-
-  const handleTabChange = (value) => {
-    if (value.startsWith('label/')) {
-      const label = value.split('/')[1];
-      navigate(`/apps/email/label/${label}`);
-    } else {
-      navigate(`/apps/email/${value}`);
-    }
-    setSelectedEmails([]); // Reset selection on tab change
-  };
-
-  // Filter emails based on the current tab or label
-  const filteredEmails = emails?.filter((email) => {
-    if (selectedTab.startsWith('label/')) {
-      const label = selectedTab.split('/')[1];
-      return email.labels.includes(label);
-    }
-    return Array.isArray(email.tab) ? email.tab.includes(selectedTab) : email.tab === selectedTab;
-  }) || [];
 
   if (isLoading) {
     return (
@@ -255,231 +187,304 @@ const EmailPage = () => {
 
   return (
     <ErrorBoundary>
-      <Box sx={getEmailPageStyle('mainContainer')}>
-        {/* Email Sidebar */}
-        <Box sx={getEmailPageStyle('sidebar')}>
+      <Box sx={getChatpageStyle('mainContainer')}>
+        {/* User Drawer */}
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={toggleDrawer(false)}
+          sx={{
+            '& .MuiDrawer-paper': {
+              width: 360, // Match the chat sidebar width
+              boxSizing: 'border-box',
+              backgroundColor: '#fff',
+            },
+          }}
+        >
           <Box sx={{ p: 2 }}>
-            <Button variant="contained" sx={getEmailPageStyle('composeButton')}>
-              Compose
+            {/* User Info */}
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Avatar src="/user.png" sx={{ width: 60, height: 60, mr: 2 }} />
+              <Box>
+                <Typography variant="h6">John Doe</Typography>
+                <Typography variant="body2" color="textSecondary">Admin</Typography>
+              </Box>
+            </Box>
+            <Divider />
+
+            {/* About Section */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              About
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.
+            </Typography>
+
+            {/* Status Selector */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Status
+            </Typography>
+            <FormControl fullWidth>
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                label="Status"
+              >
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Away">Away</MenuItem>
+                <MenuItem value="Do Not Disturb">Do Not Disturb</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Settings Section */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Settings
+            </Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={twoStepVerification}
+                  onChange={(e) => setTwoStepVerification(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Two-step Verification"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={notifications}
+                  onChange={(e) => setNotifications(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Notification"
+            />
+
+            {/* Invite Friends */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Invite Friends
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Invite Friends
+            </Typography>
+
+            {/* Delete Account */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Delete Account
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Delete Account
+            </Typography>
+
+            {/* Logout Button */}
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2, textTransform: 'uppercase', backgroundColor: '#635ee7' }}
+            >
+              Logout
             </Button>
           </Box>
-          <List>
-            {tabs.map((tab) => (
-              <ListItem key={tab.value} disablePadding>
-                <ListItemButton
-                  selected={selectedTab === tab.value}
-                  onClick={() => handleTabChange(tab.value)}
-                  sx={getEmailPageStyle('navItem', { selected: selectedTab === tab.value })}
-                >
-                  <ListItemIcon sx={getEmailPageStyle('navIcon', { selected: selectedTab === tab.value })}>
-                    {tab.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={tab.label}
-                    primaryTypographyProps={{
-                      sx: getEmailPageStyle('navText', { selected: selectedTab === tab.value }),
+        </Drawer>
+
+        {/* Chat Sidebar */}
+        <Box sx={getChatpageStyle('sidebar')}>
+          <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
+            <IconButton onClick={toggleDrawer(true)}>
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={
+                  <Box
+                    sx={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: '50%',
+                      backgroundColor: statusColors[status],
+                      border: '2px solid #fff',
                     }}
                   />
-                  {tab.count && (
-                    <Box sx={getEmailPageStyle('tabCount')}>
-                      <Typography variant="caption">{tab.count}</Typography>
-                    </Box>
-                  )}
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <Box sx={getEmailPageStyle('labelsSection')}>
-            <Typography variant="caption" sx={getEmailPageStyle('labelsTitle')}>
-              LABELS
-            </Typography>
-            <List>
-              {labels.map((label) => (
-                <ListItem key={label.label} disablePadding>
-                  <ListItemButton
-                    sx={getEmailPageStyle('labelItem', { selected: selectedTab === `label/${label.label.toLowerCase()}` })}
-                    onClick={() => handleTabChange(`label/${label.label.toLowerCase()}`)}
-                  >
-                    <Box sx={getEmailPageStyle('labelDot', { color: label.color })} />
-                    <ListItemText
-                      primary={label.label}
-                      primaryTypographyProps={{
-                        sx: getEmailPageStyle('labelText', { selected: selectedTab === `label/${label.label.toLowerCase()}` }),
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Box>
-
-        {/* Email Page (Main Content) */}
-        <Box sx={getEmailPageStyle('content')}>
-          {/* Breadcrumbs */}
-          {/* <Box sx={getEmailPageStyle('breadcrumbs')}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Typography sx={getEmailPageStyle('breadcrumbItem')}>
-                Apps
-              </Typography>
-              <Typography sx={getEmailPageStyle('breadcrumbItem', { active: true })}>
-                Email
-              </Typography>
-            </Breadcrumbs>
-          </Box> */}
-          {/* Search Bar */}
-          <Box sx={getEmailPageStyle('searchBarContainer')}>
+                }
+              >
+                <Avatar src="/user.png" sx={{ width: 40, height: 40 }} />
+              </Badge>
+            </IconButton>
             <TextField
-              placeholder="Search mail"
+              placeholder="Search for contact..."
               variant="outlined"
               size="small"
               InputProps={{
                 startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
               }}
-              sx={getEmailPageStyle('searchField')}
+              sx={{ ...getChatpageStyle('searchField'), flexGrow: 1, ml: 2 }}
             />
           </Box>
-          {/* Email List with Sorting & Selecting */}
-          <Box sx={getEmailPageStyle('emailList')}>
-            {selectedEmails.length > 0 && (
-              <EnhancedTableToolbar numSelected={selectedEmails.length} onAction={handleAction} />
-            )}
-            <TableContainer>
-              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                <TableHead>
-                  <TableRow>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        indeterminate={selectedEmails.length > 0 && selectedEmails.length < filteredEmails.length}
-                        checked={filteredEmails.length > 0 && selectedEmails.length === filteredEmails.length}
-                        onChange={handleSelectAllClick}
-                        sx={getEmailPageStyle('emailCheckbox')}
+
+          <Typography sx={getChatpageStyle('sectionTitle')}>
+            Chats
+          </Typography>
+          <List>
+            {chats.map((chat) => (
+              <ListItem key={chat.id} disablePadding>
+                <ListItemButton
+                  sx={getChatpageStyle('chatItem')}
+                  onClick={() => handleChatSelect(chat)}
+                  selected={selectedChat?.id === chat.id}
+                >
+                  <Avatar src={chat.avatar} sx={getChatpageStyle('avatar')}>
+                    {chat.name[0]}
+                  </Avatar>
+                  <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+                    <Typography sx={getChatpageStyle('chatName')}>
+                      {chat.name}
+                    </Typography>
+                    <Typography sx={getChatpageStyle('chatSnippet')}>
+                      {chat.snippet}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    <Typography sx={getChatpageStyle('chatTime')}>
+                      {chat.time}
+                    </Typography>
+                    {chat.unreadCount > 0 && (
+                      <Badge
+                        badgeContent={chat.unreadCount}
+                        sx={getChatpageStyle('unreadBadge')}
                       />
-                    </TableCell>
-                    <TableCell padding="checkbox">
-                      <Typography variant="body2" sx={{ color: '#6e6b7b' }}></Typography>
-                    </TableCell>
-                    {headCells.map((headCell) => (
-                      <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                      >
-                        <TableSortLabel
-                          active={orderBy === headCell.id}
-                          direction={orderBy === headCell.id ? order : 'asc'}
-                          onClick={() => handleRequestSort(headCell.id)}
-                        >
-                          {headCell.label}
-                          {orderBy === headCell.id ? (
-                            <Box component="span" sx={{ display: 'none' }}>
-                              {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                            </Box>
-                          ) : null}
-                        </TableSortLabel>
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {stableSort(filteredEmails, getComparator(order, orderBy)).map((email) => {
-                    const isItemSelected = selectedEmails.includes(email.id);
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={email.id}
-                        selected={isItemSelected}
-                        onMouseEnter={() => setHoveredEmail(email.id)}
-                        onMouseLeave={() => setHoveredEmail(null)}
-                        sx={getEmailPageStyle('emailItem')}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            onChange={() => handleSelectEmail(email.id)}
-                            sx={getEmailPageStyle('emailCheckbox')}
-                          />
-                        </TableCell>
-                        <TableCell padding="checkbox">
-                          <IconButton
-                            size="small"
-                            onClick={() => {
-                              email.starred = !email.starred;
-                            }}
-                          >
-                            <StarIcon
-                              sx={getEmailPageStyle('emailStarIcon', { starred: email.starred })}
-                            />
-                          </IconButton>
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Avatar sx={getEmailPageStyle('emailAvatar')}>
-                              {email.sender[0]}
-                            </Avatar>
-                            <Typography variant="body2" sx={getEmailPageStyle('emailSender')}>
-                              {email.sender}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell>
-                          {/* <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
-                            {email.subject}
-                          </Typography> */}
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
-                              {email.snippet}
-                            </Typography>
-                            <Box sx={getEmailPageStyle('emailLabels')}>
-                              {email.labels.map((label, idx) => (
-                                <Box
-                                  key={idx}
-                                  sx={getEmailPageStyle('emailLabelDot', {
-                                    color: labels.find((l) => l.label.toLowerCase() === label)?.color,
-                                  })}
-                                />
-                              ))}
-                            </Box>
-                          </Box>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Box sx={getEmailPageStyle('emailActions')}>
-                            <Typography variant="caption" sx={getEmailPageStyle('emailTime')}>
-                              {email.time}
-                            </Typography>
-                            {hoveredEmail === email.id && selectedEmails.length === 0 && (
-                              <Box sx={{ display: 'flex', gap: 1 }}>
-                                <IconButton size="small">
-                                  <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
-                                </IconButton>
-                                <IconButton size="small">
-                                  <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
-                                </IconButton>
-                                <IconButton size="small">
-                                  <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
-                                </IconButton>
-                              </Box>
-                            )}
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+                    )}
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+
+          <Divider />
+
+          <Typography sx={getChatpageStyle('sectionTitle')}>
+            Contacts
+          </Typography>
+          <List>
+            {contacts.map((contact) => (
+              <ListItem key={contact.id} disablePadding>
+                <ListItemButton
+                  sx={getChatpageStyle('contactItem')}
+                  onClick={() => handleContactSelect(contact)}
+                  selected={selectedContact?.id === contact.id}
+                >
+                  <Avatar sx={getChatpageStyle('contactAvatar', { color: contact.color })}>
+                    {contact.initials}
+                  </Avatar>
+                  <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+                    <Typography sx={getChatpageStyle('chatName')}>
+                      {contact.name}
+                    </Typography>
+                    <Typography sx={getChatpageStyle('chatSnippet')}>
+                      {contact.snippet}
+                    </Typography>
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+
+        {/* Main Content */}
+        <Box sx={getChatpageStyle('content')}>
+          {selectedChat ? (
+            <>
+              {/* Chat Header */}
+              <Box sx={getChatpageStyle('chatHeader')}>
+                <Avatar src={selectedChat.avatar} sx={getChatpageStyle('chatHeaderAvatar')}>
+                  {selectedChat.name[0]}
+                </Avatar>
+                <Box>
+                  <Typography sx={getChatpageStyle('chatHeaderName')}>
+                    {selectedChat.name}
+                  </Typography>
+                  <Typography sx={getChatpageStyle('chatHeaderStatus')}>
+                    Friend - Developer
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Messages */}
+              <Box sx={getChatpageStyle('messageContainer')} ref={messageContainerRef}>
+                {selectedChat.messages.map((message) => (
+                  <Box key={message.id} sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box
+                      sx={getChatpageStyle('message', { isSent: message.sender === 'You' })}
+                    >
+                      {message.content}
+                    </Box>
+                    <Typography
+                      sx={getChatpageStyle('messageTime', { isSent: message.sender === 'You' })}
+                    >
+                      {message.time}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+
+              {/* Message Input */}
+              <Box sx={getChatpageStyle('inputContainer')}>
+                <TextField
+                  placeholder="Type your message here..."
+                  variant="outlined"
+                  size="small"
+                  multiline
+                  maxRows={4}
+                  value={messageInput}
+                  onChange={(e) => setMessageInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  sx={getChatpageStyle('messageInput')}
+                />
+                <IconButton>
+                  <MicIcon />
+                </IconButton>
+                <IconButton>
+                  <AttachFileIcon />
+                </IconButton>
+                <Button
+                  variant="contained"
+                  sx={getChatpageStyle('sendButton')}
+                  onClick={handleSendMessage}
+                >
+                  Send
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 2 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 60,
+                  height: 60,
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <ChatIcon sx={{ fontSize: 30, color: '#6e6b7b' }} />
+              </Box>
+              <Button
+                variant="contained"
+                sx={getChatpageStyle('startButton')}
+              >
+                Start Conversation
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
     </ErrorBoundary>
   );
 };
 
-export default EmailPage;
+export default ChatPage;

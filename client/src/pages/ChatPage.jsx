@@ -174,6 +174,7 @@ const ChatPage = () => {
         {/* Chat Sidebar */}
         <Box sx={getChatpageStyle('sidebar')}>
           <Box sx={getChatpageStyle('searchBarContainer')}>
+          
             <TextField
               placeholder="Search for contact..."
               variant="outlined"
@@ -319,16 +320,29 @@ const ChatPage = () => {
               </Box>
             </>
           ) : (
-            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Button
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 2 }}>
+                <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    backgroundColor: '#fff',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Add shadow
+                }}
+                >
+                <ChatIcon sx={{ fontSize: 30, color: '#6e6b7b' }} />
+                </Box>
+                <Button
                 variant="contained"
-                startIcon={<ChatIcon />}
                 sx={getChatpageStyle('startButton')}
-              >
+                >
                 Start Conversation
-              </Button>
+                </Button>
             </Box>
-          )}
+                    )}
         </Box>
       </Box>
     </ErrorBoundary>

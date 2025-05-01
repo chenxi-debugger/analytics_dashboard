@@ -14,9 +14,11 @@ const getChatpageStyle = (key, props = {}) => {
       },
       searchBarContainer: {
         p: 2,
+        display: 'flex',
+        alignItems: 'center',
       },
       searchField: {
-        width: '100%',
+        flexGrow: 1,
         '& .MuiOutlinedInput-root': {
           borderRadius: '20px',
           backgroundColor: '#f5f5f9',
@@ -54,6 +56,9 @@ const getChatpageStyle = (key, props = {}) => {
         '&:hover': {
           backgroundColor: '#f5f5f9',
           cursor: 'pointer',
+        },
+        '&.Mui-selected': {
+          backgroundColor: '#e0e7ff',
         },
       },
       avatar: {
@@ -107,6 +112,12 @@ const getChatpageStyle = (key, props = {}) => {
         fontWeight: 500,
         px: 3,
         py: 1,
+        backgroundColor: '#fff',
+        color: '#5e5873',
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        '&:hover': {
+          backgroundColor: '#f5f5f9',
+        },
       },
       chatHeader: {
         p: 2,
@@ -135,6 +146,7 @@ const getChatpageStyle = (key, props = {}) => {
         display: 'flex',
         flexDirection: 'column',
         gap: 1,
+        backgroundColor: '#f5f5f9', // Match the background color in the image
       },
       message: {
         maxWidth: '60%',
@@ -170,10 +182,48 @@ const getChatpageStyle = (key, props = {}) => {
       },
       sendButton: {
         borderRadius: '20px',
-        textTransform: 'none',
+        textTransform: 'uppercase',
         fontWeight: 500,
         px: 3,
         py: 1,
+        backgroundColor: '#635ee7',
+        color: '#fff',
+        '&:hover': {
+          backgroundColor: '#544ed5',
+        },
+      },
+      userAvatar: {
+        width: 60,
+        height: 60,
+        mr: 2,
+      },
+      drawerTitle: {
+        fontWeight: 500,
+        color: '#5e5873',
+        mt: 2,
+        mb: 1,
+      },
+      drawerText: {
+        color: '#b9b9c3',
+        fontSize: '0.875rem',
+      },
+      statusSelect: {
+        mt: 1,
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '8px',
+        },
+      },
+      settingsToggle: {
+        color: '#5e5873',
+      },
+      logoutButton: {
+        mt: 2,
+        textTransform: 'uppercase',
+        backgroundColor: '#635ee7',
+        color: '#fff',
+        '&:hover': {
+          backgroundColor: '#544ed5',
+        },
       },
     };
     return styles[key] || {};
