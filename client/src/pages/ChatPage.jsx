@@ -14,6 +14,13 @@ import {
   CircularProgress,
   Badge,
   IconButton,
+  Drawer,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
 import { Search as SearchIcon, Chat as ChatIcon, Mic as MicIcon, AttachFile as AttachFileIcon } from '@mui/icons-material';
 import getChatpageStyle from '../styles/ChatpageStyle';
@@ -51,6 +58,20 @@ const ChatPage = () => {
   const [error, setError] = useState(null);
   const messageContainerRef = useRef(null);
 
+  // Drawer state
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [status, setStatus] = useState('Online'); // Status state
+  const [twoStepVerification, setTwoStepVerification] = useState(false); // Two-step verification state
+  const [notifications, setNotifications] = useState(true); // Notification state
+
+  // Status dot colors
+  const statusColors = {
+    Online: '#28c76f', // Green
+    Away: '#ff9f43', // Orange
+    'Do Not Disturb': '#ea5455', // Red
+    Offline: '#b9b9c3', // Gray
+  };
+
   // Fetch chat data
   useEffect(() => {
     const fetchData = async () => {
@@ -84,21 +105,13 @@ const ChatPage = () => {
   }, [selectedChat]);
 
   const handleChatSelect = (chat) => {
-    // Clear the unreadCount for the selected chat
     const updatedChats = chats.map((c) =>
       c.id === chat.id ? { ...c, unreadCount: 0 } : c
     );
     setChats(updatedChats);
-    setSelectedChat({ ...chat, unreadCount: 0 }); // Update selectedChat to reflect the change
+    setSelectedChat({ ...chat, unreadCount: 0 });
     setSelectedContact(null);
     setMessageInput('');
-
-    // Optionally, update the backend to persist the unreadCount change
-    // fetch('http://localhost:5001/api/chat/update-unread', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ chatId: chat.id, unreadCount: 0 }),
-    // });
   };
 
   const handleContactSelect = (contact) => {
@@ -152,6 +165,10 @@ const ChatPage = () => {
     }
   };
 
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
+
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -171,10 +188,131 @@ const ChatPage = () => {
   return (
     <ErrorBoundary>
       <Box sx={getChatpageStyle('mainContainer')}>
+        {/* User Drawer */}
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={toggleDrawer(false)}
+          sx={{
+            '& .MuiDrawer-paper': {
+              width: 360, // Match the chat sidebar width
+              boxSizing: 'border-box',
+              backgroundColor: '#fff',
+            },
+          }}
+        >
+          <Box sx={{ p: 2 }}>
+            {/* User Info */}
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Avatar src="/user.png" sx={{ width: 60, height: 60, mr: 2 }} />
+              <Box>
+                <Typography variant="h6">John Doe</Typography>
+                <Typography variant="body2" color="textSecondary">Admin</Typography>
+              </Box>
+            </Box>
+            <Divider />
+
+            {/* About Section */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              About
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.
+            </Typography>
+
+            {/* Status Selector */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Status
+            </Typography>
+            <FormControl fullWidth>
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                label="Status"
+              >
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Away">Away</MenuItem>
+                <MenuItem value="Do Not Disturb">Do Not Disturb</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Settings Section */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Settings
+            </Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={twoStepVerification}
+                  onChange={(e) => setTwoStepVerification(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Two-step Verification"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={notifications}
+                  onChange={(e) => setNotifications(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Notification"
+            />
+
+            {/* Invite Friends */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Invite Friends
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Invite Friends
+            </Typography>
+
+            {/* Delete Account */}
+            <Typography sx={{ mt: 2, mb: 1, fontWeight: 500, color: '#5e5873' }}>
+              Delete Account
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Delete Account
+            </Typography>
+
+            {/* Logout Button */}
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2, textTransform: 'uppercase', backgroundColor: '#635ee7' }}
+            >
+              Logout
+            </Button>
+          </Box>
+        </Drawer>
+
         {/* Chat Sidebar */}
         <Box sx={getChatpageStyle('sidebar')}>
-          <Box sx={getChatpageStyle('searchBarContainer')}>
-          
+          <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
+            <IconButton onClick={toggleDrawer(true)}>
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                badgeContent={
+                  <Box
+                    sx={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: '50%',
+                      backgroundColor: statusColors[status],
+                      border: '2px solid #fff',
+                    }}
+                  />
+                }
+              >
+                <Avatar src="/user.png" sx={{ width: 40, height: 40 }} />
+              </Badge>
+            </IconButton>
             <TextField
               placeholder="Search for contact..."
               variant="outlined"
@@ -182,7 +320,7 @@ const ChatPage = () => {
               InputProps={{
                 startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
               }}
-              sx={getChatpageStyle('searchField')}
+              sx={{ ...getChatpageStyle('searchField'), flexGrow: 1, ml: 2 }}
             />
           </Box>
 
@@ -321,28 +459,28 @@ const ChatPage = () => {
             </>
           ) : (
             <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 2 }}>
-                <Box
+              <Box
                 sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 60,
-                    height: 60,
-                    borderRadius: '50%',
-                    backgroundColor: '#fff',
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Add shadow
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 60,
+                  height: 60,
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                 }}
-                >
+              >
                 <ChatIcon sx={{ fontSize: 30, color: '#6e6b7b' }} />
-                </Box>
-                <Button
+              </Box>
+              <Button
                 variant="contained"
                 sx={getChatpageStyle('startButton')}
-                >
+              >
                 Start Conversation
-                </Button>
+              </Button>
             </Box>
-                    )}
+          )}
         </Box>
       </Box>
     </ErrorBoundary>
