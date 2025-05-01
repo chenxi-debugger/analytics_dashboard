@@ -13,6 +13,7 @@ import analyticsRouter from './mongoose/routes/analytics.js';
 import ecommerceRouter from './mongoose/routes/ecommerce.js';
 import crmRouter from './mongoose/routes/crm.js';
 import emailRouter from './mongoose/routes/emailRoutes.js';
+import chatRoutes from './mongoose/routes/chatRoutes.js'; 
 
 
 // Resolve __dirname in ES Modules
@@ -39,6 +40,7 @@ app.use('/api/analytics', analyticsRouter);
 app.use('/api/ecommerce', ecommerceRouter);
 app.use('/api/crm', crmRouter);
 app.use('/api/email', emailRouter);
+app.use('/api/chat', chatRoutes);
 
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 

@@ -38,6 +38,7 @@ import {
   Forward as ForwardIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material';
+import getEmailPageStyle from '../styles/getEmailPageStyle'; // Import the styles
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -61,16 +62,6 @@ class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-// Fix getEmailPageStyle to avoid circular references
-const getEmailPageStyle = (key, options = {}) => {
-  const styles = {
-    mainContainer: { display: 'flex', height: '100vh' },
-    sidebar: { width: '250px', borderRight: '1px solid #ddd' },
-    // ...other styles...
-  };
-  return styles[key] || {};
-};
 
 // Utility functions for sorting
 const descendingComparator = (a, b, orderBy) => {
@@ -132,68 +123,67 @@ const iconMap = {
 };
 
 const EmailPage = () => {
-  const { tab, labelName } = useParams();
-  const navigate = useNavigate();
-  const [selectedEmails, setSelectedEmails] = useState([]);
-  const [hoveredEmail, setHoveredEmail] = useState(null);
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('sender');
-  const [emails, setEmails] = useState([]);
-  const [tabs, setTabs] = useState([]);
-  const [labels, setLabels] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const selectedTab = tab || (labelName ? `label/${labelName}` : 'inbox');
-
-  // Fetch email data using useEffect
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        // Fetch emails
-        const emailsResponse = await fetch('http://localhost:5001/api/email/emails', {
-          mode: 'cors',
-        });
-        if (!emailsResponse.ok) {
-          throw new Error(`HTTP error! Status: ${emailsResponse.status}`);
+    const { tab, labelName } = useParams();
+    const navigate = useNavigate();
+    const [selectedEmails, setSelectedEmails] = useState([]);
+    const [hoveredEmail, setHoveredEmail] = useState(null);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('sender');
+    const [emails, setEmails] = useState([]);
+    const [tabs, setTabs] = useState([]);
+    const [labels, setLabels] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+  
+    const selectedTab = tab || (labelName ? `label/${labelName}` : 'inbox');
+  
+    // Fetch email data
+    useEffect(() => {
+      const fetchData = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const emailsResponse = await fetch('http://localhost:5001/api/email/emails', {
+            mode: 'cors',
+          });
+          if (!emailsResponse.ok) {
+            throw new Error(`HTTP error! Status: ${emailsResponse.status}`);
+          }
+          const emailsData = await emailsResponse.json();
+          console.log('Emails:', emailsData); // Log emails
+          console.log('Sent Emails:', emailsData.filter((email) => email.tab.includes('sent'))); // Log sent emails
+          setEmails(emailsData);
+  
+          const tabsResponse = await fetch('http://localhost:5001/api/email/tabs', {
+            mode: 'cors',
+          });
+          if (!tabsResponse.ok) {
+            throw new Error(`HTTP error! Status: ${tabsResponse.status}`);
+          }
+          const tabsData = await tabsResponse.json();
+          console.log('Tabs:', tabsData); // Log tabs
+          setTabs(tabsData.map((tab) => ({
+            ...tab,
+            icon: iconMap[tab.icon],
+          })));
+  
+          const labelsResponse = await fetch('http://localhost:5001/api/email/labels', {
+            mode: 'cors',
+          });
+          if (!labelsResponse.ok) {
+            throw new Error(`HTTP error! Status: ${labelsResponse.status}`);
+          }
+          const labelsData = await labelsResponse.json();
+          setLabels(labelsData);
+        } catch (err) {
+          setError(err);
+          console.error('Fetch error:', err);
+        } finally {
+          setIsLoading(false);
         }
-        const emailsData = await emailsResponse.json();
-        setEmails(emailsData);
-
-        // Fetch tabs
-        const tabsResponse = await fetch('http://localhost:5001/api/email/tabs', {
-          mode: 'cors',
-        });
-        if (!tabsResponse.ok) {
-          throw new Error(`HTTP error! Status: ${tabsResponse.status}`);
-        }
-        const tabsData = await tabsResponse.json();
-        setTabs(tabsData.map((tab) => ({
-          ...tab,
-          icon: iconMap[tab.icon],
-        })));
-
-        // Fetch labels
-        const labelsResponse = await fetch('http://localhost:5001/api/email/labels', {
-          mode: 'cors',
-        });
-        if (!labelsResponse.ok) {
-          throw new Error(`HTTP error! Status: ${labelsResponse.status}`);
-        }
-        const labelsData = await labelsResponse.json();
-        setLabels(labelsData);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array to fetch data once on mount
+      };
+      fetchData();
+    }, []);// Empty dependency array to fetch data once on mount
 
   const headCells = [
     { id: 'sender', numeric: false, disablePadding: true, label: 'Sender' },
@@ -244,7 +234,7 @@ const EmailPage = () => {
       const label = selectedTab.split('/')[1];
       return email.labels.includes(label);
     }
-    return email.tab === selectedTab;
+    return Array.isArray(email.tab) ? email.tab.includes(selectedTab) : email.tab === selectedTab;
   }) || [];
 
   if (isLoading) {
@@ -328,7 +318,7 @@ const EmailPage = () => {
         {/* Email Page (Main Content) */}
         <Box sx={getEmailPageStyle('content')}>
           {/* Breadcrumbs */}
-          <Box sx={getEmailPageStyle('breadcrumbs')}>
+          {/* <Box sx={getEmailPageStyle('breadcrumbs')}>
             <Breadcrumbs aria-label="breadcrumb">
               <Typography sx={getEmailPageStyle('breadcrumbItem')}>
                 Apps
@@ -337,7 +327,7 @@ const EmailPage = () => {
                 Email
               </Typography>
             </Breadcrumbs>
-          </Box>
+          </Box> */}
           {/* Search Bar */}
           <Box sx={getEmailPageStyle('searchBarContainer')}>
             <TextField
@@ -440,9 +430,9 @@ const EmailPage = () => {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
+                          {/* <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
                             {email.subject}
-                          </Typography>
+                          </Typography> */}
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
                               {email.snippet}

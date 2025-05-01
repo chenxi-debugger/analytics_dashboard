@@ -106,7 +106,7 @@ async function seedMongo(config) {
   }
 }
 
-// Seed the four JSON files
+// Seed the five JSON files
 async function main() {
   try {
     // Seed analyticsPageData.json (MongoClient)
@@ -140,6 +140,15 @@ async function main() {
     await seedMongo({
       jsonFilePath: path.join(__dirname, '../../data/email.json'),
       collectionName: 'emailData',
+      dataKey: null,
+      clearCollection: true,
+      useMongoose: false,
+    });
+
+    // Seed chat-data.json (MongoClient)
+    await seedMongo({
+      jsonFilePath: path.join(__dirname, '../../data/chat-data.json'),
+      collectionName: 'chatData',
       dataKey: null,
       clearCollection: true,
       useMongoose: false,

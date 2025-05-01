@@ -6,9 +6,9 @@
         "subject": "World Tourism Day Event Invitation",
         "snippet": "World Tourism Day Event Invitation",
         "time": "12:25 AM",
-        "labels": ["personal"],
+        "labels":  ["company", "private"],
         "starred": false,
-        "tab": "inbox"
+        "tab":  ["trash", "spam", "inbox"]
       },
       {
         "id": 2,
@@ -18,7 +18,7 @@
         "time": "10:31 AM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["trash", "spam"]
       },
       {
         "id": 3,
@@ -28,7 +28,7 @@
         "time": "05:05 PM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["trash", "spam"]
       },
       {
         "id": 4,
@@ -38,7 +38,7 @@
         "time": "07:34 AM",
         "labels": ["private"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "spam"]
       },
       {
         "id": 5,
@@ -48,7 +48,7 @@
         "time": "11:55 PM",
         "labels": ["company", "private"],
         "starred": true,
-        "tab": "inbox"
+        "tab": ["starred", "draft", "inbox"]
       },
       {
         "id": 6,
@@ -58,7 +58,7 @@
         "time": "03:12 PM",
         "labels": ["company"],
         "starred": false,
-        "tab": "sent"
+        "tab": ["starred", "draft", "inbox", "sent"]
       },
       {
         "id": 7,
@@ -68,7 +68,7 @@
         "time": "04:25 AM",
         "labels": ["company"],
         "starred": false,
-        "tab": "draft"
+        "tab": ["draft", "inbox", "sent"]
       },
       {
         "id": 8,
@@ -78,7 +78,7 @@
         "time": "02:06 AM",
         "labels": ["company"],
         "starred": true,
-        "tab": "starred"
+        "tab": ["inbox", "draft", "inbox", "sent"]
       },
       {
         "id": 9,
@@ -88,7 +88,7 @@
         "time": "09:04 AM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["spam", "draft", "inbox", "inbox"]
       },
       {
         "id": 10,
@@ -98,7 +98,7 @@
         "time": "09:04 AM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["trash", "draft", "inbox", "sent"]
       },
       {
         "id": 11,
@@ -108,7 +108,7 @@
         "time": "09:04 AM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "spam"
+        "tab": ["sent", "inbox"]
       },
       {
         "id": 12,
@@ -118,7 +118,7 @@
         "time": "09:04 AM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "spam", "inbox"]
       },
       {
         "id": 13,
@@ -128,7 +128,7 @@
         "time": "01:26 PM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["spam", "inbox", "sent"]
       },
       {
         "id": 14,
@@ -138,7 +138,7 @@
         "time": "04:36 PM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": [ "inbox", "sent"]
       },
       {
         "id": 15,
@@ -148,7 +148,7 @@
         "time": "08:49 PM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["trash", "sent"]
       },
       {
         "id": 16,
@@ -158,7 +158,7 @@
         "time": "12:05 AM",
         "labels": ["important"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "draft", "inbox", "sent"]
       },
       {
         "id": 17,
@@ -168,7 +168,7 @@
         "time": "11:00 AM",
         "labels": ["important"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred","sent"]
       },
       {
         "id": 18,
@@ -178,7 +178,7 @@
         "time": "07:54 AM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "draft", "inbox", "sent"]
       },
       {
         "id": 19,
@@ -188,7 +188,7 @@
         "time": "03:55 AM",
         "labels": ["private"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "spam", "draft", "sent"]
       },
       {
         "id": 20,
@@ -198,7 +198,7 @@
         "time": "02:06 PM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "inbox", "sent"]
       },
       {
         "id": 21,
@@ -208,7 +208,7 @@
         "time": "05:51 PM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["spam","inbox", "sent"]
       },
       {
         "id": 22,
@@ -218,7 +218,7 @@
         "time": "06:25 AM",
         "labels": ["personal"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "inbox", "sent"]
       },
       {
         "id": 23,
@@ -228,7 +228,7 @@
         "time": "11:46 PM",
         "labels": ["private"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "trash", "spam"]
       },
       {
         "id": 24,
@@ -238,7 +238,7 @@
         "time": "12:35 PM",
         "labels": ["company"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "inbox", "sent"]
       },
       {
         "id": 25,
@@ -248,7 +248,7 @@
         "time": "08:18 PM",
         "labels": ["private"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["starred", "inbox", "draft"]
       },
       {
         "id": 26,
@@ -258,7 +258,7 @@
         "time": "03:02 AM",
         "labels": ["private"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "inbox", "sent"]
       },
       {
         "id": 27,
@@ -268,7 +268,7 @@
         "time": "09:04 AM",
         "labels": ["private"],
         "starred": false,
-        "tab": "trash"
+        "tab": ["starred", "inbox"]
       },
       {
         "id": 28,
@@ -278,7 +278,7 @@
         "time": "09:04 AM",
         "labels": ["important"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "inbox", "sent"]
       },
       {
         "id": 29,
@@ -288,7 +288,7 @@
         "time": "01:04 AM",
         "labels": ["important"],
         "starred": false,
-        "tab": "inbox"
+        "tab": ["draft", "inbox", "sent"]
       }
     ],
     "tabs": [

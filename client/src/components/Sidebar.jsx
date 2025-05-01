@@ -169,9 +169,24 @@ const Sidebar = () => {
           >
             APPS & PAGES
           </Typography>
-          <SidebarItem sideBarIcon={<Email />} sideBarText="Email" onClick={() => navigate('/apps/email')} />
-          <SidebarItem sideBarIcon={<Chat />} sideBarText="Chat" onClick={() => navigate('/apps/chat')} />
-          <SidebarItem sideBarIcon={<CalendarMonth />} sideBarText="Calendar" onClick={() => navigate('/apps/calendar')} />
+          <SidebarItem
+            sideBarIcon={<Email />}
+            sideBarText="Email"
+            onClick={() => navigate('/apps/email')}
+            isActive={location.pathname.startsWith('/apps/email')} // Highlight for email routes
+          />
+          <SidebarItem
+            sideBarIcon={<Chat />}
+            sideBarText="Chat"
+            onClick={() => navigate('/apps/chat')}
+            isActive={location.pathname === '/apps/chat'} // Highlight when on chat route
+          />
+          <SidebarItem
+            sideBarIcon={<CalendarMonth />}
+            sideBarText="Calendar"
+            onClick={() => navigate('/apps/calendar')}
+            isActive={location.pathname === '/apps/calendar'}
+          />
           <SidebarItem
             sideBarIcon={<ReceiptLong />}
             sideBarText="Invoice"
@@ -208,8 +223,18 @@ const Sidebar = () => {
               { text: 'Forgot Password', path: '/auth/forgot-password', isActive: location.pathname === '/auth/forgot-password' },
             ]}
           />
-          <SidebarItem sideBarIcon={<AutoAwesome />} sideBarText="Wizard Examples" onClick={() => navigate('/wizard-examples')} />
-          <SidebarItem sideBarIcon={<Apps />} sideBarText="Dialog Examples" onClick={() => navigate('/dialog-examples')} />
+          <SidebarItem
+            sideBarIcon={<AutoAwesome />}
+            sideBarText="Wizard Examples"
+            onClick={() => navigate('/wizard-examples')}
+            isActive={location.pathname === '/wizard-examples'}
+          />
+          <SidebarItem
+            sideBarIcon={<Apps />}
+            sideBarText="Dialog Examples"
+            onClick={() => navigate('/dialog-examples')}
+            isActive={location.pathname === '/dialog-examples'}
+          />
 
           <Typography
             variant="caption"
@@ -217,9 +242,24 @@ const Sidebar = () => {
           >
             USER INTERFACE
           </Typography>
-          <SidebarItem sideBarIcon={<TextFields />} sideBarText="Typography" onClick={() => navigate('/ui/typography')} />
-          <SidebarItem sideBarIcon={<Inventory />} sideBarText="Icons" onClick={() => navigate('/ui/icons')} />
-          <SidebarItem sideBarIcon={<Inventory />} sideBarText="Icons Test" onClick={() => navigate('/ui/icons-test')} />
+          <SidebarItem
+            sideBarIcon={<TextFields />}
+            sideBarText="Typography"
+            onClick={() => navigate('/ui/typography')}
+            isActive={location.pathname === '/ui/typography'}
+          />
+          <SidebarItem
+            sideBarIcon={<Inventory />}
+            sideBarText="Icons"
+            onClick={() => navigate('/ui/icons')}
+            isActive={location.pathname === '/ui/icons'}
+          />
+          <SidebarItem
+            sideBarIcon={<Inventory />}
+            sideBarText="Icons Test"
+            onClick={() => navigate('/ui/icons-test')}
+            isActive={location.pathname === '/ui/icons-test'}
+          />
           <SidebarItem
             sideBarIcon={<Lock />}
             sideBarText="Cards"
@@ -237,6 +277,7 @@ const Sidebar = () => {
             sideBarText="Components"
             sideBarBadge={19}
             onClick={() => navigate('/ui/components')}
+            isActive={location.pathname === '/ui/components'}
           />
 
           <Typography
@@ -245,12 +286,42 @@ const Sidebar = () => {
           >
             FORMS & TABLES
           </Typography>
-          <SidebarItem sideBarIcon={<CreditCard />} sideBarText="Form Elements" onClick={() => navigate('/forms/elements')} />
-          <SidebarItem sideBarIcon={<ViewList />} sideBarText="Form Layouts" onClick={() => navigate('/forms/layouts')} />
-          <SidebarItem sideBarIcon={<Tune />} sideBarText="Form Validation" onClick={() => navigate('/forms/validation')} />
-          <SidebarItem sideBarIcon={<AutoAwesome />} sideBarText="Form Wizard" onClick={() => navigate('/forms/wizard')} />
-          <SidebarItem sideBarIcon={<TableView />} sideBarText="Table" onClick={() => navigate('/tables/table')} />
-          <SidebarItem sideBarIcon={<Apps />} sideBarText="Mui DataGrid" onClick={() => navigate('/tables/mui-datagrid')} />
+          <SidebarItem
+            sideBarIcon={<CreditCard />}
+            sideBarText="Form Elements"
+            onClick={() => navigate('/forms/elements')}
+            isActive={location.pathname === '/forms/elements'}
+          />
+          <SidebarItem
+            sideBarIcon={<ViewList />}
+            sideBarText="Form Layouts"
+            onClick={() => navigate('/forms/layouts')}
+            isActive={location.pathname === '/forms/layouts'}
+          />
+          <SidebarItem
+            sideBarIcon={<Tune />}
+            sideBarText="Form Validation"
+            onClick={() => navigate('/forms/validation')}
+            isActive={location.pathname === '/forms/validation'}
+          />
+          <SidebarItem
+            sideBarIcon={<AutoAwesome />}
+            sideBarText="Form Wizard"
+            onClick={() => navigate('/forms/wizard')}
+            isActive={location.pathname === '/forms/wizard'}
+          />
+          <SidebarItem
+            sideBarIcon={<TableView />}
+            sideBarText="Table"
+            onClick={() => navigate('/tables/table')}
+            isActive={location.pathname === '/tables/table'}
+          />
+          <SidebarItem
+            sideBarIcon={<Apps />}
+            sideBarText="Mui DataGrid"
+            onClick={() => navigate('/tables/mui-datagrid')}
+            isActive={location.pathname === '/tables/mui-datagrid'}
+          />
 
           <Typography
             variant="caption"
@@ -258,9 +329,24 @@ const Sidebar = () => {
           >
             CHARTS & MISC
           </Typography>
-          <SidebarItem sideBarIcon={<BarChart />} sideBarText="Charts" onClick={() => navigate('/charts')} />
-          <SidebarItem sideBarIcon={<Lock />} sideBarText="Access Control" onClick={() => navigate('/misc/access-control')} />
-          <SidebarItem sideBarIcon={<Settings />} sideBarText="Others" onClick={() => navigate('/misc/others')} />
+          <SidebarItem
+            sideBarIcon={<BarChart />}
+            sideBarText="Charts"
+            onClick={() => navigate('/charts')}
+            isActive={location.pathname === '/charts'}
+          />
+          <SidebarItem
+            sideBarIcon={<Lock />}
+            sideBarText="Access Control"
+            onClick={() => navigate('/misc/access-control')}
+            isActive={location.pathname === '/misc/access-control'}
+          />
+          <SidebarItem
+            sideBarIcon={<Settings />}
+            sideBarText="Others"
+            onClick={() => navigate('/misc/others')}
+            isActive={location.pathname === '/misc/others'}
+          />
         </List>
       </Box>
     </Drawer>

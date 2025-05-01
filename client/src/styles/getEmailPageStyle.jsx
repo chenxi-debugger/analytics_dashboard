@@ -1,5 +1,3 @@
-// EmailPageStyle.jsx
-
 const getEmailPageStyle = (key, options = {}) => {
     const styles = {
       mainContainer: {

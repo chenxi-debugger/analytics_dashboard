@@ -8,6 +8,7 @@ import CrmPage from './pages/CrmPage';
 import EcommercePage from './pages/EcommercePage';
 import Footer from './components/Footer';
 import EmailPage from './pages/EmailPage';
+import ChatPage from './pages/ChatPage';
 import { Box } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -62,9 +63,10 @@ const App = () => {
                 <Route path="/" element={<AnalyticsPage />} />
                 <Route path="/dashboards/crm" element={<CrmPage />} />
                 <Route path="/dashboards/ecommerce" element={<EcommercePage />} />
-                <Route path="/apps/email" element={<EmailPage />} />   
-                <Route path=":tab" element={<EmailPage />} />
-                <Route path="label/:labelName" element={<EmailPage />} />
+                <Route path="/apps/email" element={<EmailPage />} />
+                <Route path="/apps/email/:tab" element={<EmailPage />} />
+                <Route path="/apps/email/label/:labelName" element={<EmailPage />} />
+                <Route path="/apps/chat" element={<ChatPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Box>
