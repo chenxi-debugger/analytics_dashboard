@@ -1,3 +1,5 @@
+import { Margin } from "@mui/icons-material";
+
 const getEmailPageStyle = (key, options = {}) => {
     const styles = {
       mainContainer: {
@@ -10,16 +12,19 @@ const getEmailPageStyle = (key, options = {}) => {
         borderRight: '1px solid #e0e0e0',
         backgroundColor: '#fff',
         display: 'flex',
+        borderRadius: '8px 0 0 0',
         flexDirection: 'column',
       },
       composeButton: {
-        backgroundColor: '#5c6bc0',
+        backgroundColor: 'rgb(105, 108, 255)',
         color: '#fff',
         textTransform: 'none',
         fontWeight: 500,
         padding: '8px 16px',
-        borderRadius: '4px',
-        margin: '16px',
+        borderRadius: '8px',
+        marginLeft: '14px',
+        marginTop: '6px',
+        width: '190px',
         '&:hover': {
           backgroundColor: '#4a569d',
         },

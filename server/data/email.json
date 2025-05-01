@@ -1,308 +1,337 @@
 {
-    "emails": [
-      {
-        "id": 1,
-        "sender": "Rebecca Gilder",
-        "subject": "World Tourism Day Event Invitation",
-        "snippet": "World Tourism Day Event Invitation",
-        "time": "12:25 AM",
-        "labels":  ["company", "private"],
-        "starred": false,
-        "tab":  ["trash", "spam", "inbox"]
-      },
-      {
-        "id": 2,
-        "sender": "Heath FrostDyke",
-        "subject": "Good Hair Day!",
-        "snippet": "Good Hair Day!",
-        "time": "10:31 AM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["trash", "spam"]
-      },
-      {
-        "id": 3,
-        "sender": "Lowell Minghetti",
-        "subject": "Cyber Monday Sale!",
-        "snippet": "Cyber Monday Sale!",
-        "time": "05:05 PM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["trash", "spam"]
-      },
-      {
-        "id": 4,
-        "sender": "Nada MacCarthy",
-        "subject": "Labor Day Sale",
-        "snippet": "Labor Day Sale",
-        "time": "07:34 AM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["starred", "spam"]
-      },
-      {
-        "id": 5,
-        "sender": "Tressa Gass",
-        "subject": "Please find attached the latest Company Report",
-        "snippet": "Please find attached the latest Company Report",
-        "time": "11:55 PM",
-        "labels": ["company", "private"],
-        "starred": true,
-        "tab": ["starred", "draft", "inbox"]
-      },
-      {
-        "id": 6,
-        "sender": "Eb Begg",
-        "subject": "App Update",
-        "snippet": "App Update",
-        "time": "03:12 PM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["starred", "draft", "inbox", "sent"]
-      },
-      {
-        "id": 7,
-        "sender": "Modestine Spat",
-        "subject": "Password Reset",
-        "snippet": "Password Reset",
-        "time": "04:25 AM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      },
-      {
-        "id": 8,
-        "sender": "Ardis Balderson",
-        "subject": "Bank transfer initiated.",
-        "snippet": "Bank transfer initiated.",
-        "time": "02:06 AM",
-        "labels": ["company"],
-        "starred": true,
-        "tab": ["inbox", "draft", "inbox", "sent"]
-      },
-      {
-        "id": 9,
-        "sender": "Gabriel Abramow",
-        "subject": "Forgot your password?",
-        "snippet": "Forgot your password?",
-        "time": "09:04 AM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["spam", "draft", "inbox", "inbox"]
-      },
-      {
-        "id": 10,
-        "sender": "Temple Olrenshaw",
-        "subject": "April Fools Day Movies",
-        "snippet": "April Fools Day Movies",
-        "time": "09:04 AM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["trash", "draft", "inbox", "sent"]
-      },
-      {
-        "id": 11,
-        "sender": "Dalila Ouldcott",
-        "subject": "Order Feedback",
-        "snippet": "Order Feedback",
-        "time": "09:04 AM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["sent", "inbox"]
-      },
-      {
-        "id": 12,
-        "sender": "Phoebee Buffay",
-        "subject": "Personal Insurance",
-        "snippet": "Personal Insurance",
-        "time": "09:04 AM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["starred", "spam", "inbox"]
-      },
-      {
-        "id": 13,
-        "sender": "Eugenie Finessy",
-        "subject": "Book Lover’s Day",
-        "snippet": "Book Lover’s Day",
-        "time": "01:26 PM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["spam", "inbox", "sent"]
-      },
-      {
-        "id": 14,
-        "sender": "Chase Prando",
-        "subject": "Course Update",
-        "snippet": "Course Update",
-        "time": "04:36 PM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": [ "inbox", "sent"]
-      },
-      {
-        "id": 15,
-        "sender": "Shawn Wilby",
-        "subject": "Delivery Note",
-        "snippet": "Delivery Note",
-        "time": "08:49 PM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["trash", "sent"]
-      },
-      {
-        "id": 16,
-        "sender": "Paulita Jentzsch",
-        "subject": "Travel to Europe",
-        "snippet": "Travel to Europe",
-        "time": "12:05 AM",
-        "labels": ["important"],
-        "starred": false,
-        "tab": ["starred", "draft", "inbox", "sent"]
-      },
-      {
-        "id": 17,
-        "sender": "Tadio McKeurton",
-        "subject": "Handmade Goods",
-        "snippet": "Handmade Goods",
-        "time": "11:00 AM",
-        "labels": ["important"],
-        "starred": false,
-        "tab": ["starred","sent"]
-      },
-      {
-        "id": 18,
-        "sender": "Dagmar Mallall",
-        "subject": "Accounting software",
-        "snippet": "Accounting software",
-        "time": "07:54 AM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["starred", "draft", "inbox", "sent"]
-      },
-      {
-        "id": 19,
-        "sender": "Bobbie Posvner",
-        "subject": "Your opinion matters to us. Tell us how you feel",
-        "snippet": "Your opinion matters to us. Tell us how you feel",
-        "time": "03:55 AM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["starred", "spam", "draft", "sent"]
-      },
-      {
-        "id": 20,
-        "sender": "Norman Bartles",
-        "subject": "Earth Hour",
-        "snippet": "Earth Hour",
-        "time": "02:06 PM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      },
-      {
-        "id": 21,
-        "sender": "Robin Genn",
-        "subject": "Happy Teacher’s Day!",
-        "snippet": "Happy Teacher’s Day!",
-        "time": "05:51 PM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["spam","inbox", "sent"]
-      },
-      {
-        "id": 22,
-        "sender": "Emmalyn Ramelot",
-        "subject": "Newly Improved Product",
-        "snippet": "Newly Improved Product",
-        "time": "06:25 AM",
-        "labels": ["personal"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      },
-      {
-        "id": 23,
-        "sender": "Hidden Mail",
-        "subject": "Hidden Mail",
-        "snippet": "Hidden Mail",
-        "time": "11:46 PM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["draft", "trash", "spam"]
-      },
-      {
-        "id": 24,
-        "sender": "Hettie McCree",
-        "subject": "Your order has been delivered",
-        "snippet": "Your order has been delivered",
-        "time": "12:35 PM",
-        "labels": ["company"],
-        "starred": false,
-        "tab": ["starred", "inbox", "sent"]
-      },
-      {
-        "id": 25,
-        "sender": "Penni Cuzen",
-        "subject": "Meet your new banker",
-        "snippet": "Meet your new banker",
-        "time": "08:18 PM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["starred", "inbox", "draft"]
-      },
-      {
-        "id": 26,
-        "sender": "Waldemar Mannering",
-        "subject": "Refer friends. Get rewards.",
-        "snippet": "Refer friends. Get rewards.",
-        "time": "03:02 AM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      },
-      {
-        "id": 27,
-        "sender": "Lowell Kubicek",
-        "subject": "Finally Start Running",
-        "snippet": "Finally Start Running",
-        "time": "09:04 AM",
-        "labels": ["private"],
-        "starred": false,
-        "tab": ["starred", "inbox"]
-      },
-      {
-        "id": 28,
-        "sender": "Milena Osgarby",
-        "subject": "Eco Food",
-        "snippet": "Eco Food",
-        "time": "09:04 AM",
-        "labels": ["important"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      },
-      {
-        "id": 29,
-        "sender": "Louetta Esses",
-        "subject": "Update Can Change Your Personal Life",
-        "snippet": "Update Can Change Your Personal Life",
-        "time": "01:04 AM",
-        "labels": ["important"],
-        "starred": false,
-        "tab": ["draft", "inbox", "sent"]
-      }
-    ],
-    "tabs": [
-      { "label": "Inbox", "value": "inbox", "count": 3, "icon": "EmailIcon" },
-      { "label": "Sent", "value": "sent", "icon": "SendIcon" },
-      { "label": "Draft", "value": "draft", "count": 4, "icon": "DraftIcon" },
-      { "label": "Starred", "value": "starred", "icon": "StarIcon" },
-      { "label": "Spam", "value": "spam", "count": 2, "icon": "SpamIcon" },
-      { "label": "Trash", "value": "trash", "icon": "TrashIcon" }
-    ],
-    "labels": [
-      { "label": "Personal", "color": "#28c76f" },
-      { "label": "Company", "color": "#00cfe8" },
-      { "label": "Important", "color": "#ff9f43" },
-      { "label": "Private", "color": "#ea5455" }
-    ]
-  }
+  "emails": [
+    {
+      "id": 1,
+      "sender": "Rebecca Gilder",
+      "subject": "World Tourism Day Event Invitation",
+      "snippet": "World Tourism Day Event Invitation",
+      "time": "12:25 AM",
+      "labels": ["company", "private"],
+      "starred": false,
+      "tab": ["trash", "spam", "inbox"],
+      "avatar": "/1.png"
+    },
+    {
+      "id": 2,
+      "sender": "Heath FrostDyke",
+      "subject": "Good Hair Day!",
+      "snippet": "Good Hair Day!",
+      "time": "10:31 AM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["trash", "spam"],
+      "avatar": "/2.png"
+    },
+    {
+      "id": 3,
+      "sender": "Lowell Minghetti",
+      "subject": "Cyber Monday Sale!",
+      "snippet": "Cyber Monday Sale!",
+      "time": "05:05 PM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["trash", "spam"],
+      "avatar": "/3.png"
+    },
+    {
+      "id": 4,
+      "sender": "Nada MacCarthy",
+      "subject": "Labor Day Sale",
+      "snippet": "Labor Day Sale",
+      "time": "07:34 AM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["starred", "spam"],
+      "avatar": "/4.png"
+    },
+    {
+      "id": 5,
+      "sender": "Tressa Gass",
+      "subject": "Please find attached the latest Company Report",
+      "snippet": "Please find attached the latest Company Report",
+      "time": "11:55 PM",
+      "labels": ["company", "private"],
+      "starred": true,
+      "tab": ["starred", "draft", "inbox"],
+      "avatar": "/5.png"
+    },
+    {
+      "id": 6,
+      "sender": "Eb Begg",
+      "subject": "App Update",
+      "snippet": "App Update",
+      "time": "03:12 PM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["starred", "draft", "inbox", "sent"],
+      "avatar": "/6.png"
+    },
+    {
+      "id": 7,
+      "sender": "Modestine Spat",
+      "subject": "Password Reset",
+      "snippet": "Password Reset",
+      "time": "04:25 AM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/7.png"
+    },
+    {
+      "id": 8,
+      "sender": "Ardis Balderson",
+      "subject": "Bank transfer initiated.",
+      "snippet": "Bank transfer initiated.",
+      "time": "02:06 AM",
+      "labels": ["company"],
+      "starred": true,
+      "tab": ["inbox", "draft", "inbox", "sent"],
+      "avatar": "/8.png"
+    },
+    {
+      "id": 9,
+      "sender": "Gabriel Abramow",
+      "subject": "Forgot your password?",
+      "snippet": "Forgot your password?",
+      "time": "09:04 AM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["spam", "draft", "inbox", "inbox"],
+      "avatar": "/9.png"
+    },
+    {
+      "id": 10,
+      "sender": "Temple Olrenshaw",
+      "subject": "April Fools Day Movies",
+      "snippet": "April Fools Day Movies",
+      "time": "09:04 AM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["trash", "draft", "inbox", "sent"],
+      "avatar": "/10.png"
+    },
+    {
+      "id": 11,
+      "sender": "Dalila Ouldcott",
+      "subject": "Order Feedback",
+      "snippet": "Order Feedback",
+      "time": "09:04 AM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["sent", "inbox"],
+      "avatar": "/11.png"
+    },
+    {
+      "id": 12,
+      "sender": "Phoebee Buffay",
+      "subject": "Personal Insurance",
+      "snippet": "Personal Insurance",
+      "time": "09:04 AM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["starred", "spam", "inbox"],
+      "avatar": "/12.png"
+    },
+    {
+      "id": 13,
+      "sender": "Eugenie Finessy",
+      "subject": "Book Lover’s Day",
+      "snippet": "Book Lover’s Day",
+      "time": "01:26 PM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["spam", "inbox", "sent"],
+      "avatar": "/13.png"
+    },
+    {
+      "id": 14,
+      "sender": "Chase Prando",
+      "subject": "Course Update",
+      "snippet": "Course Update",
+      "time": "04:36 PM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["inbox", "sent"],
+      "avatar": "/14.png"
+    },
+    {
+      "id": 15,
+      "sender": "Shawn Wilby",
+      "subject": "Delivery Note",
+      "snippet": "Delivery Note",
+      "time": "08:49 PM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["trash", "sent"],
+      "avatar": "/1.png"
+    },
+    {
+      "id": 16,
+      "sender": "Paulita Jentzsch",
+      "subject": "Travel to Europe",
+      "snippet": "Travel to Europe",
+      "time": "12:05 AM",
+      "labels": ["important"],
+      "starred": false,
+      "tab": ["starred", "draft", "inbox", "sent"],
+      "avatar": "/2.png"
+    },
+    {
+      "id": 17,
+      "sender": "Tadio McKeurton",
+      "subject": "Handmade Goods",
+      "snippet": "Handmade Goods",
+      "time": "11:00 AM",
+      "labels": ["important"],
+      "starred": false,
+      "tab": ["starred", "sent"],
+      "avatar": "/3.png"
+    },
+    {
+      "id": 18,
+      "sender": "Dagmar Mallall",
+      "subject": "Accounting software",
+      "snippet": "Accounting software",
+      "time": "07:54 AM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["starred", "draft", "inbox", "sent"],
+      "avatar": "/4.png"
+    },
+    {
+      "id": 19,
+      "sender": "Bobbie Posvner",
+      "subject": "Your opinion matters to us. Tell us how you feel",
+      "snippet": "Your opinion matters to us. Tell us how you feel",
+      "time": "03:55 AM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["starred", "spam", "draft", "sent"],
+      "avatar": "/5.png"
+    },
+    {
+      "id": 20,
+      "sender": "Norman Bartles",
+      "subject": "Earth Hour",
+      "snippet": "Earth Hour",
+      "time": "02:06 PM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/6.png"
+    },
+    {
+      "id": 21,
+      "sender": "Robin Genn",
+      "subject": "Happy Teacher’s Day!",
+      "snippet": "Happy Teacher’s Day!",
+      "time": "05:51 PM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["spam", "inbox", "sent"],
+      "avatar": "/7.png"
+    },
+    {
+      "id": 22,
+      "sender": "Emmalyn Ramelot",
+      "subject": "Newly Improved Product",
+      "snippet": "Newly Improved Product",
+      "time": "06:25 AM",
+      "labels": ["personal"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/8.png"
+    },
+    {
+      "id": 23,
+      "sender": "Hidden Mail",
+      "subject": "Hidden Mail",
+      "snippet": "Hidden Mail",
+      "time": "11:46 PM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["draft", "trash", "spam"],
+      "avatar": "/9.png"
+    },
+    {
+      "id": 24,
+      "sender": "Hettie McCree",
+      "subject": "Your order has been delivered",
+      "snippet": "Your order has been delivered",
+      "time": "12:35 PM",
+      "labels": ["company"],
+      "starred": false,
+      "tab": ["starred", "inbox", "sent"],
+      "avatar": "/10.png"
+    },
+    {
+      "id": 25,
+      "sender": "Penni Cuzen",
+      "subject": "Meet your new banker",
+      "snippet": "Meet your new banker",
+      "time": "08:18 PM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["starred", "inbox", "draft"],
+      "avatar": "/11.png"
+    },
+    {
+      "id": 26,
+      "sender": "Waldemar Mannering",
+      "subject": "Refer friends. Get rewards.",
+      "snippet": "Refer friends. Get rewards.",
+      "time": "03:02 AM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/12.png"
+    },
+    {
+      "id": 27,
+      "sender": "Lowell Kubicek",
+      "subject": "Finally Start Running",
+      "snippet": "Finally Start Running",
+      "time": "09:04 AM",
+      "labels": ["private"],
+      "starred": false,
+      "tab": ["starred", "inbox"],
+      "avatar": "/13.png"
+    },
+    {
+      "id": 28,
+      "sender": "Milena Osgarby",
+      "subject": "Eco Food",
+      "snippet": "Eco Food",
+      "time": "09:04 AM",
+      "labels": ["important"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/14.png"
+    },
+    {
+      "id": 29,
+      "sender": "Louetta Esses",
+      "subject": "Update Can Change Your Personal Life",
+      "snippet": "Update Can Change Your Personal Life",
+      "time": "01:04 AM",
+      "labels": ["important"],
+      "starred": false,
+      "tab": ["draft", "inbox", "sent"],
+      "avatar": "/5.png"
+    }
+  ],
+  "tabs": [
+    { "label": "Inbox", "value": "inbox", "count": 3, "icon": "EmailIcon" },
+    { "label": "Sent", "value": "sent", "icon": "SendIcon" },
+    { "label": "Draft", "value": "draft", "count": 4, "icon": "DraftIcon" },
+    { "label": "Starred", "value": "starred", "icon": "StarIcon" },
+    { "label": "Spam", "value": "spam", "count": 2, "icon": "SpamIcon" },
+    { "label": "Trash", "value": "trash", "icon": "TrashIcon" }
+  ],
+  "labels": [
+    { "label": "Personal", "color": "#28c76f" },
+    { "label": "Company", "color": "#00cfe8" },
+    { "label": "Important", "color": "#ff9f43" },
+    { "label": "Private", "color": "#ea5455" }
+  ]
+}

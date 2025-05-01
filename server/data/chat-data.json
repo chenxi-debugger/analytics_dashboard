@@ -1,160 +1,168 @@
 {
-    "chats": [
-      {
-        "id": 1,
-        "name": "Felecia Rower",
-        "avatar": "",
-        "snippet": "I will purchase it for sure. 👍",
-        "time": "Apr 29",
-        "unreadCount": 1,
-        "messages": [
-          {
-            "id": 1,
-            "sender": "Felecia Rower",
-            "content": "Hey John, I'm looking for the best admin template. Could you please help me find it out?",
-            "time": "11:45 PM"
-          },
-          {
-            "id": 2,
-            "sender": "You",
-            "content": "Absolutely!",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 3,
-            "sender": "You",
-            "content": "This admin template is built with MUI!!",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 4,
-            "sender": "Felecia Rower",
-            "content": "Looks clean and fresh UI 😍 Perfect for my next project.",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 5,
-            "sender": "Felecia Rower",
-            "content": "How can I purchase it?",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 6,
-            "sender": "You",
-            "content": "Thanks. From our official site 😊",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 7,
-            "sender": "Felecia Rower",
-            "content": "I will purchase it for sure. 👍",
-            "time": "3:28 PM"
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "name": "Adalberto Granzi",
-        "avatar": "",
-        "snippet": "If it takes long you can mail me ...",
-        "time": "Apr 28",
-        "unreadCount": 0,
-        "messages": [
-          {
-            "id": 1,
-            "sender": "You",
-            "content": "Hi",
-            "time": "11:45 PM"
-          },
-          {
-            "id": 2,
-            "sender": "You",
-            "content": "Hello. How can I help You?",
-            "time": "11:45 PM"
-          },
-          {
-            "id": 3,
-            "sender": "Adalberto Granzi",
-            "content": "Can I get details of my last transaction I made last month? 😅",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 4,
-            "sender": "You",
-            "content": "We need to check if we can provide you such information.",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 5,
-            "sender": "You",
-            "content": "I will inform you as I get update on this.",
-            "time": "11:46 PM"
-          },
-          {
-            "id": 6,
-            "sender": "Adalberto Granzi",
-            "content": "If it takes long you can mail me at my mail address.",
-            "time": "3:18 PM"
-          }
-        ]
-      }
-    ],
-    "contacts": [
-      {
-        "id": 1,
-        "name": "Joaquina Weisenborn",
-        "initials": "JW",
-        "color": "#ff9f43",
-        "snippet": "Soufflé soufflé caramels sweet roll. Jell..."
-      },
-      {
-        "id": 2,
-        "name": "Verla Morgano",
-        "initials": "VM",
-        "color": "#28c76f",
-        "snippet": "Chupa chups candy canes chocolate ba..."
-      },
-      {
-        "id": 3,
-        "name": "Margot Henschke",
-        "initials": "MH",
-        "color": "#00cfe8",
-        "snippet": "Cake pie jelly beans. Marzipan lem..."
-      },
-      {
-        "id": 4,
-        "name": "Sal Piggee",
-        "initials": "SP",
-        "color": "#ea5455",
-        "snippet": "Toffee caramels jelly-o tart gummi bear..."
-      },
-      {
-        "id": 5,
-        "name": "Miguel Guelfi",
-        "initials": "MG",
-        "color": "#ff9f43",
-        "snippet": "Biscuit powder oat cake donut brownie..."
-      },
-      {
-        "id": 6,
-        "name": "Mauro Elenbaas",
-        "initials": "ME",
-        "color": "#28c76f",
-        "snippet": "Bear claw ice cream lollipop gingerbrea..."
-      },
-      {
-        "id": 7,
-        "name": "Bridgett Omohundro",
-        "initials": "BO",
-        "color": "#00cfe8",
-        "snippet": "Gummies gummies I love candy icin..."
-      },
-      {
-        "id": 8,
-        "name": "Zenia Jacobs",
-        "initials": "ZJ",
-        "color": "#ea5455",
-        "snippet": "Cake pie jelly beans. Marzipan lem..."
-      }
-    ]
-  }
+  "chats": [
+    {
+      "id": 1,
+      "name": "Felecia Rower",
+      "avatar": "/1.png",
+      "snippet": "I will purchase it for sure. 👍",
+      "time": "Apr 29",
+      "unreadCount": 1,
+      "messages": [
+        {
+          "id": 1,
+          "sender": "Felecia Rower",
+          "content": "Hey John, I'm looking for the best admin template. Could you please help me find it out?",
+          "time": "11:45 PM"
+        },
+        {
+          "id": 2,
+          "sender": "You",
+          "content": "Absolutely!",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 3,
+          "sender": "You",
+          "content": "This admin template is built with MUI!!",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 4,
+          "sender": "Felecia Rower",
+          "content": "Looks clean and fresh UI 😍 Perfect for my next project.",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 5,
+          "sender": "Felecia Rower",
+          "content": "How can I purchase it?",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 6,
+          "sender": "You",
+          "content": "Thanks. From our official site 😊",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 7,
+          "sender": "Felecia Rower",
+          "content": "I will purchase it for sure. 👍",
+          "time": "3:28 PM"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Adalberto Granzi",
+      "avatar": "/2.png",
+      "snippet": "If it takes long you can mail me ...",
+      "time": "Apr 28",
+      "unreadCount": 0,
+      "messages": [
+        {
+          "id": 1,
+          "sender": "You",
+          "content": "Hi",
+          "time": "11:45 PM"
+        },
+        {
+          "id": 2,
+          "sender": "You",
+          "content": "Hello. How can I help You?",
+          "time": "11:45 PM"
+        },
+        {
+          "id": 3,
+          "sender": "Adalberto Granzi",
+          "content": "Can I get details of my last transaction I made last month? 😅",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 4,
+          "sender": "You",
+          "content": "We need to check if we can provide you such information.",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 5,
+          "sender": "You",
+          "content": "I will inform you as I get update on this.",
+          "time": "11:46 PM"
+        },
+        {
+          "id": 6,
+          "sender": "Adalberto Granzi",
+          "content": "If it takes long you can mail me at my mail address.",
+          "time": "3:18 PM"
+        }
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Joaquina Weisenborn",
+      "initials": "JW",
+      "color": "#ff9f43",
+      "snippet": "Soufflé soufflé caramels sweet roll. Jell...",
+      "avatar": "/3.png"
+    },
+    {
+      "id": 2,
+      "name": "Verla Morgano",
+      "initials": "VM",
+      "color": "#28c76f",
+      "snippet": "Chupa chups candy canes chocolate ba...",
+      "avatar": "/4.png"
+    },
+    {
+      "id": 3,
+      "name": "Margot Henschke",
+      "initials": "MH",
+      "color": "#00cfe8",
+      "snippet": "Cake pie jelly beans. Marzipan lem...",
+      "avatar": "/5.png"
+    },
+    {
+      "id": 4,
+      "name": "Sal Piggee",
+      "initials": "SP",
+      "color": "#ea5455",
+      "snippet": "Toffee caramels jelly-o tart gummi bear...",
+      "avatar": "/6.png"
+    },
+    {
+      "id": 5,
+      "name": "Miguel Guelfi",
+      "initials": "MG",
+      "color": "#ff9f43",
+      "snippet": "Biscuit powder oat cake donut brownie...",
+      "avatar": "/7.png"
+    },
+    {
+      "id": 6,
+      "name": "Mauro Elenbaas",
+      "initials": "ME",
+      "color": "#28c76f",
+      "snippet": "Bear claw ice cream lollipop gingerbrea...",
+      "avatar": "/8.png"
+    },
+    {
+      "id": 7,
+      "name": "Bridgett Omohundro",
+      "initials": "BO",
+      "color": "#00cfe8",
+      "snippet": "Gummies gummies I love candy icin...",
+      "avatar": "/9.png"
+    },
+    {
+      "id": 8,
+      "name": "Zenia Jacobs",
+      "initials": "ZJ",
+      "color": "#ea5455",
+      "snippet": "Cake pie jelly beans. Marzipan lem...",
+      "avatar": "/10.png"
+    }
+  ]
+}

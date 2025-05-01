@@ -267,7 +267,7 @@ const EmailPage = () => {
         <Box sx={getEmailPageStyle('sidebar')}>
           <Box sx={{ p: 2 }}>
             <Button variant="contained" sx={getEmailPageStyle('composeButton')}>
-              Compose
+              COMPOSE
             </Button>
           </Box>
           <List>
@@ -418,7 +418,11 @@ const EmailPage = () => {
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Avatar sx={getEmailPageStyle('emailAvatar')}>
+                            <Avatar
+                              src={email.avatar}
+                              sx={getEmailPageStyle('emailAvatar')}
+                              onError={() => console.log(`Failed to load avatar for ${email.sender}: ${email.avatar}`)}
+                            >
                               {email.sender[0]}
                             </Avatar>
                             <Typography variant="body2" sx={getEmailPageStyle('emailSender')}>
@@ -427,9 +431,6 @@ const EmailPage = () => {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          {/* <Typography variant="body2" sx={getEmailPageStyle('emailSubject')}>
-                            {email.subject}
-                          </Typography> */}
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
                               {email.snippet}
