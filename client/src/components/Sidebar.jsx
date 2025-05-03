@@ -38,8 +38,8 @@ import {
   Apps,
   Settings,
   Tune,
-  ChevronLeft,
-  ChevronRight,
+  ArrowCircleRightRounded as ArrowCircleRightRoundedIcon,
+  ArrowCircleLeftRounded as ArrowCircleLeftRoundedIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -153,22 +153,24 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
   };
 
   return (
-    <Drawer
-      variant={isLargeScreen ? "persistent" : "temporary"}
-      open={isLargeScreen ? true : open}
-      onClose={handleDrawerToggle}
-      css={isMini && isLargeScreen ? miniDrawerStyles : drawerStyles}
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
-          boxSizing: 'border-box',
-        },
-      }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+        <Drawer
+            variant={isLargeScreen ? "persistent" : "temporary"}
+            open={isLargeScreen ? true : open}
+            onClose={handleDrawerToggle}
+            css={isMini && isLargeScreen ? miniDrawerStyles : drawerStyles}
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                boxSizing: 'border-box',
+                transition: 'width .4s ease',
+              },
+            }}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+
       <Toolbar sx={{ display: 'flex', justifyContent: isMini ? 'center' : 'space-between', alignItems: 'center' }}>
         {!isMini && (
           <Typography variant="h6" sx={typographyTitleStyles}>
@@ -176,8 +178,17 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
           </Typography>
         )}
         {isLargeScreen && (
-          <IconButton onClick={onToggleMini}>
-            {isMini ? <ChevronRight /> : <ChevronLeft />}
+          <IconButton
+            onClick={onToggleMini}
+            sx={{
+              color: 'blue',
+              backgroundColor: 'lightblue',
+              '&:hover': {
+                backgroundColor: 'lightgrey',
+              },
+            }}
+          >
+            {isMini ? <ArrowCircleRightRoundedIcon /> : <ArrowCircleLeftRoundedIcon />}
           </IconButton>
         )}
       </Toolbar>

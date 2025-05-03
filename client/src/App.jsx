@@ -111,13 +111,18 @@ const App = () => {
         <Box sx={{ display: 'flex', minHeight: '100vh' }}>
           {/* AppBar */}
           <AppBar
-            position="fixed"
-            sx={{
-              ...appBarStyles,
-              width: { lg: `calc(100% - ${drawerWidth}px)` },
-              ml: { lg: `${drawerWidth}px` },
-            }}
-          >
+              position="fixed"
+              sx={{
+                ...appBarStyles,
+                width: { lg: `calc(100% - ${drawerWidth}px)` },
+                ml: { lg: `${drawerWidth}px` },
+                transition: (theme) =>
+                  theme.transitions.create(['width', 'margin'], {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.standard,
+                  }),
+              }}
+            >
             <Toolbar sx={toolbarStyles}>
               <IconButton
                 color="inherit"
@@ -292,18 +297,19 @@ const App = () => {
 
           {/* Main Content */}
           <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              p: 3,
-              mt: 8,
-              width: { xs: '100%', lg: `calc(100% - ${drawerWidth}px)` },
-              backgroundColor: '#f5f5f9',
-              minHeight: '100vh',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
+  component="main"
+  sx={{
+    flexGrow: 1,
+    p: 3,
+    mt: 8,
+    width: { xs: '100%', lg: `calc(100% - ${drawerWidth}px)` },
+    backgroundColor: '#f5f5f9',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  }}
+>
+
             <Routes>
               <Route path="/" element={<AnalyticsPage />} />
               <Route path="/dashboards/crm" element={<CrmPage />} />

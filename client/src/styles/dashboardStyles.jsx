@@ -105,7 +105,7 @@ export const drawerStyles = css`
     background-color: #f8f9ff;
     border-right: 1px solid #e5e7eb;
     color: #6b7280;
-    transition: width 0.3s ease;
+    
   }
 `;
 
@@ -117,7 +117,7 @@ export const miniDrawerStyles = css`
     border-right: 1px solid #e5e7eb;
     color: #6b7280;
     overflow-x: hidden;
-    transition: width 0.3s ease;
+  
   }
 `;
 
