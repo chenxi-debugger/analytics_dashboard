@@ -1,23 +1,24 @@
 import { Margin } from "@mui/icons-material";
 
 const getEmailPageStyle = (key, options = {}) => {
+    const { theme } = options; // Ensure theme is passed in options
     const styles = {
       mainContainer: {
         display: 'flex',
         height: '100vh',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: theme?.palette?.background?.default || '#1a1d29', // Dark background
       },
       sidebar: {
         width: '250px',
-        borderRight: '1px solid #e0e0e0',
-        backgroundColor: '#fff',
+        borderRight: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
+        backgroundColor: theme?.palette?.background?.paper || '#212332', // Darker sidebar background
         display: 'flex',
         borderRadius: '8px 0 0 0',
         flexDirection: 'column',
       },
       composeButton: {
-        backgroundColor: 'rgb(105, 108, 255)',
-        color: '#fff',
+        backgroundColor: theme?.palette?.primary?.main || '#696cff', // Theme primary color for compose button
+        color: theme?.palette?.primary?.contrastText || '#fff',
         textTransform: 'none',
         fontWeight: 500,
         padding: '8px 16px',
@@ -26,36 +27,36 @@ const getEmailPageStyle = (key, options = {}) => {
         marginTop: '6px',
         width: '190px',
         '&:hover': {
-          backgroundColor: '#4a569d',
+          backgroundColor: theme?.palette?.primary?.dark || '#5a5fe6', // Darker shade of primary on hover
         },
       },
       navItem: {
         padding: '8px 16px',
         '&:hover': {
-          backgroundColor: '#f1f3f4',
+          backgroundColor: theme?.palette?.action?.hover || '#2a2f3e', // Hover effect using theme
         },
         ...(options.selected && {
-          backgroundColor: '#e8e8e8',
+          backgroundColor: theme?.palette?.action?.selected || '#2a2f3e', // Selected state background
           fontWeight: 600,
         }),
       },
       navIcon: {
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for icons
         minWidth: '40px',
         ...(options.selected && {
-          color: '#5c6bc0',
+          color: theme?.palette?.primary?.main || '#696cff', // Primary color for selected icon
         }),
       },
       navText: {
-        color: '#333',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color
         fontSize: '14px',
         ...(options.selected && {
-          color: '#5c6bc0',
+          color: theme?.palette?.text?.primary || '#fff', // Primary text color for selected
           fontWeight: 600,
         }),
       },
       tabCount: {
-        backgroundColor: '#e0e0e0',
+        backgroundColor: theme?.palette?.action?.disabledBackground || '#2a2f3e', // Disabled background for tab count
         borderRadius: '12px',
         padding: '2px 8px',
         marginLeft: '8px',
@@ -64,7 +65,7 @@ const getEmailPageStyle = (key, options = {}) => {
         padding: '16px',
       },
       labelsTitle: {
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for labels title
         fontSize: '12px',
         fontWeight: 500,
         marginBottom: '8px',
@@ -72,24 +73,24 @@ const getEmailPageStyle = (key, options = {}) => {
       labelItem: {
         padding: '4px 16px',
         '&:hover': {
-          backgroundColor: '#f1f3f4',
+          backgroundColor: theme?.palette?.action?.hover || '#2a2f3e', // Hover effect using theme
         },
         ...(options.selected && {
-          backgroundColor: '#e8e8e8',
+          backgroundColor: theme?.palette?.action?.selected || '#2a2f3e', // Selected state background
         }),
       },
       labelDot: {
         width: '12px',
         height: '12px',
         borderRadius: '50%',
-        backgroundColor: options.color || '#ccc',
+        backgroundColor: options.color || theme?.palette?.action?.disabled || '#ccc', // Use the label color or fallback
         marginRight: '8px',
       },
       labelText: {
-        color: '#333',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for label text
         fontSize: '14px',
         ...(options.selected && {
-          color: '#5c6bc0',
+          color: theme?.palette?.text?.primary || '#fff', // Primary text color for selected
           fontWeight: 600,
         }),
       },
@@ -98,12 +99,15 @@ const getEmailPageStyle = (key, options = {}) => {
         display: 'flex',
         flexDirection: 'column',
         padding: '16px',
+        backgroundColor: theme?.palette?.background?.default || '#1a1d29', // Dark background for content
       },
       breadcrumbs: {
         marginBottom: '16px',
       },
       breadcrumbItem: {
-        color: options.active ? '#5c6bc0' : '#666',
+        color: options.active
+          ? theme?.palette?.primary?.main || '#696cff'
+          : theme?.palette?.text?.secondary || '#a1a5b7', // Primary for active, secondary for inactive
         fontSize: '14px',
         ...(options.active && {
           fontWeight: 600,
@@ -114,68 +118,73 @@ const getEmailPageStyle = (key, options = {}) => {
       },
       searchField: {
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: theme?.palette?.background?.paper || '#212332', // Paper background for search field
         borderRadius: '4px',
         '& .MuiOutlinedInput-root': {
           '& fieldset': {
-            borderColor: '#e0e0e0',
+            borderColor: theme?.palette?.divider || '#2a2f3e', // Divider color for border
           },
           '&:hover fieldset': {
-            borderColor: '#5c6bc0',
+            borderColor: theme?.palette?.primary?.main || '#696cff', // Primary color on hover
           },
           '&.Mui-focused fieldset': {
-            borderColor: '#5c6bc0',
+            borderColor: theme?.palette?.primary?.main || '#696cff', // Primary color when focused
           },
+        },
+        '& .MuiInputBase-input': {
+          color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for input
         },
       },
       emailList: {
         flex: 1,
         overflow: 'auto',
-        backgroundColor: '#fff',
+        backgroundColor: theme?.palette?.background?.paper || '#212332', // Paper background for email list
         borderRadius: '4px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
       },
       enhancedTableToolbar: {
-        backgroundColor: '#f1f3f4',
+        backgroundColor: theme?.palette?.action?.disabledBackground || '#2a2f3e', // Disabled background for toolbar
         padding: '8px 16px',
       },
       emailCheckbox: {
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for checkbox
         '&.Mui-checked': {
-          color: '#5c6bc0',
+          color: theme?.palette?.primary?.main || '#696cff', // Primary color when checked
         },
       },
       emailItem: {
         '&:hover': {
-          backgroundColor: '#f8f9fa',
+          backgroundColor: theme?.palette?.action?.hover || '#2a2f3e', // Hover effect using theme
         },
         '&.Mui-selected': {
-          backgroundColor: '#e8e8e8',
+          backgroundColor: theme?.palette?.action?.selected || '#2a2f3e', // Selected state background
         },
       },
       emailStarIcon: {
-        color: options.starred ? '#f4b400' : '#ccc',
+        color: options.starred
+          ? theme?.palette?.warning?.main || '#ffab00'
+          : theme?.palette?.text?.secondary || '#a1a5b7', // Warning color for starred, secondary otherwise
         fontSize: '20px',
       },
       emailAvatar: {
         width: '32px',
         height: '32px',
         fontSize: '14px',
-        backgroundColor: '#5c6bc0',
+        backgroundColor: theme?.palette?.primary?.main || '#696cff', // Primary color for avatar background
       },
       emailSender: {
         fontSize: '14px',
         fontWeight: 500,
-        color: '#333',
+        color: theme?.palette?.text?.primary || '#fff', // Primary text color for sender
       },
       emailSubject: {
         fontSize: '14px',
         fontWeight: 500,
-        color: '#333',
+        color: theme?.palette?.text?.primary || '#fff', // Primary text color for subject
       },
       emailSnippet: {
         fontSize: '12px',
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for snippet
       },
       emailLabels: {
         display: 'flex',
@@ -185,7 +194,7 @@ const getEmailPageStyle = (key, options = {}) => {
         width: '8px',
         height: '8px',
         borderRadius: '50%',
-        backgroundColor: options.color || '#ccc',
+        backgroundColor: options.color || theme?.palette?.action?.disabled || '#ccc', // Use the label color or fallback
       },
       emailActions: {
         display: 'flex',
@@ -194,13 +203,13 @@ const getEmailPageStyle = (key, options = {}) => {
       },
       emailTime: {
         fontSize: '12px',
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for time
       },
       actionIcon: {
-        color: '#666',
+        color: theme?.palette?.text?.secondary || '#a1a5b7', // Secondary text color for action icons
         fontSize: '20px',
         '&:hover': {
-          color: '#5c6bc0',
+          color: theme?.palette?.primary?.main || '#696cff', // Primary color on hover
         },
       },
     };

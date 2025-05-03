@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   List,
@@ -88,24 +89,25 @@ const stableSort = (array, comparator) => {
 
 // Custom Toolbar for selected emails
 const EnhancedTableToolbar = ({ numSelected, onAction }) => {
+  const theme = useTheme();
   return (
-    <Toolbar sx={getEmailPageStyle('enhancedTableToolbar')}>
+    <Toolbar sx={getEmailPageStyle('enhancedTableToolbar', { theme })}>
       <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
         {numSelected} selected
       </Typography>
       <Tooltip title="Reply">
         <IconButton onClick={() => onAction('reply')}>
-          <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
+          <ReplyIcon sx={getEmailPageStyle('actionIcon', { theme })} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Forward">
         <IconButton onClick={() => onAction('forward')}>
-          <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
+          <ForwardIcon sx={getEmailPageStyle('actionIcon', { theme })} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Delete">
         <IconButton onClick={() => onAction('delete')}>
-          <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
+          <DeleteIcon sx={getEmailPageStyle('actionIcon', { theme })} />
         </IconButton>
       </Tooltip>
     </Toolbar>
@@ -123,6 +125,7 @@ const iconMap = {
 };
 
 const EmailPage = () => {
+  const theme = useTheme();
   const { tab, labelName } = useParams();
   const navigate = useNavigate();
   const [selectedEmails, setSelectedEmails] = useState([]);
@@ -262,11 +265,11 @@ const EmailPage = () => {
 
   return (
     <ErrorBoundary>
-      <Box sx={getEmailPageStyle('mainContainer')}>
+      <Box sx={getEmailPageStyle('mainContainer', { theme })}>
         {/* Email Sidebar */}
-        <Box sx={getEmailPageStyle('sidebar')}>
+        <Box sx={getEmailPageStyle('sidebar', { theme })}>
           <Box sx={{ p: 2 }}>
-            <Button variant="contained" sx={getEmailPageStyle('composeButton')}>
+            <Button variant="contained" sx={getEmailPageStyle('composeButton', { theme })}>
               COMPOSE
             </Button>
           </Box>
@@ -276,19 +279,19 @@ const EmailPage = () => {
                 <ListItemButton
                   selected={selectedTab === tab.value}
                   onClick={() => handleTabChange(tab.value)}
-                  sx={getEmailPageStyle('navItem', { selected: selectedTab === tab.value })}
+                  sx={getEmailPageStyle('navItem', { selected: selectedTab === tab.value, theme })}
                 >
-                  <ListItemIcon sx={getEmailPageStyle('navIcon', { selected: selectedTab === tab.value })}>
+                  <ListItemIcon sx={getEmailPageStyle('navIcon', { selected: selectedTab === tab.value, theme })}>
                     {tab.icon}
                   </ListItemIcon>
                   <ListItemText
                     primary={tab.label}
                     primaryTypographyProps={{
-                      sx: getEmailPageStyle('navText', { selected: selectedTab === tab.value }),
+                      sx: getEmailPageStyle('navText', { selected: selectedTab === tab.value, theme }),
                     }}
                   />
                   {tab.count && (
-                    <Box sx={getEmailPageStyle('tabCount')}>
+                    <Box sx={getEmailPageStyle('tabCount', { theme })}>
                       <Typography variant="caption">{tab.count}</Typography>
                     </Box>
                   )}
@@ -297,22 +300,22 @@ const EmailPage = () => {
             ))}
           </List>
           <Divider />
-          <Box sx={getEmailPageStyle('labelsSection')}>
-            <Typography variant="caption" sx={getEmailPageStyle('labelsTitle')}>
+          <Box sx={getEmailPageStyle('labelsSection', { theme })}>
+            <Typography variant="caption" sx={getEmailPageStyle('labelsTitle', { theme })}>
               LABELS
             </Typography>
             <List>
               {labels.map((label) => (
                 <ListItem key={label.label} disablePadding>
                   <ListItemButton
-                    sx={getEmailPageStyle('labelItem', { selected: selectedTab === `label/${label.label.toLowerCase()}` })}
+                    sx={getEmailPageStyle('labelItem', { selected: selectedTab === `label/${label.label.toLowerCase()}`, theme })}
                     onClick={() => handleTabChange(`label/${label.label.toLowerCase()}`)}
                   >
-                    <Box sx={getEmailPageStyle('labelDot', { color: label.color })} />
+                    <Box sx={getEmailPageStyle('labelDot', { color: label.color, theme })} />
                     <ListItemText
                       primary={label.label}
                       primaryTypographyProps={{
-                        sx: getEmailPageStyle('labelText', { selected: selectedTab === `label/${label.label.toLowerCase()}` }),
+                        sx: getEmailPageStyle('labelText', { selected: selectedTab === `label/${label.label.toLowerCase()}`, theme }),
                       }}
                     />
                   </ListItemButton>
@@ -323,21 +326,21 @@ const EmailPage = () => {
         </Box>
 
         {/* Email Page (Main Content) */}
-        <Box sx={getEmailPageStyle('content')}>
+        <Box sx={getEmailPageStyle('content', { theme })}>
           {/* Search Bar */}
-          <Box sx={getEmailPageStyle('searchBarContainer')}>
+          <Box sx={getEmailPageStyle('searchBarContainer', { theme })}>
             <TextField
               placeholder="Search mail"
               variant="outlined"
               size="small"
               InputProps={{
-                startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
+                startAdornment: <SearchIcon sx={{ color: theme.palette.text.secondary, mr: 1 }} />,
               }}
-              sx={getEmailPageStyle('searchField')}
+              sx={getEmailPageStyle('searchField', { theme })}
             />
           </Box>
           {/* Email List with Sorting & Selecting */}
-          <Box sx={getEmailPageStyle('emailList')}>
+          <Box sx={getEmailPageStyle('emailList', { theme })}>
             {selectedEmails.length > 0 && (
               <EnhancedTableToolbar numSelected={selectedEmails.length} onAction={handleAction} />
             )}
@@ -351,11 +354,11 @@ const EmailPage = () => {
                         indeterminate={selectedEmails.length > 0 && selectedEmails.length < filteredEmails.length}
                         checked={filteredEmails.length > 0 && selectedEmails.length === filteredEmails.length}
                         onChange={handleSelectAllClick}
-                        sx={getEmailPageStyle('emailCheckbox')}
+                        sx={getEmailPageStyle('emailCheckbox', { theme })}
                       />
                     </TableCell>
                     <TableCell padding="checkbox">
-                      <Typography variant="body2" sx={{ color: '#6e6b7b' }}></Typography>
+                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}></Typography>
                     </TableCell>
                     {headCells.map((headCell) => (
                       <TableCell
@@ -393,14 +396,14 @@ const EmailPage = () => {
                         selected={isItemSelected}
                         onMouseEnter={() => setHoveredEmail(email.id)}
                         onMouseLeave={() => setHoveredEmail(null)}
-                        sx={getEmailPageStyle('emailItem')}
+                        sx={getEmailPageStyle('emailItem', { theme })}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
                             color="primary"
                             checked={isItemSelected}
                             onChange={() => handleSelectEmail(email.id)}
-                            sx={getEmailPageStyle('emailCheckbox')}
+                            sx={getEmailPageStyle('emailCheckbox', { theme })}
                           />
                         </TableCell>
                         <TableCell padding="checkbox">
@@ -412,35 +415,39 @@ const EmailPage = () => {
                             }}
                           >
                             <StarIcon
-                              sx={getEmailPageStyle('emailStarIcon', { starred: email.starred })}
+                              sx={getEmailPageStyle('emailStarIcon', { starred: email.starred, theme })}
                             />
                           </IconButton>
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Avatar
-                              src={email.avatar}
-                              sx={getEmailPageStyle('emailAvatar')}
-                              onError={() => console.log(`Failed to load avatar for ${email.sender}: ${email.avatar}`)}
+                              src={email.avatar} // Use the avatar field directly
+                              sx={getEmailPageStyle('emailAvatar', { theme })}
+                              onError={() => console.log(`Failed to load email avatar for ${email.sender}: ${email.avatar}`)}
                             >
-                              {email.sender[0]}
+                              {email.sender[0]} {/* Fallback to initial if avatar fails to load */}
                             </Avatar>
-                            <Typography variant="body2" sx={getEmailPageStyle('emailSender')}>
+                            <Typography variant="body2" sx={getEmailPageStyle('emailSender', { theme })}>
                               {email.sender}
                             </Typography>
                           </Box>
                         </TableCell>
                         <TableCell>
+                          {/* <Typography variant="body2" sx={getEmailPageStyle('emailSubject', { theme })}>
+                            {email.subject}
+                          </Typography> */}
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Typography variant="caption" sx={getEmailPageStyle('emailSnippet')}>
+                            <Typography variant="caption" sx={getEmailPageStyle('emailSnippet', { theme })}>
                               {email.snippet}
                             </Typography>
-                            <Box sx={getEmailPageStyle('emailLabels')}>
+                            <Box sx={getEmailPageStyle('emailLabels', { theme })}>
                               {email.labels.map((label, idx) => (
                                 <Box
                                   key={idx}
                                   sx={getEmailPageStyle('emailLabelDot', {
                                     color: labels.find((l) => l.label.toLowerCase() === label)?.color,
+                                    theme,
                                   })}
                                 />
                               ))}
@@ -448,20 +455,20 @@ const EmailPage = () => {
                           </Box>
                         </TableCell>
                         <TableCell align="right">
-                          <Box sx={getEmailPageStyle('emailActions')}>
-                            <Typography variant="caption" sx={getEmailPageStyle('emailTime')}>
+                          <Box sx={getEmailPageStyle('emailActions', { theme })}>
+                            <Typography variant="caption" sx={getEmailPageStyle('emailTime', { theme })}>
                               {email.time}
                             </Typography>
                             {hoveredEmail === email.id && selectedEmails.length === 0 && (
                               <Box sx={{ display: 'flex', gap: 1 }}>
                                 <IconButton size="small">
-                                  <ReplyIcon sx={getEmailPageStyle('actionIcon')} />
+                                  <ReplyIcon sx={getEmailPageStyle('actionIcon', { theme })} />
                                 </IconButton>
                                 <IconButton size="small">
-                                  <ForwardIcon sx={getEmailPageStyle('actionIcon')} />
+                                  <ForwardIcon sx={getEmailPageStyle('actionIcon', { theme })} />
                                 </IconButton>
                                 <IconButton size="small">
-                                  <DeleteIcon sx={getEmailPageStyle('actionIcon')} />
+                                  <DeleteIcon sx={getEmailPageStyle('actionIcon', { theme })} />
                                 </IconButton>
                               </Box>
                             )}

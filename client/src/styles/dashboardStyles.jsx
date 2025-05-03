@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
 
-export const appBarStyles = {
+export const appBarStyles = (theme) => ({
   zIndex: 1200,
-  backgroundColor: '#ffffff',
-  color: '#6b7280',
+  backgroundColor: theme.palette.background.paper,
+  color: theme.palette.text.secondary,
   boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-};
+});
 
 export const toolbarStyles = {
   display: 'flex',
@@ -22,21 +22,21 @@ export const searchStyles = {
   maxWidth: '700px',
 };
 
-export const searchBoxStyles = {
+export const searchBoxStyles = (theme) => ({
   display: 'flex',
   alignItems: 'center',
   p: '8px 16px',
   width: '100%',
   cursor: 'pointer',
   boxShadow: 'none',
-  backgroundColor: '#f5f5f9',
+  backgroundColor: theme.palette.background.default,
   borderRadius: '8px',
-};
+});
 
-export const searchIconStyles = {
+export const searchIconStyles = (theme) => ({
   mr: '8px',
-  color: '#9ca3af',
-};
+  color: theme.palette.text.secondary,
+});
 
 export const searchPopupStyles = {
   p: '16px',
@@ -98,73 +98,52 @@ export const userInfoStyles = {
   mb: '8px',
 };
 
-export const drawerStyles = css`
-  & .MuiDrawer-paper {
-    width: 280px;
-    box-sizing: border-box;
-    background-color: #f8f9ff;
-    border-right: 1px solid #e5e7eb;
-    color: #6b7280;
-    
-  }
-`;
+// Removed drawerStyles and miniDrawerStyles since we'll define them in Sidebar.jsx using sx
 
-export const miniDrawerStyles = css`
-  & .MuiDrawer-paper {
-    width: 80px;
-    box-sizing: border-box;
-    background-color: #f8f9ff;
-    border-right: 1px solid #e5e7eb;
-    color: #6b7280;
-    overflow-x: hidden;
-  
-  }
-`;
-
-export const typographyTitleStyles = {
-  color: '#5a57ff',
+export const typographyTitleStyles = (theme) => ({
+  color: theme.palette.primary.main, // Use primary color for branding
   fontWeight: 'bold',
-};
+});
 
 export const boxContentStyles = {
   overflowY: 'auto',
 };
 
-export const typographyCategoryStyles = {
+export const typographyCategoryStyles = (theme) => ({
   pl: 2,
   mt: 2,
   mb: 1,
   display: 'block',
   fontWeight: 600,
-  color: '#9ca3af',
+  color: theme.palette.text.secondary,
   fontSize: '0.75rem',
   textTransform: 'uppercase',
-};
+});
 
-export const getListItemButtonStyles = (isActive) => ({
+export const getListItemButtonStyles = (theme) => (isActive) => ({
   py: 1,
   ...(isActive && {
-    backgroundColor: '#5a57ff',
-    color: '#ffffff',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
     '& .MuiListItemIcon-root': {
-      color: '#ffffff',
+      color: theme.palette.primary.contrastText,
     },
   }),
 });
 
-export const getListItemIconStyles = (isActive) => ({
-  color: isActive ? '#ffffff' : '#9CA3AF',
+export const getListItemIconStyles = (theme) => (isActive) => ({
+  color: isActive ? theme.palette.primary.contrastText : theme.palette.text.secondary,
   minWidth: 36,
 });
 
-export const getNestedListItemButtonStyles = (isActive) => ({
+export const getNestedListItemButtonStyles = (theme) => (isActive) => ({
   pl: 4,
   py: 0.5,
-  color: isActive ? '#5a57ff' : '#6b7280',
+  color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
   ...(isActive && {
     fontWeight: 600,
   }),
   '&:hover': {
-    color: '#5a57ff',
+    color: theme.palette.primary.main,
   },
 });

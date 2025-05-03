@@ -2,18 +2,18 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 // Single styled component with props to handle different sections
-const StyledFooter = styled(Box)(({ variant }) => ({
+const StyledFooter = styled(Box)(({ theme, variant }) => ({
   ...(variant === 'container' && {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '12px',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.palette.background.paper, // Use theme background
     position: 'fixed',
     bottom: 0,
     width: '100vw',
     boxSizing: 'border-box',
-    paddingRight: '322px',
+    paddingRight: '180px',
     paddingLeft: '28px',
   }),
   ...(variant === 'left' && {

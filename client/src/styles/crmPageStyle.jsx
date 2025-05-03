@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-const getCrmStyle = (className) => {
+const getCrmStyle = (className, theme) => {
   switch (className) {
     case 'crmMain':
       return {
@@ -8,7 +8,7 @@ const getCrmStyle = (className) => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: '#f8f9fd',
+        bgcolor: theme.palette.background.default, // Use theme background (was #f8f9fd)
       };
 
     case 'crmContent':
@@ -33,7 +33,7 @@ const getCrmStyle = (className) => {
       return {
         p: 2,
         borderRadius: '8px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
       };
 
@@ -42,7 +42,7 @@ const getCrmStyle = (className) => {
       return {
         fontSize: '1rem',
         fontWeight: 600,
-        color: '#5e5873',
+        color: theme.palette.text.primary, // Use theme text color (was #5e5873)
       };
 
     // Typography for h4 (large values)
@@ -50,14 +50,14 @@ const getCrmStyle = (className) => {
       return {
         fontSize: '1.75rem',
         fontWeight: 700,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
       };
 
     // Typography for body2 (secondary text)
     case 'typographyBody2':
       return {
         fontSize: '0.85rem',
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     // Rating Value
@@ -80,7 +80,7 @@ const getCrmStyle = (className) => {
     case 'earningReportChart':
       return {
         height: '90px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
         borderRadius: '6px',
         mt: 1.5,
       };
@@ -109,9 +109,13 @@ const getCrmStyle = (className) => {
           display: 'flex',
           flexDirection: 'column',
         },
+        '& .MuiTypography-body2': {
+          fontSize: '0.85rem',
+          color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 600,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
           my: 0.5,
         },
         '& div': {
@@ -130,7 +134,7 @@ const getCrmStyle = (className) => {
       return {
         p: 2,
         borderRadius: '8px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
@@ -154,6 +158,7 @@ const getCrmStyle = (className) => {
         transform: 'translate(-50%, -50%)',
         fontSize: '1.5rem',
         fontWeight: 700,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'legendDot':
@@ -181,10 +186,12 @@ const getCrmStyle = (className) => {
         alignItems: 'center',
         '& .MuiTypography-body2': {
           flex: 1,
+          fontSize: '0.85rem',
+          color: theme.palette.text.secondary, // Use theme secondary text (was implied #6e6b7b)
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 600,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         },
       };
 
@@ -217,7 +224,7 @@ const getCrmStyle = (className) => {
         alignItems: 'center',
         '&.header .MuiTypography-body2': {
           fontWeight: 600,
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
           fontSize: '0.8rem',
         },
         '& .MuiTypography-body2': {
@@ -226,7 +233,7 @@ const getCrmStyle = (className) => {
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 500,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         },
       };
 
@@ -236,6 +243,7 @@ const getCrmStyle = (className) => {
         height: '24px',
         borderRadius: '50%',
         mr: 1,
+        bgcolor: theme.palette.divider, // Use divider color (was #e0e0e0)
       };
 
     default:

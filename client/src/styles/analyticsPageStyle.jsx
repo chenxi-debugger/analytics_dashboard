@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Margin, Padding } from '@mui/icons-material';
 import { color } from 'echarts';
 
-const getAnalyticsStyle = (className) => {
+const getAnalyticsStyle = (className, theme) => {
   switch (className) {
     case 'analyticsMain':
       return {
@@ -10,7 +10,7 @@ const getAnalyticsStyle = (className) => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.background.default, // Use theme background
         minHeight: '100vh',
         width: '100%',
       };
@@ -25,11 +25,12 @@ const getAnalyticsStyle = (className) => {
     case 'welcomeCard':
       return {
         p: { xs: 1.5, md: 2.5 },
-        color: '#7367f0',
+        color: theme.palette.primary.main, // Use primary color (was #7367f0)
         borderRadius: '10px',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
-        Padding: '50px',
+        padding: '50px', // Note: 'Padding' was incorrect, should be 'padding'
+        bgcolor: theme.palette.background.paper, // Add background
       };
 
     case 'welcomeContent':
@@ -43,13 +44,14 @@ const getAnalyticsStyle = (className) => {
       return {
         fontSize: '24px',
         fontWeight: 500,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'welcomeTypographyBody2':
       return {
         fontSize: '18px',
         width: '65%',
-        color: 'grey',
+        color: theme.palette.text.secondary, // Use theme secondary text (was grey)
         mt: 1,
         opacity: 0.9,
       };
@@ -57,9 +59,9 @@ const getAnalyticsStyle = (className) => {
     case 'welcomeAction':
       return {
         mt: { xs: 1, md: 1.5 },
-        bgcolor: 'white',
-        color: ' #7367f0',
-        border: '1px solid #7367f0',
+        bgcolor: theme.palette.background.paper, // Use theme background (was white)
+        color: theme.palette.primary.main, // Use primary color (was #7367f0)
+        border: `1px solid ${theme.palette.primary.main}`,
         p: { xs: '5px 10px', md: '6px 12px' },
         borderRadius: '6px',
         display: 'inline-block',
@@ -84,7 +86,7 @@ const getAnalyticsStyle = (className) => {
       return {
         p: { xs: 1.5, md: 2 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
@@ -103,7 +105,7 @@ const getAnalyticsStyle = (className) => {
     case 'orderValue':
       return {
         my: 1,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         fontSize: { xs: '20px', md: '24px' },
         fontWeight: 700,
       };
@@ -120,7 +122,7 @@ const getAnalyticsStyle = (className) => {
       return {
         p: { xs: 1.5, md: 2 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
@@ -139,14 +141,14 @@ const getAnalyticsStyle = (className) => {
     case 'salesValue':
       return {
         my: 1,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         fontSize: { xs: '20px', md: '24px' },
         fontWeight: 700,
       };
 
     case 'salesGrowth':
       return {
-        color: '#28c76f',
+        color: theme.palette.success.main, // Use success color (was #28c76f)
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
         display: 'flex',
@@ -156,140 +158,139 @@ const getAnalyticsStyle = (className) => {
 
     // Total Revenue + Company Growth
     case 'revenueGrowthCombined':
-  return {
-    p: { xs: 1.5, md: 2.5 },
-    borderRadius: '10px',
-    bgcolor: '#fff',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-    overflow: 'hidden',
-    width: '100%',
-  };
+      return {
+        p: { xs: 1.5, md: 2.5 },
+        borderRadius: '10px',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        overflow: 'hidden',
+        width: '100%',
+      };
 
-case 'revenueGrowthContent':
-  return {
-    gap: { xs: 1.5, md: 2.5 },
-    height: '100%',
-  };
+    case 'revenueGrowthContent':
+      return {
+        gap: { xs: 1.5, md: 2.5 },
+        height: '100%',
+      };
 
-case 'revenueSection':
-  return {
-    flex: 2,
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-  };
+    case 'revenueSection':
+      return {
+        flex: 2,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+      };
 
-case 'revenueHeader':
-  return {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    mb: 1.5,
-  };
+    case 'revenueHeader':
+      return {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 1.5,
+      };
 
-case 'revenueHeaderTypographyH6':
-  return {
-    fontSize: { xs: '14px', md: '16px' },
-    fontWeight: 600,
-    color: '#1a1a1a',
-  };
+    case 'revenueHeaderTypographyH6':
+      return {
+        fontSize: { xs: '14px', md: '16px' },
+        fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+      };
 
-case 'revenueHeaderTypographyBody2':
-  return {
-    fontSize: { xs: '11px', md: '12px' },
-    color: '#6e6b7b',
-    bgcolor: '#f5f5f9',
-    borderRadius: '6px',
-    px: 1,
-    py: 0.5,
-  };
+    case 'revenueHeaderTypographyBody2':
+      return {
+        fontSize: { xs: '11px', md: '12px' },
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        borderRadius: '6px',
+        px: 1,
+        py: 0.5,
+      };
 
-case 'revenueChart':
-  return {
-    flex: 1,
-    width: '100%',
-    maxHeight: '300px',
-  };
+    case 'revenueChart':
+      return {
+        flex: 1,
+        width: '100%',
+        maxHeight: '300px',
+      };
 
-case 'growthSection':
-  return {
-    flex: 1,
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  };
+    case 'growthSection':
+      return {
+        flex: 1,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+      };
 
-case 'growthTypographyH6':
-  return {
-    fontSize: { xs: '14px', md: '16px' },
-    fontWeight: 600,
-    color: '#6e6b7b',
-    mb: 1,
-  };
+    case 'growthTypographyH6':
+      return {
+        fontSize: { xs: '14px', md: '16px' },
+        fontWeight: 600,
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        mb: 1,
+      };
 
-case 'growthProgress':
-  return {
-    position: 'relative',
-    display: 'inline-flex',
-    my: { xs: 1, md: 1.5 },
-    '& .MuiCircularProgress-root': {
-      color: '#7367f0', // Fallback color
-      size: { xs: '60px', md: '80px' },
-      thickness: 6,
-      background: 'linear-gradient(90deg, #e0e0e0 0%, #e0e0e0 100%)',
-      borderRadius: '50%',
-    },
-  };
+    case 'growthProgress':
+      return {
+        position: 'relative',
+        display: 'inline-flex',
+        my: { xs: 1, md: 1.5 },
+        '& .MuiCircularProgress-root': {
+          color: theme.palette.primary.main, // Use primary color (was #7367f0)
+          size: { xs: '60px', md: '80px' },
+          thickness: 6,
+          backgroundColor: theme.palette.divider, // Use divider color (was #e0e0e0)
+          borderRadius: '50%',
+        },
+      };
 
-case 'growthValue':
-  return {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    fontSize: { xs: '18px', md: '20px' },
-    fontWeight: 600,
-    color: '#1a1a1a',
-  };
+    case 'growthValue':
+      return {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: { xs: '18px', md: '20px' },
+        fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+      };
 
-case 'growthStats':
-  return {
-    justifyContent: 'center',
-    gap: { xs: 1, md: 2 },
-    mt: 1,
-  };
+    case 'growthStats':
+      return {
+        justifyContent: 'center',
+        gap: { xs: 1, md: 2 },
+        mt: 1,
+      };
 
-case 'growthStatItem':
-  return {
-    bgcolor: '#f5f5f9',
-    p: { xs: 0.75, md: 1 },
-    borderRadius: '6px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minWidth: '80px',
-  };
+    case 'growthStatItem':
+      return {
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        p: { xs: 0.75, md: 1 },
+        borderRadius: '6px',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minWidth: '80px',
+      };
 
-case 'growthStatTypographyBody2':
-  return {
-    fontSize: { xs: '11px', md: '12px' },
-    color: '#6e6b7b',
-  };
+    case 'growthStatTypographyBody2':
+      return {
+        fontSize: { xs: '11px', md: '12px' },
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+      };
 
     // Payments Card
     case 'paymentsCard':
       return {
         p: { xs: 1, md: 1.25 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-       
-        flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
+        flex: { xs: 'none', sm: 1 },
       };
 
     case 'paymentsHeader':
@@ -302,14 +303,14 @@ case 'growthStatTypographyBody2':
     case 'paymentsValue':
       return {
         my: 0.5,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
       };
 
     case 'paymentsGrowth':
       return {
-        color: '#28c76f',
+        color: theme.palette.success.main, // Use success color (was #28c76f)
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
         display: 'flex',
@@ -322,14 +323,14 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: 1, md: 1.25 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
         width: '100%',
-        flex: { xs: 'none', sm: 1 }, // Flex 1 on sm+ to split space evenly, none on xs
+        flex: { xs: 'none', sm: 1 },
       };
 
     case 'revenueStatsHeader':
@@ -343,7 +344,7 @@ case 'growthStatTypographyBody2':
     case 'revenueStatsValue':
       return {
         my: 0.5,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
       };
@@ -360,14 +361,13 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: 1, md: 1.25 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
-        // width: '100%',
         display: 'flex',
         flexDirection: 'row',
       };
-    
+
     case 'profitTextSection':
       return {
         flex: 1,
@@ -377,52 +377,51 @@ case 'growthStatTypographyBody2':
         marginLeft: '30px',
         gap: 2,
       };
-    
+
     case 'profitTypographyH6':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
-        mb: 0.5,
+        color: theme.palette.text.primary, // Use theme text color
       };
-    
+
     case 'profitYear':
       return {
-        bgcolor: '#ffe4b5', // Light orange background as in the image
+        bgcolor: theme.palette.warning.light, // Use warning light for orange background (was #ffe4b5)
         borderRadius: '6px',
         width: 'fit-content',
         px: 1.5,
         py: 0.5,
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 500,
         textTransform: 'uppercase',
         mb: 1,
       };
-    
+
     case 'profitValue':
       return {
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         mb: 0.5,
       };
-    
+
     case 'profitGrowth':
       return {
-        color: '#28c76f',
+        color: theme.palette.success.main, // Use success color (was #28c76f)
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
         gap: '4px',
       };
-    
+
     case 'profitChart':
       return {
         flex: 1,
         width: '150px',
-        height: '200px', // Stretch to fit the card height
-        // minWidth: '100px', 
+        height: '200px',
       };
 
     // Order Statistics Card
@@ -430,14 +429,13 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: 1, md: 1.25 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',
         overflow: 'hidden',
         width: '100%',
-        // height: '100%',
       };
 
     case 'orderStatsHeader':
@@ -452,20 +450,21 @@ case 'growthStatTypographyBody2':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'orderStatsValue':
       return {
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         my: 0.5,
       };
 
     case 'orderStatsTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'orderStatsProgress':
@@ -474,7 +473,7 @@ case 'growthStatTypographyBody2':
         display: 'inline-flex',
         my: { xs: 0.75, md: 1 },
         '& .MuiCircularProgress-root': {
-          color: '#28c76f',
+          color: theme.palette.success.main, // Use success color (was #28c76f)
           size: { xs: '40px', md: '40px' },
         },
       };
@@ -487,7 +486,7 @@ case 'growthStatTypographyBody2':
         transform: 'translate(-50%, -50%)',
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
       };
 
     case 'orderStatsList':
@@ -513,13 +512,13 @@ case 'growthStatTypographyBody2':
     case 'orderStatsItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
       };
 
     case 'orderStatsItemTypographyCaption':
       return {
         fontSize: { xs: '9px', md: '10px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     // Income/Expenses/Profit Card
@@ -527,14 +526,13 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: 1, md: 1.25 },
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         overflow: 'hidden',
         width: '100%',
-        // height: '100%',
       };
 
     case 'incomeTabs':
@@ -548,36 +546,37 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: '3px 6px', md: '4px 8px' },
         borderRadius: '6px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
         cursor: 'pointer',
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'incomeActiveTab':
       return {
-        bgcolor: '#7367f0',
-        color: '#fff',
+        bgcolor: theme.palette.primary.main, // Use primary color (was #7367f0)
+        color: theme.palette.primary.contrastText, // Use contrast text (was #fff)
       };
 
     case 'incomeTypographyH6':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'incomeValue':
       return {
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
         my: 0.5,
       };
 
     case 'incomeStats':
       return {
-        color: '#ea5455',
+        color: theme.palette.error.main, // Use error color (was #ea5455)
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
         display: 'flex',
@@ -600,11 +599,10 @@ case 'growthStatTypographyBody2':
       return {
         p: 2.5,
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        // height: '100%',
       };
 
     case 'transactionsHeader':
@@ -619,6 +617,7 @@ case 'growthStatTypographyBody2':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'transactionsList':
@@ -646,7 +645,7 @@ case 'growthStatTypographyBody2':
     case 'transactionsItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     // Activity Timeline Card
@@ -654,11 +653,10 @@ case 'growthStatTypographyBody2':
       return {
         p: 2.5,
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        // height: '100%',
       };
 
     case 'activityHeader':
@@ -673,6 +671,7 @@ case 'growthStatTypographyBody2':
       return {
         fontSize: { xs: '14px', md: '16px' },
         fontWeight: 600,
+        color: theme.palette.text.primary, // Use theme text color
       };
 
     case 'activityList':
@@ -700,18 +699,18 @@ case 'growthStatTypographyBody2':
     case 'activityItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
       };
 
     case 'activityItemTypographyCaption':
       return {
         fontSize: { xs: '9px', md: '10px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'activityAttachment':
       return {
-        color: '#7367f0',
+        color: theme.palette.primary.main, // Use primary color (was #7367f0)
         mt: 0.5,
         display: 'block',
       };
@@ -727,13 +726,13 @@ case 'growthStatTypographyBody2':
     case 'activityClientTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#1a1a1a',
+        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
       };
 
     case 'activityClientTypographyCaption':
       return {
         fontSize: { xs: '9px', md: '10px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'activityAvatars':
@@ -747,7 +746,7 @@ case 'growthStatTypographyBody2':
         width: { xs: '20px', md: '24px' },
         height: { xs: '20px', md: '24px' },
         mr: { xs: '-6px', md: '-8px' },
-        border: '2px solid #fff',
+        border: `2px solid ${theme.palette.background.paper}`, // Use theme background (was #fff)
       };
 
     // Browser/Country Stats Card
@@ -755,11 +754,10 @@ case 'growthStatTypographyBody2':
       return {
         p: 2.5,
         borderRadius: '10px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         width: '100%',
-        // height: '100%',
       };
 
     case 'browserTabs':
@@ -773,11 +771,11 @@ case 'growthStatTypographyBody2':
       return {
         p: { xs: '5px 10px', md: '6px 12px' },
         borderRadius: '6px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
         cursor: 'pointer',
         fontSize: { xs: '11px', md: '12px' },
         fontWeight: 600,
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'browserList':
@@ -797,7 +795,7 @@ case 'growthStatTypographyBody2':
     case 'browserItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
       };
 
     case 'browserIcon':
@@ -810,7 +808,7 @@ case 'growthStatTypographyBody2':
       return {
         flex: 1,
         height: { xs: '6px', md: '8px' },
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
         borderRadius: '4px',
         overflow: 'hidden',
       };

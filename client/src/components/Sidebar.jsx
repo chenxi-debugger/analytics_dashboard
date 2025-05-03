@@ -43,8 +43,6 @@ import {
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  drawerStyles,
-  miniDrawerStyles,
   typographyTitleStyles,
   boxContentStyles,
   typographyCategoryStyles,
@@ -53,7 +51,7 @@ import {
   getNestedListItemButtonStyles,
 } from '../styles/dashboardStyles';
 
-const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null, isMini = false }) => {
+const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null, isMini = false, theme }) => {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -70,9 +68,9 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
       <ListItem disablePadding>
         <ListItemButton
           onClick={handleClick}
-          sx={getListItemButtonStyles(isActive)}
+          sx={getListItemButtonStyles(theme)(isActive)}
         >
-          <ListItemIcon sx={getListItemIconStyles(isActive)}>{sideBarIcon}</ListItemIcon>
+          <ListItemIcon sx={getListItemIconStyles(theme)(isActive)}>{sideBarIcon}</ListItemIcon>
           {!isMini && <ListItemText primary={sideBarText} />}
           {!isMini && sideBarBadge && <Badge color="secondary" badgeContent={sideBarBadge} />}
           {!isMini && sideBarNestedItems && (open ? <ExpandLess /> : <ExpandMore />)}
@@ -85,7 +83,7 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
               <ListItemButton
                 key={index}
                 onClick={() => navigate(nested.path)}
-                sx={getNestedListItemButtonStyles(nested.isActive)}
+                sx={getNestedListItemButtonStyles(theme)(nested.isActive)}
               >
                 <ListItemText primary={nested.text} />
               </ListItemButton>
@@ -111,6 +109,7 @@ SidebarItem.propTypes = {
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   isMini: PropTypes.bool,
+  theme: PropTypes.object.isRequired, // Add theme prop
 };
 
 const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLeave }) => {
@@ -118,6 +117,10 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
   const location = useLocation();
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const handleDrawerToggle = () => {
+    onToggle(!open);
+  };
 
   const drawerWidth = isLargeScreen && isMini ? 80 : 280;
 
@@ -148,32 +151,32 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
     { text: 'Add', path: '/apps/invoice/add', isActive: location.pathname === '/apps/invoice/add' },
   ];
 
-  const handleDrawerToggle = () => {
-    onToggle(!open);
-  };
-
   return (
-        <Drawer
-            variant={isLargeScreen ? "persistent" : "temporary"}
-            open={isLargeScreen ? true : open}
-            onClose={handleDrawerToggle}
-            css={isMini && isLargeScreen ? miniDrawerStyles : drawerStyles}
-            sx={{
-              width: drawerWidth,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                transition: 'width .4s ease',
-              },
-            }}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-
+    <Drawer
+      variant={isLargeScreen ? "persistent" : "temporary"}
+      open={isLargeScreen ? true : open}
+      onClose={handleDrawerToggle}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          backgroundColor: theme.palette.background.paper,
+          borderRight: `1px solid ${theme.palette.divider}`,
+          color: theme.palette.text.secondary,
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        },
+      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <Toolbar sx={{ display: 'flex', justifyContent: isMini ? 'center' : 'space-between', alignItems: 'center' }}>
         {!isMini && (
-          <Typography variant="h6" sx={typographyTitleStyles}>
+          <Typography variant="h6" sx={typographyTitleStyles(theme)}>
             🌀 sneat
           </Typography>
         )}
@@ -181,10 +184,10 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
           <IconButton
             onClick={onToggleMini}
             sx={{
-              color: 'blue',
-              backgroundColor: 'lightblue',
+              color: theme.palette.common.white,
+              backgroundColor: theme.palette.primary.main,
               '&:hover': {
-                backgroundColor: 'lightgrey',
+                backgroundColor: theme.palette.primary.dark,
               },
             }}
           >
@@ -196,7 +199,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
       <Box sx={boxContentStyles}>
         <List>
           {!isMini && (
-            <Typography variant="caption" sx={typographyCategoryStyles}>
+            <Typography variant="caption" sx={typographyCategoryStyles(theme)}>
               DASHBOARDS
             </Typography>
           )}
@@ -206,10 +209,11 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             sideBarBadge="New"
             sideBarNestedItems={dashboardItems}
             isMini={isMini}
+            theme={theme}
           />
 
           {!isMini && (
-            <Typography variant="caption" sx={typographyCategoryStyles}>
+            <Typography variant="caption" sx={typographyCategoryStyles(theme)}>
               APPS & PAGES
             </Typography>
           )}
@@ -219,6 +223,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/apps/email')}
             isActive={location.pathname.startsWith('/apps/email')}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Chat />}
@@ -226,6 +231,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/apps/chat')}
             isActive={location.pathname === '/apps/chat'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<CalendarMonth />}
@@ -233,12 +239,14 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/apps/calendar')}
             isActive={location.pathname === '/apps/calendar'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<ReceiptLong />}
             sideBarText="Invoice"
             sideBarNestedItems={invoiceItems}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<People />}
@@ -249,6 +257,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
               { text: 'Edit', path: '/apps/user/edit', isActive: location.pathname === '/apps/user/edit' },
             ]}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Lock />}
@@ -258,12 +267,14 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
               { text: 'Permissions', path: '/apps/permissions', isActive: location.pathname === '/apps/permissions' },
             ]}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Pages />}
             sideBarText="Pages"
             sideBarNestedItems={pagesItems}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Lock />}
@@ -274,6 +285,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
               { text: 'Forgot Password', path: '/auth/forgot-password', isActive: location.pathname === '/auth/forgot-password' },
             ]}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<AutoAwesome />}
@@ -281,6 +293,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/wizard-examples')}
             isActive={location.pathname === '/wizard-examples'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Apps />}
@@ -288,10 +301,11 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/dialog-examples')}
             isActive={location.pathname === '/dialog-examples'}
             isMini={isMini}
+            theme={theme}
           />
 
           {!isMini && (
-            <Typography variant="caption" sx={typographyCategoryStyles}>
+            <Typography variant="caption" sx={typographyCategoryStyles(theme)}>
               USER INTERFACE
             </Typography>
           )}
@@ -301,6 +315,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/ui/typography')}
             isActive={location.pathname === '/ui/typography'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Inventory />}
@@ -308,6 +323,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/ui/icons')}
             isActive={location.pathname === '/ui/icons'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Inventory />}
@@ -315,6 +331,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/ui/icons-test')}
             isActive={location.pathname === '/ui/icons-test'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Lock />}
@@ -328,6 +345,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
               { text: 'Actions', path: '/ui/cards/actions', isActive: location.pathname === '/ui/cards/actions' },
             ]}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Apps />}
@@ -336,10 +354,11 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/ui/components')}
             isActive={location.pathname === '/ui/components'}
             isMini={isMini}
+            theme={theme}
           />
 
           {!isMini && (
-            <Typography variant="caption" sx={typographyCategoryStyles}>
+            <Typography variant="caption" sx={typographyCategoryStyles(theme)}>
               FORMS & TABLES
             </Typography>
           )}
@@ -349,6 +368,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/forms/elements')}
             isActive={location.pathname === '/forms/elements'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<ViewList />}
@@ -356,6 +376,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/forms/layouts')}
             isActive={location.pathname === '/forms/layouts'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Tune />}
@@ -363,6 +384,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/forms/validation')}
             isActive={location.pathname === '/forms/validation'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<AutoAwesome />}
@@ -370,6 +392,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/forms/wizard')}
             isActive={location.pathname === '/forms/wizard'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<TableView />}
@@ -377,6 +400,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/tables/table')}
             isActive={location.pathname === '/tables/table'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Apps />}
@@ -384,10 +408,11 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/tables/mui-datagrid')}
             isActive={location.pathname === '/tables/mui-datagrid'}
             isMini={isMini}
+            theme={theme}
           />
 
           {!isMini && (
-            <Typography variant="caption" sx={typographyCategoryStyles}>
+            <Typography variant="caption" sx={typographyCategoryStyles(theme)}>
               CHARTS & MISC
             </Typography>
           )}
@@ -397,6 +422,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/charts')}
             isActive={location.pathname === '/charts'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Lock />}
@@ -404,6 +430,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/misc/access-control')}
             isActive={location.pathname === '/misc/access-control'}
             isMini={isMini}
+            theme={theme}
           />
           <SidebarItem
             sideBarIcon={<Settings />}
@@ -411,6 +438,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             onClick={() => navigate('/misc/others')}
             isActive={location.pathname === '/misc/others'}
             isMini={isMini}
+            theme={theme}
           />
         </List>
       </Box>

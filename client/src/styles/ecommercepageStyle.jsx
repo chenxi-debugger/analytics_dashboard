@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-const getEcommerceStyle = (className) => {
+const getEcommerceStyle = (className, theme) => {
   switch (className) {
     case 'ecommerceMain':
       return {
@@ -8,7 +8,7 @@ const getEcommerceStyle = (className) => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: '#f8f9fd',
+        bgcolor: theme.palette.background.default,
       };
 
     case 'ecommerceContent':
@@ -24,8 +24,8 @@ const getEcommerceStyle = (className) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         p: 2,
-        bgcolor: 'linear-gradient(135deg, #7367f0, #9c93ff)',
-        color: '#fff',
+        bgcolor: theme.palette.background.paper, // Use same background as other cards
+        color: theme.palette.text.primary, // Use primary text color for readability
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       };
@@ -38,8 +38,8 @@ const getEcommerceStyle = (className) => {
     case 'congratulationsAction':
       return {
         mt: 1.5,
-        bgcolor: '#3b82f6',
-        color: '#fff',
+        bgcolor: theme.palette.info.main,
+        color: theme.palette.info.contrastText,
         p: '6px 12px',
         borderRadius: '4px',
         display: 'inline-block',
@@ -73,7 +73,7 @@ const getEcommerceStyle = (className) => {
       return {
         p: 2,
         borderRadius: '8px',
-        bgcolor: '#fff',
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
       };
 
@@ -81,13 +81,13 @@ const getEcommerceStyle = (className) => {
       return {
         fontSize: '1rem',
         fontWeight: 600,
-        color: '#5e5873',
+        color: theme.palette.text.primary,
       };
 
     case 'typographyH4':
       return {
         my: 1,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary,
         fontSize: '1.75rem',
         fontWeight: 700,
       };
@@ -95,14 +95,14 @@ const getEcommerceStyle = (className) => {
     case 'typographyBody2':
       return {
         fontSize: '0.85rem',
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary,
       };
 
     case 'visitorsStats':
     case 'activityStats':
     case 'salesStats':
       return {
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary,
         fontSize: '0.8rem',
         display: 'flex',
         alignItems: 'center',
@@ -118,7 +118,7 @@ const getEcommerceStyle = (className) => {
     case 'totalBalanceChart':
       return {
         height: '60px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '6px',
         mt: 1.5,
       };
@@ -126,7 +126,7 @@ const getEcommerceStyle = (className) => {
     case 'totalIncomeChart':
       return {
         height: '100px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '6px',
         mt: 1.5,
       };
@@ -139,11 +139,11 @@ const getEcommerceStyle = (className) => {
         my: 1,
         '& .MuiTypography-body2': {
           fontSize: '0.85rem',
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary,
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 600,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary,
         },
       };
 
@@ -172,14 +172,14 @@ const getEcommerceStyle = (className) => {
         mb: 1.5,
         '& .MuiTypography-body2': {
           fontSize: '0.85rem',
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary,
         },
       };
 
     case 'performanceChart':
       return {
         height: '180px',
-        bgcolor: '#f5f5f9',
+        bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '6px',
       };
 
@@ -194,11 +194,11 @@ const getEcommerceStyle = (className) => {
         },
         '& .MuiTypography-body2': {
           fontSize: '0.85rem',
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary,
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 600,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary,
           my: 0.5,
         },
         '& div': {
@@ -225,17 +225,17 @@ const getEcommerceStyle = (className) => {
         alignItems: 'center',
         '&.header .MuiTypography-body2': {
           fontWeight: 600,
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary,
           fontSize: '0.8rem',
         },
         '& .MuiTypography-body2': {
           fontSize: '0.85rem',
-          color: '#5e5873',
+          color: theme.palette.text.primary,
           flex: 1,
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 500,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary,
         },
       };
 
@@ -245,6 +245,7 @@ const getEcommerceStyle = (className) => {
         height: '24px',
         borderRadius: '4px',
         mr: 1,
+        bgcolor: theme.palette.divider,
       };
 
     case 'totalBalanceStats':
@@ -254,18 +255,18 @@ const getEcommerceStyle = (className) => {
         my: 1.5,
         '& .MuiTypography-body2': {
           fontSize: '0.85rem',
-          color: '#6e6b7b',
+          color: theme.palette.text.secondary,
         },
         '& .MuiTypography-body2:nth-of-type(2)': {
           fontWeight: 600,
-          color: '#1a1a1a',
+          color: theme.palette.text.primary,
         },
       };
 
     case 'totalBalanceNote':
       return {
         fontSize: '0.75rem',
-        color: '#6e6b7b',
+        color: theme.palette.text.secondary,
         mt: 1.5,
       };
 
@@ -273,7 +274,7 @@ const getEcommerceStyle = (className) => {
     case 'activityValue':
       return {
         my: 1,
-        color: '#1a1a1a',
+        color: theme.palette.text.primary,
         fontSize: '1.75rem',
         fontWeight: 700,
       };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   List,
@@ -49,6 +50,7 @@ class ErrorBoundary extends React.Component {
 }
 
 const ChatPage = () => {
+  const theme = useTheme();
   const [chats, setChats] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
@@ -64,12 +66,12 @@ const ChatPage = () => {
   const [twoStepVerification, setTwoStepVerification] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
-  // Status dot colors
+  // Status dot colors using Material-UI theme
   const statusColors = {
-    Online: '#28c76f',
-    Away: '#ff9f43',
-    'Do Not Disturb': '#ea5455',
-    Offline: '#b9b9c3',
+    Online: theme?.palette?.success?.main || '#28c76f', // Success color for Online
+    Away: theme?.palette?.warning?.main || '#ff9f43', // Warning color for Away
+    'Do Not Disturb': theme?.palette?.error?.main || '#ea5455', // Error color for Do Not Disturb
+    Offline: theme?.palette?.text?.secondary || '#b9b9c3', // Secondary text color for Offline
   };
 
   // Fetch chat data
@@ -188,7 +190,7 @@ const ChatPage = () => {
 
   return (
     <ErrorBoundary>
-      <Box sx={getChatpageStyle('mainContainer')}>
+      <Box sx={getChatpageStyle('mainContainer', { theme })}>
         {/* User Drawer */}
         <Drawer
           anchor="left"
@@ -198,7 +200,7 @@ const ChatPage = () => {
             '& .MuiDrawer-paper': {
               width: 360,
               boxSizing: 'border-box',
-              backgroundColor: '#fff',
+              backgroundColor: theme?.palette?.background?.paper || '#fff', // Paper background
             },
           }}
         >
@@ -206,25 +208,29 @@ const ChatPage = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <Avatar
                 src="/user.png"
-                sx={getChatpageStyle('userAvatar')}
+                sx={getChatpageStyle('userAvatar', { theme })}
                 onError={() => console.log('Failed to load user avatar: /user.png')}
               />
               <Box>
-                <Typography variant="h6">John Doe</Typography>
-                <Typography variant="body2" color="textSecondary">Admin</Typography>
+                <Typography variant="h6" sx={{ color: theme?.palette?.text?.primary || '#5e5873' }}>
+                  John Doe
+                </Typography>
+                <Typography variant="body2" sx={{ color: theme?.palette?.text?.secondary || '#b9b9c3' }}>
+                  Admin
+                </Typography>
               </Box>
             </Box>
             <Divider />
-            <Typography sx={getChatpageStyle('drawerTitle')}>
+            <Typography sx={getChatpageStyle('drawerTitle', { theme })}>
               About
             </Typography>
-            <Typography sx={getChatpageStyle('drawerText')}>
+            <Typography sx={getChatpageStyle('drawerText', { theme })}>
               Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.
             </Typography>
-            <Typography sx={getChatpageStyle('drawerTitle')}>
+            <Typography sx={getChatpageStyle('drawerTitle', { theme })}>
               Status
             </Typography>
-            <FormControl fullWidth sx={getChatpageStyle('statusSelect')}>
+            <FormControl fullWidth sx={getChatpageStyle('statusSelect', { theme })}>
               <InputLabel>Status</InputLabel>
               <Select
                 value={status}
@@ -237,7 +243,7 @@ const ChatPage = () => {
                 <MenuItem value="Offline">Offline</MenuItem>
               </Select>
             </FormControl>
-            <Typography sx={getChatpageStyle('drawerTitle')}>
+            <Typography sx={getChatpageStyle('drawerTitle', { theme })}>
               Settings
             </Typography>
             <FormControlLabel
@@ -249,7 +255,7 @@ const ChatPage = () => {
                 />
               }
               label="Two-step Verification"
-              sx={getChatpageStyle('settingsToggle')}
+              sx={getChatpageStyle('settingsToggle', { theme })}
             />
             <FormControlLabel
               control={
@@ -260,25 +266,25 @@ const ChatPage = () => {
                 />
               }
               label="Notification"
-              sx={getChatpageStyle('settingsToggle')}
+              sx={getChatpageStyle('settingsToggle', { theme })}
             />
-            <Typography sx={getChatpageStyle('drawerTitle')}>
+            <Typography sx={getChatpageStyle('drawerTitle', { theme })}>
               Invite Friends
             </Typography>
-            <Typography sx={getChatpageStyle('drawerText')}>
+            <Typography sx={getChatpageStyle('drawerText', { theme })}>
               Invite Friends
             </Typography>
-            <Typography sx={getChatpageStyle('drawerTitle')}>
+            <Typography sx={getChatpageStyle('drawerTitle', { theme })}>
               Delete Account
             </Typography>
-            <Typography sx={getChatpageStyle('drawerText')}>
+            <Typography sx={getChatpageStyle('drawerText', { theme })}>
               Delete Account
             </Typography>
             <Button
               variant="contained"
               color="primary"
               fullWidth
-              sx={getChatpageStyle('logoutButton')}
+              sx={getChatpageStyle('logoutButton', { theme })}
             >
               Logout
             </Button>
@@ -286,7 +292,7 @@ const ChatPage = () => {
         </Drawer>
 
         {/* Chat Sidebar */}
-        <Box sx={getChatpageStyle('sidebar')}>
+        <Box sx={getChatpageStyle('sidebar', { theme })}>
           <Box sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
             <IconButton onClick={toggleDrawer(true)}>
               <Badge
@@ -299,7 +305,7 @@ const ChatPage = () => {
                       height: 16,
                       borderRadius: '50%',
                       backgroundColor: statusColors[status],
-                      border: '2px solid #fff',
+                      border: `2px solid ${theme?.palette?.background?.paper || '#fff'}`,
                     }}
                   />
                 }
@@ -316,46 +322,46 @@ const ChatPage = () => {
               variant="outlined"
               size="small"
               InputProps={{
-                startAdornment: <SearchIcon sx={{ color: '#6e6b7b', mr: 1 }} />,
+                startAdornment: <SearchIcon sx={{ color: theme?.palette?.text?.secondary || '#6e6b7b', mr: 1 }} />,
               }}
-              sx={{ ...getChatpageStyle('searchField'), flexGrow: 1, ml: 2 }}
+              sx={{ ...getChatpageStyle('searchField', { theme }), flexGrow: 1, ml: 2 }}
             />
           </Box>
 
-          <Typography sx={getChatpageStyle('sectionTitle')}>
+          <Typography sx={getChatpageStyle('sectionTitle', { theme })}>
             Chats
           </Typography>
           <List>
             {chats.map((chat) => (
               <ListItem key={chat.id} disablePadding>
                 <ListItemButton
-                  sx={getChatpageStyle('chatItem')}
+                  sx={getChatpageStyle('chatItem', { theme })}
                   onClick={() => handleChatSelect(chat)}
                   selected={selectedChat?.id === chat.id}
                 >
                   <Avatar
                     src={chat.avatar}
-                    sx={getChatpageStyle('avatar')}
+                    sx={getChatpageStyle('avatar', { theme })}
                     onError={() => console.log(`Failed to load chat avatar for ${chat.name}: ${chat.avatar}`)}
                   >
                     {chat.name[0]}
                   </Avatar>
                   <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-                    <Typography sx={getChatpageStyle('chatName')}>
+                    <Typography sx={getChatpageStyle('chatName', { theme })}>
                       {chat.name}
                     </Typography>
-                    <Typography sx={getChatpageStyle('chatSnippet')}>
+                    <Typography sx={getChatpageStyle('chatSnippet', { theme })}>
                       {chat.snippet}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <Typography sx={getChatpageStyle('chatTime')}>
+                    <Typography sx={getChatpageStyle('chatTime', { theme })}>
                       {chat.time}
                     </Typography>
                     {chat.unreadCount > 0 && (
                       <Badge
                         badgeContent={chat.unreadCount}
-                        sx={getChatpageStyle('unreadBadge')}
+                        sx={getChatpageStyle('unreadBadge', { theme })}
                       />
                     )}
                   </Box>
@@ -366,29 +372,29 @@ const ChatPage = () => {
 
           <Divider />
 
-          <Typography sx={getChatpageStyle('sectionTitle')}>
+          <Typography sx={getChatpageStyle('sectionTitle', { theme })}>
             Contacts
           </Typography>
           <List>
             {contacts.map((contact) => (
               <ListItem key={contact.id} disablePadding>
                 <ListItemButton
-                  sx={getChatpageStyle('contactItem')}
+                  sx={getChatpageStyle('contactItem', { theme })}
                   onClick={() => handleContactSelect(contact)}
                   selected={selectedContact?.id === contact.id}
                 >
                   <Avatar
                     src={contact.avatar}
-                    sx={getChatpageStyle('contactAvatar', { color: contact.color })}
+                    sx={getChatpageStyle('contactAvatar', { color: contact.color, theme })}
                     onError={() => console.log(`Failed to load contact avatar for ${contact.name}: ${contact.avatar}`)}
                   >
                     {contact.initials}
                   </Avatar>
                   <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-                    <Typography sx={getChatpageStyle('chatName')}>
+                    <Typography sx={getChatpageStyle('chatName', { theme })}>
                       {contact.name}
                     </Typography>
-                    <Typography sx={getChatpageStyle('chatSnippet')}>
+                    <Typography sx={getChatpageStyle('chatSnippet', { theme })}>
                       {contact.snippet}
                     </Typography>
                   </Box>
@@ -399,43 +405,43 @@ const ChatPage = () => {
         </Box>
 
         {/* Main Content */}
-        <Box sx={getChatpageStyle('content')}>
+        <Box sx={getChatpageStyle('content', { theme })}>
           {selectedChat ? (
             <>
-              <Box sx={getChatpageStyle('chatHeader')}>
+              <Box sx={getChatpageStyle('chatHeader', { theme })}>
                 <Avatar
                   src={selectedChat.avatar}
-                  sx={getChatpageStyle('chatHeaderAvatar')}
+                  sx={getChatpageStyle('chatHeaderAvatar', { theme })}
                   onError={() => console.log(`Failed to load chat header avatar for ${selectedChat.name}: ${selectedChat.avatar}`)}
                 >
                   {selectedChat.name[0]}
                 </Avatar>
                 <Box>
-                  <Typography sx={getChatpageStyle('chatHeaderName')}>
+                  <Typography sx={getChatpageStyle('chatHeaderName', { theme })}>
                     {selectedChat.name}
                   </Typography>
-                  <Typography sx={getChatpageStyle('chatHeaderStatus')}>
+                  <Typography sx={getChatpageStyle('chatHeaderStatus', { theme })}>
                     Friend - Developer
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={getChatpageStyle('messageContainer')} ref={messageContainerRef}>
+              <Box sx={getChatpageStyle('messageContainer', { theme })} ref={messageContainerRef}>
                 {selectedChat.messages.map((message) => (
                   <Box key={message.id} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box
-                      sx={getChatpageStyle('message', { isSent: message.sender === 'You' })}
+                      sx={getChatpageStyle('message', { isSent: message.sender === 'You', theme })}
                     >
                       {message.content}
                     </Box>
                     <Typography
-                      sx={getChatpageStyle('messageTime', { isSent: message.sender === 'You' })}
+                      sx={getChatpageStyle('messageTime', { isSent: message.sender === 'You', theme })}
                     >
                       {message.time}
                     </Typography>
                   </Box>
                 ))}
               </Box>
-              <Box sx={getChatpageStyle('inputContainer')}>
+              <Box sx={getChatpageStyle('inputContainer', { theme })}>
                 <TextField
                   placeholder="Type your message here..."
                   variant="outlined"
@@ -445,17 +451,17 @@ const ChatPage = () => {
                   value={messageInput}
                   onChange={(e) => setMessageInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  sx={getChatpageStyle('messageInput')}
+                  sx={getChatpageStyle('messageInput', { theme })}
                 />
                 <IconButton>
-                  <MicIcon />
+                  <MicIcon sx={{ color: theme?.palette?.text?.secondary || '#6e6b7b' }} />
                 </IconButton>
                 <IconButton>
-                  <AttachFileIcon />
+                  <AttachFileIcon sx={{ color: theme?.palette?.text?.secondary || '#6e6b7b' }} />
                 </IconButton>
                 <Button
                   variant="contained"
-                  sx={getChatpageStyle('sendButton')}
+                  sx={getChatpageStyle('sendButton', { theme })}
                   onClick={handleSendMessage}
                 >
                   Send
@@ -472,15 +478,15 @@ const ChatPage = () => {
                   width: 60,
                   height: 60,
                   borderRadius: '50%',
-                  backgroundColor: '#fff',
+                  backgroundColor: theme?.palette?.background?.paper || '#fff',
                   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                 }}
               >
-                <ChatIcon sx={{ fontSize: 30, color: '#6e6b7b' }} />
+                <ChatIcon sx={{ fontSize: 30, color: theme?.palette?.text?.secondary || '#6e6b7b' }} />
               </Box>
               <Button
                 variant="contained"
-                sx={getChatpageStyle('startButton')}
+                sx={getChatpageStyle('startButton', { theme })}
               >
                 Start Conversation
               </Button>

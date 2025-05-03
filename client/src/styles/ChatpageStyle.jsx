@@ -1,232 +1,249 @@
 const getChatpageStyle = (key, props = {}) => {
-    const styles = {
-      mainContainer: {
-        display: 'flex',
-        height: '100%',
-        backgroundColor: '#f5f5f9',
+  const { theme } = props;
+  const styles = {
+    mainContainer: {
+      display: 'flex',
+      height: '100%',
+      backgroundColor: theme?.palette?.background?.default || '#f5f5f9',
+    },
+    sidebar: {
+      width: '360px',
+      borderRight: `1px solid ${theme?.palette?.divider || '#e0e0e0'}`,
+      backgroundColor: theme?.palette?.background?.paper || '#fff',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    searchBarContainer: {
+      p: 2,
+      display: 'flex',
+      alignItems: 'center',
+    },
+    searchField: {
+      flexGrow: 1,
+      '& .MuiOutlinedInput-root': {
+        borderRadius: '20px',
+        backgroundColor: theme?.palette?.background?.default || '#f5f5f9',
       },
-      sidebar: {
-        width: '360px',
-        borderRight: '1px solid #e0e0e0',
-        backgroundColor: '#fff',
-        display: 'flex',
-        flexDirection: 'column',
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme?.palette?.divider || '#e0e0e0',
       },
-      searchBarContainer: {
-        p: 2,
-        display: 'flex',
-        alignItems: 'center',
+      '& .MuiInputBase-input': {
+        color: theme?.palette?.text?.secondary || '#6e6b7b',
       },
-      searchField: {
-        flexGrow: 1,
-        '& .MuiOutlinedInput-root': {
-          borderRadius: '20px',
-          backgroundColor: '#f5f5f9',
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#e0e0e0',
-        },
+    },
+    sectionTitle: {
+      px: 2,
+      py: 1,
+      color: theme?.palette?.text?.secondary || '#5e5873',
+      fontWeight: 500,
+      textTransform: 'uppercase',
+      fontSize: '0.75rem',
+    },
+    chatItem: {
+      py: 1,
+      px: 2,
+      display: 'flex',
+      alignItems: 'center',
+      '&:hover': {
+        backgroundColor: theme?.palette?.action?.hover || '#f5f5f9',
+        cursor: 'pointer',
       },
-      sectionTitle: {
-        px: 2,
-        py: 1,
-        color: '#5e5873',
-        fontWeight: 500,
-        textTransform: 'uppercase',
-        fontSize: '0.75rem',
+      '&.Mui-selected': {
+        backgroundColor: theme?.palette?.action?.selected || '#e0e7ff',
       },
-      chatItem: {
-        py: 1,
-        px: 2,
-        display: 'flex',
-        alignItems: 'center',
-        '&:hover': {
-          backgroundColor: '#f5f5f9',
-          cursor: 'pointer',
-        },
-        '&.Mui-selected': {
-          backgroundColor: '#e0e7ff',
-        },
+    },
+    contactItem: {
+      py: 1,
+      px: 2,
+      display: 'flex',
+      alignItems: 'center',
+      '&:hover': {
+        backgroundColor: theme?.palette?.action?.hover || '#f5f5f9',
+        cursor: 'pointer',
       },
-      contactItem: {
-        py: 1,
-        px: 2,
-        display: 'flex',
-        alignItems: 'center',
-        '&:hover': {
-          backgroundColor: '#f5f5f9',
-          cursor: 'pointer',
-        },
-        '&.Mui-selected': {
-          backgroundColor: '#e0e7ff',
-        },
+      '&.Mui-selected': {
+        backgroundColor: theme?.palette?.action?.selected || '#e0e7ff',
       },
-      avatar: {
-        width: 40,
-        height: 40,
-        mr: 2,
-      },
-      contactAvatar: {
-        width: 40,
-        height: 40,
-        mr: 2,
-        backgroundColor: props.color || '#e0e0e0',
-        color: '#fff',
-        fontSize: '0.875rem',
-      },
-      chatName: {
-        fontWeight: 500,
-        color: '#5e5873',
-      },
-      chatSnippet: {
-        color: '#b9b9c3',
-        fontSize: '0.875rem',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-      },
-      chatTime: {
-        color: '#b9b9c3',
-        fontSize: '0.75rem',
-      },
-      unreadBadge: {
-        backgroundColor: '#ea5455',
-        color: '#fff',
-        borderRadius: '50%',
+    },
+    avatar: {
+      width: 40,
+      height: 40,
+      mr: 2,
+    },
+    contactAvatar: {
+      width: 40,
+      height: 40,
+      mr: 2,
+      backgroundColor: props.color || theme?.palette?.action?.disabled || '#e0e0e0',
+      color: theme?.palette?.text?.primary || '#fff',
+      fontSize: '0.875rem',
+    },
+    chatName: {
+      fontWeight: 500,
+      color: theme?.palette?.text?.primary || '#5e5873',
+    },
+    chatSnippet: {
+      color: theme?.palette?.text?.secondary || '#b9b9c3',
+      fontSize: '0.875rem',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+    chatTime: {
+      color: theme?.palette?.text?.secondary || '#b9b9c3',
+      fontSize: '0.75rem',
+    },
+    unreadBadge: {
+      '& .MuiBadge-badge': {
+        backgroundColor: theme?.palette?.error?.main || '#ea5455', // Style the badge itself
+        color: theme?.palette?.error?.contrastText || '#fff',
+        marginTop: '13px',
+        marginRight: '20px',
         width: 20,
         height: 20,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderRadius: '50%',
         fontSize: '0.75rem',
-        ml: 'auto',
       },
-      content: {
-        flexGrow: 1,
-        display: 'flex',
-        flexDirection: 'column',
+    },
+    content: {
+      flexGrow: 1,
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    startButton: {
+      borderRadius: '20px',
+      textTransform: 'none',
+      fontWeight: 500,
+      px: 3,
+      py: 1,
+      backgroundColor: theme?.palette?.background?.paper || '#fff',
+      color: theme?.palette?.text?.primary || '#5e5873',
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      '&:hover': {
+        backgroundColor: theme?.palette?.action?.hover || '#f5f5f9',
       },
-      startButton: {
+    },
+    chatHeader: {
+      p: 2,
+      borderBottom: `1px solid ${theme?.palette?.divider || '#e0e0e0'}`,
+      display: 'flex',
+      alignItems: 'center',
+      backgroundColor: theme?.palette?.background?.paper || '#fff',
+    },
+    chatHeaderAvatar: {
+      width: 40,
+      height: 40,
+      mr: 2,
+    },
+    chatHeaderName: {
+      fontWeight: 500,
+      color: theme?.palette?.text?.primary || '#5e5873',
+    },
+    chatHeaderStatus: {
+      color: theme?.palette?.text?.secondary || '#b9b9c3',
+      fontSize: '0.875rem',
+    },
+    messageContainer: {
+      flexGrow: 1,
+      p: 2,
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 1,
+      backgroundColor: theme?.palette?.background?.default || '#f5f5f9',
+    },
+    message: {
+      maxWidth: '60%',
+      p: 1.5,
+      borderRadius: '15px',
+      backgroundColor: props.isSent
+        ? theme?.palette?.primary?.main || '#635ee7'
+        : theme?.palette?.background?.paper || '#f5f5f9',
+      color: props.isSent
+        ? theme?.palette?.primary?.contrastText || '#fff'
+        : theme?.palette?.text?.primary || '#5e5873',
+      alignSelf: props.isSent ? 'flex-end' : 'flex-start',
+    },
+    messageTime: {
+      fontSize: '0.75rem',
+      color: theme?.palette?.text?.secondary || '#b9b9c3',
+      mt: 0.5,
+      alignSelf: props.isSent ? 'flex-end' : 'flex-start',
+    },
+    inputContainer: {
+      p: 2,
+      borderTop: `1px solid ${theme?.palette?.divider || '#e0e0e0'}`,
+      display: 'flex',
+      alignItems: 'center',
+      backgroundColor: theme?.palette?.background?.paper || '#fff',
+      gap: 1,
+    },
+    messageInput: {
+      flexGrow: 1,
+      '& .MuiOutlinedInput-root': {
         borderRadius: '20px',
-        textTransform: 'none',
-        fontWeight: 500,
-        px: 3,
-        py: 1,
-        backgroundColor: '#fff',
-        color: '#5e5873',
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-        '&:hover': {
-          backgroundColor: '#f5f5f9',
-        },
+        backgroundColor: theme?.palette?.background?.default || '#f5f5f9',
       },
-      chatHeader: {
-        p: 2,
-        borderBottom: '1px solid #e0e0e0',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: '#fff',
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme?.palette?.divider || '#e0e0e0',
       },
-      chatHeaderAvatar: {
-        width: 40,
-        height: 40,
-        mr: 2,
+      '& .MuiInputBase-input': {
+        color: theme?.palette?.text?.primary || '#5e5873',
       },
-      chatHeaderName: {
-        fontWeight: 500,
-        color: '#5e5873',
+    },
+    sendButton: {
+      borderRadius: '20px',
+      textTransform: 'uppercase',
+      fontWeight: 500,
+      px: 3,
+      py: 1,
+      backgroundColor: theme?.palette?.primary?.main || '#635ee7',
+      color: theme?.palette?.primary?.contrastText || '#fff',
+      '&:hover': {
+        backgroundColor: theme?.palette?.primary?.dark || '#544ed5',
       },
-      chatHeaderStatus: {
-        color: '#b9b9c3',
-        fontSize: '0.875rem',
+    },
+    userAvatar: {
+      width: 60,
+      height: 60,
+      mr: 2,
+    },
+    drawerTitle: {
+      fontWeight: 500,
+      color: theme?.palette?.text?.primary || '#5e5873',
+      mt: 2,
+      mb: 1,
+    },
+    drawerText: {
+      color: theme?.palette?.text?.secondary || '#b9b9c3',
+      fontSize: '0.875rem',
+    },
+    statusSelect: {
+      mt: 1,
+      '& .MuiOutlinedInput-root': {
+        borderRadius: '8px',
       },
-      messageContainer: {
-        flexGrow: 1,
-        p: 2,
-        overflowY: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 1,
-        backgroundColor: '#f5f5f9', // Match the background color in the image
+      '& .MuiInputLabel-root': {
+        color: theme?.palette?.text?.secondary || '#5e5873',
       },
-      message: {
-        maxWidth: '60%',
-        p: 1.5,
-        borderRadius: '15px',
-        backgroundColor: props.isSent ? '#635ee7' : '#f5f5f9',
-        color: props.isSent ? '#fff' : '#5e5873',
-        alignSelf: props.isSent ? 'flex-end' : 'flex-start',
+      '& .MuiSelect-select': {
+        color: theme?.palette?.text?.primary || '#5e5873',
       },
-      messageTime: {
-        fontSize: '0.75rem',
-        color: '#b9b9c3',
-        mt: 0.5,
-        alignSelf: props.isSent ? 'flex-end' : 'flex-start',
+    },
+    settingsToggle: {
+      color: theme?.palette?.text?.primary || '#5e5873',
+    },
+    logoutButton: {
+      mt: 2,
+      textTransform: 'uppercase',
+      backgroundColor: theme?.palette?.primary?.main || '#635ee7',
+      color: theme?.palette?.primary?.contrastText || '#fff',
+      '&:hover': {
+        backgroundColor: theme?.palette?.primary?.dark || '#544ed5',
       },
-      inputContainer: {
-        p: 2,
-        borderTop: '1px solid #e0e0e0',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        gap: 1,
-      },
-      messageInput: {
-        flexGrow: 1,
-        '& .MuiOutlinedInput-root': {
-          borderRadius: '20px',
-          backgroundColor: '#f5f5f9',
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#e0e0e0',
-        },
-      },
-      sendButton: {
-        borderRadius: '20px',
-        textTransform: 'uppercase',
-        fontWeight: 500,
-        px: 3,
-        py: 1,
-        backgroundColor: '#635ee7',
-        color: '#fff',
-        '&:hover': {
-          backgroundColor: '#544ed5',
-        },
-      },
-      userAvatar: {
-        width: 60,
-        height: 60,
-        mr: 2,
-      },
-      drawerTitle: {
-        fontWeight: 500,
-        color: '#5e5873',
-        mt: 2,
-        mb: 1,
-      },
-      drawerText: {
-        color: '#b9b9c3',
-        fontSize: '0.875rem',
-      },
-      statusSelect: {
-        mt: 1,
-        '& .MuiOutlinedInput-root': {
-          borderRadius: '8px',
-        },
-      },
-      settingsToggle: {
-        color: '#5e5873',
-      },
-      logoutButton: {
-        mt: 2,
-        textTransform: 'uppercase',
-        backgroundColor: '#635ee7',
-        color: '#fff',
-        '&:hover': {
-          backgroundColor: '#544ed5',
-        },
-      },
-    };
-    return styles[key] || {};
+    },
   };
-  
-  export default getChatpageStyle;
+  return styles[key] || {};
+};
+
+export default getChatpageStyle;

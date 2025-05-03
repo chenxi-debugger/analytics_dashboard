@@ -1,15 +1,17 @@
 import React from 'react';
-import { Typography, Link } from '@mui/material';
-import StyledFooter from '../styles/footerStyle'; // Import the styled component
+import { Typography, Link, useTheme } from '@mui/material';
+import StyledFooter from '../styles/footerStyle';
 
 const Footer = () => {
+  const theme = useTheme();
+
   return (
     <StyledFooter variant="container">
       {/* Left Section: Copyright and Made with Love */}
       <StyledFooter variant="left">
         <Typography
           variant="body2"
-          sx={{ color: 'text.secondary' }}
+          sx={{ color: theme.palette.text.secondary }}
         >
           © {new Date().getFullYear()}, Made with ❤️ by{' '}
           <Link
@@ -17,7 +19,7 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             sx={{
-              color: '#3b82f6',
+              color: theme.palette.primary.main,
               textDecoration: 'none',
               '&:hover': { textDecoration: 'underline' },
             }}
@@ -33,7 +35,7 @@ const Footer = () => {
           href="#"
           variant="body2"
           sx={{
-            color: '#3b82f6',
+            color: theme.palette.primary.main,
             textDecoration: 'none',
             '&:hover': { textDecoration: 'underline' },
           }}
@@ -44,7 +46,7 @@ const Footer = () => {
           href="#"
           variant="body2"
           sx={{
-            color: '#3b82f6',
+            color: theme.palette.primary.main,
             textDecoration: 'none',
             '&:hover': { textDecoration: 'underline' },
           }}
@@ -55,7 +57,7 @@ const Footer = () => {
           href="#"
           variant="body2"
           sx={{
-            color: '#ef4444',
+            color: theme.palette.primary.main, // Changed to match License and More Themes
             textDecoration: 'none',
             '&:hover': { textDecoration: 'underline' },
           }}
@@ -66,7 +68,7 @@ const Footer = () => {
           href="#"
           variant="body2"
           sx={{
-            color: '#3b82f6',
+            color: theme.palette.primary.main,
             textDecoration: 'none',
             '&:hover': { textDecoration: 'underline' },
           }}
