@@ -72,7 +72,7 @@ const App = () => {
   const [userAnchor, setUserAnchor] = useState(null);
 
   const isMini = isBaseMini && !isHovering;
-  const drawerWidth = isLargeScreen && isMini ? 80 : 280;
+  const drawerWidth = isLargeScreen && isMini ? 60 : 280;
 
   const handleOpen = (setter) => (event) => setter(event.currentTarget);
   const handleClose = (setter) => () => setter(null);
@@ -128,14 +128,6 @@ const App = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: theme.palette.primary.main, fontWeight: 'bold', mr: 3, display: { xs: 'none', sm: 'block' } }}
-            >
-              🌀 sneat
-            </Typography>
 
             <ClickAwayListener onClickAway={handleClose(setSearchAnchor)}>
               <Box sx={searchStyles}>
