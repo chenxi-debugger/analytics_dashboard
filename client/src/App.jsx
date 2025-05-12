@@ -21,7 +21,7 @@ const App = () => {
   const [isHovering, setIsHovering] = useState(false);
 
   const isMini = isBaseMini && !isHovering;
-  const drawerWidth = isLargeScreen && isMini ? 60 : 280;
+  const drawerWidth = isLargeScreen && isMini ? 80 : 280;
 
   const handleDrawerToggle = () => {
     if (!isLargeScreen) {

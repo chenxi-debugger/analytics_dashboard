@@ -146,6 +146,7 @@ const getChatpageStyle = (key, props = {}) => {
     messageContainer: {
       flexGrow: 1,
       p: 2,
+      pb: 8, // Added padding-bottom to prevent overlap with footer
       overflowY: 'auto',
       display: 'flex',
       flexDirection: 'column',
@@ -177,6 +178,7 @@ const getChatpageStyle = (key, props = {}) => {
       alignItems: 'center',
       backgroundColor: theme?.palette?.background?.paper || '#fff',
       gap: 1,
+      marginBottom: 2,
     },
     messageInput: {
       flexGrow: 1,

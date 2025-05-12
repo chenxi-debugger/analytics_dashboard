@@ -122,7 +122,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
     onToggle(!open);
   };
 
-  const drawerWidth = isLargeScreen && isMini ? 60 : 280;
+  const drawerWidth = isLargeScreen && isMini ? 80 : 280;
 
   const dashboardItems = [
     { text: 'Analytics', path: '/', isActive: location.pathname === '/' },
