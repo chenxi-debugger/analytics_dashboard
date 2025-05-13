@@ -12,14 +12,14 @@ const getCalendarPageStyle = (key, options = {}) => {
         overflow: 'hidden', // Ensure no overflow outside the container
       },
       sidebarContainer: {
-        width: { xs: '100%', md: '250px' }, // Full width on small screens, fixed on larger
+        width: { xs: '100%', md: '280px' }, // Full width on small screens, fixed on larger
         display: { xs: 'none', md: 'block' }, // Hidden by default on small screens
         backgroundColor: theme?.palette?.background?.paper || '#212332',
         p: 2,
         height: '750px', // Fixed height
       },
       drawerPaper: {
-        width: '250px',
+        width: '280px',
         backgroundColor: theme?.palette?.background?.paper || '#212332',
         borderRight: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
         borderRadius: '8px 0 0 0',
@@ -38,10 +38,9 @@ const getCalendarPageStyle = (key, options = {}) => {
       miniCalendarDays: {
         display: 'grid',
         gridTemplateColumns: 'repeat(7, 1fr)',
-        gap: 1,
         textAlign: 'center',
         color: theme?.palette?.text?.secondary || '#a1a5b7',
-        fontSize: '12px',
+        fontSize: '10px',
       },
       miniCalendarDate: {
         p: 1,
@@ -54,7 +53,7 @@ const getCalendarPageStyle = (key, options = {}) => {
         }),
         ...(options.isCurrentDate && {
           backgroundColor: theme?.palette?.warning?.light || '#ffecd1',
-          borderRadius: '50%',
+          borderRadius: '10%',
           color: theme?.palette?.warning?.main || '#ff9f43',
         }),
       },
@@ -65,7 +64,7 @@ const getCalendarPageStyle = (key, options = {}) => {
       },
       filterTitle: {
         color: theme?.palette?.text?.secondary || '#a1a5b7',
-        fontSize: '12px',
+        fontSize: '14px',
         fontWeight: 500,
         mb: 1,
         textTransform: 'uppercase',
@@ -108,9 +107,9 @@ const getCalendarPageStyle = (key, options = {}) => {
         flex: 1,
         display: 'grid',
         gridTemplateColumns: 'repeat(7, 1fr)', // Single grid: 7 columns for days of the week
-        gap: 1,
+        gap: 0, // Remove gap to create a seamless grid
         backgroundColor: theme?.palette?.background?.paper || '#212332',
-        p: 2,
+        p: 0, // Remove padding to ensure cells are adjacent
       },
       calendarDayHeader: {
         textAlign: 'center',
@@ -118,14 +117,26 @@ const getCalendarPageStyle = (key, options = {}) => {
         fontSize: '12px',
         fontWeight: 500,
         p: 1,
+        borderBottom: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
+        borderRight: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`, // Add right border for continuity
+        '&:last-child': {
+          borderRight: 'none', // Remove right border for the last header cell
+        },
       },
       calendarDay: {
-        border: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
+        borderRight: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
+        borderBottom: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
         p: 1,
         minHeight: '100px',
         position: 'relative',
         color: theme?.palette?.text?.secondary || '#a1a5b7',
         fontSize: '12px',
+        '&:last-child': {
+          borderRight: 'none', // Remove right border for the last cell in each row
+        },
+        '&:nth-child(7n)': {
+          borderRight: 'none', // Remove right border for every 7th cell (end of row)
+        },
         ...(options.disabled && {
           backgroundColor: theme?.palette?.action?.disabledBackground || '#2a2f3e',
           color: theme?.palette?.text?.disabled || '#6e6b7b',
