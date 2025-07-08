@@ -98,7 +98,7 @@ export const userInfoStyles = {
   mb: '8px',
 };
 
-// Removed drawerStyles and miniDrawerStyles since we'll define them in Sidebar.jsx using sx
+
 
 export const typographyTitleStyles = (theme) => ({
   color: theme.palette.primary.main, // Use primary color for branding

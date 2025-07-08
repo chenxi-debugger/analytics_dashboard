@@ -22,8 +22,9 @@ import {
   InputLabel,
   Switch,
   FormControlLabel,
+  Tooltip,
 } from '@mui/material';
-import { Search as SearchIcon, Chat as ChatIcon, Mic as MicIcon, AttachFile as AttachFileIcon } from '@mui/icons-material';
+import { Search as SearchIcon, Chat as ChatIcon, Mic as MicIcon, AttachFile as AttachFileIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import getChatpageStyle from '../styles/ChatpageStyle';
 
 // Error Boundary Component
@@ -68,10 +69,10 @@ const ChatPage = () => {
 
   // Status dot colors using Material-UI theme
   const statusColors = {
-    Online: theme?.palette?.success?.main || '#28c76f', // Success color for Online
-    Away: theme?.palette?.warning?.main || '#ff9f43', // Warning color for Away
-    'Do Not Disturb': theme?.palette?.error?.main || '#ea5455', // Error color for Do Not Disturb
-    Offline: theme?.palette?.text?.secondary || '#b9b9c3', // Secondary text color for Offline
+    Online: theme?.palette?.success?.main || '#28c76f',
+    Away: theme?.palette?.warning?.main || '#ff9f43',
+    'Do Not Disturb': theme?.palette?.error?.main || '#ea5455',
+    Offline: theme?.palette?.text?.secondary || '#b9b9c3',
   };
 
   // Fetch chat data
@@ -87,7 +88,6 @@ const ChatPage = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Chat Data:', data);
         setChats(data.chats || []);
         setContacts(data.contacts || []);
       } catch (err) {
@@ -107,7 +107,7 @@ const ChatPage = () => {
     }
   }, [selectedChat]);
 
-  const handleChatSelect = (chat) => {
+  const handleChatSelect = async (chat) => {
     const updatedChats = chats.map((c) =>
       c.id === chat.id ? { ...c, unreadCount: 0 } : c
     );
@@ -115,11 +115,21 @@ const ChatPage = () => {
     setSelectedChat({ ...chat, unreadCount: 0 });
     setSelectedContact(null);
     setMessageInput('');
+    // Update unread count in MongoDB
+    try {
+      const response = await fetch(`http://localhost:5001/api/chat/chats/${chat.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...chat, unreadCount: 0 }),
+      });
+      if (!response.ok) throw new Error('Failed to update unread count');
+    } catch (err) {
+      console.error('Error updating unread count:', err);
+    }
   };
 
-  const handleContactSelect = (contact) => {
+  const handleContactSelect = async (contact) => {
     const tempChat = {
-      id: contact.id + 1000,
       name: contact.name,
       avatar: contact.avatar,
       snippet: '',
@@ -132,33 +142,85 @@ const ChatPage = () => {
     setMessageInput('');
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!messageInput.trim() || !selectedChat) return;
 
     const newMessage = {
-      id: (selectedChat.messages.length + 1) * 1000 + Date.now(),
+      id: Date.now(),
       sender: 'You',
       content: messageInput,
       time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
     };
 
-    const updatedChat = {
-      ...selectedChat,
-      messages: [...selectedChat.messages, newMessage],
-      snippet: messageInput,
-      time: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    };
-
     if (selectedContact) {
-      setChats([updatedChat, ...chats]);
-      setContacts(contacts.filter((c) => c.id !== selectedContact.id));
-      setSelectedContact(null);
+      // Create a new chat
+      const newChat = {
+        ...selectedChat,
+        messages: [newMessage],
+      };
+      try {
+        const response = await fetch('http://localhost:5001/api/chat/chats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newChat),
+        });
+        if (!response.ok) throw new Error('Failed to create chat');
+        const createdChat = await response.json();
+        setChats([createdChat, ...chats]);
+        // Delete contact
+        await fetch(`http://localhost:5001/api/chat/contacts/${selectedContact.id}`, {
+          method: 'DELETE',
+        });
+        setContacts(contacts.filter((c) => c.id !== selectedContact.id));
+        setSelectedContact(null);
+        setSelectedChat(createdChat);
+      } catch (err) {
+        console.error('Error creating chat:', err);
+      }
     } else {
-      setChats(chats.map((chat) => (chat.id === selectedChat.id ? updatedChat : chat)));
+      // Update existing chat
+      try {
+        const response = await fetch('http://localhost:5001/api/chat/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chatId: selectedChat.id, message: newMessage }),
+        });
+        if (!response.ok) throw new Error('Failed to send message');
+        const updatedChat = await response.json();
+        setChats(chats.map((chat) => (chat.id === selectedChat.id ? updatedChat : chat)));
+        setSelectedChat(updatedChat);
+      } catch (err) {
+        console.error('Error sending message:', err);
+      }
     }
 
-    setSelectedChat(updatedChat);
     setMessageInput('');
+  };
+
+  const handleDeleteChat = async (chatId) => {
+    try {
+      const response = await fetch(`http://localhost:5001/api/chat/chats/${chatId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete chat');
+      setChats(chats.filter((chat) => chat.id !== chatId));
+      if (selectedChat?.id === chatId) setSelectedChat(null);
+    } catch (err) {
+      console.error('Error deleting chat:', err);
+    }
+  };
+
+  const handleDeleteContact = async (contactId) => {
+    try {
+      const response = await fetch(`http://localhost:5001/api/chat/contacts/${contactId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete contact');
+      setContacts(contacts.filter((contact) => contact.id !== contactId));
+      if (selectedContact?.id === contactId) setSelectedContact(null);
+    } catch (err) {
+      console.error('Error deleting contact:', err);
+    }
   };
 
   const handleKeyPress = (event) => {
@@ -200,7 +262,7 @@ const ChatPage = () => {
             '& .MuiDrawer-paper': {
               width: 360,
               boxSizing: 'border-box',
-              backgroundColor: theme?.palette?.background?.paper || '#fff', // Paper background
+              backgroundColor: theme?.palette?.background?.paper || '#fff',
             },
           }}
         >
@@ -366,6 +428,11 @@ const ChatPage = () => {
                     )}
                   </Box>
                 </ListItemButton>
+                <Tooltip title="删除聊天">
+                  <IconButton onClick={() => handleDeleteChat(chat.id)}>
+                    <DeleteIcon sx={{ color: theme?.palette?.text?.secondary || '#6e6b7b' }} />
+                  </IconButton>
+                </Tooltip>
               </ListItem>
             ))}
           </List>
@@ -399,6 +466,11 @@ const ChatPage = () => {
                     </Typography>
                   </Box>
                 </ListItemButton>
+                <Tooltip title="删除联系人">
+                  <IconButton onClick={() => handleDeleteContact(contact.id)}>
+                    <DeleteIcon sx={{ color: theme?.palette?.text?.secondary || '#6e6b7b' }} />
+                  </IconButton>
+                </Tooltip>
               </ListItem>
             ))}
           </List>

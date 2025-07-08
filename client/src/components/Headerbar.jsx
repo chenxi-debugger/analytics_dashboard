@@ -192,8 +192,9 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
             >
               <Box
                 sx={{
-                  width: 'auto',
-                  maxWidth: '600px',
+                  height: '600px',
+                  width: '600px',
+                  
                   bgcolor: 'background.paper',
                   boxShadow: 24,
                   p: 3,
