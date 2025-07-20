@@ -10,7 +10,7 @@ const getAnalyticsStyle = (className, theme) => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: theme.palette.background.default, // Use theme background
+        bgcolor: theme.palette.background.default,
         minHeight: '100vh',
         width: '100%',
       };
@@ -26,11 +26,11 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         px: 3,
         py: 1,
-        color: theme.palette.primary.main, // Use primary color (was #7367f0)
+        color: theme.palette.primary.main,
         borderRadius: '10px',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
-        bgcolor: theme.palette.background.paper, // Add background
+        bgcolor: theme.palette.background.paper,
         height: '180px',
       };
 
@@ -45,14 +45,14 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         fontSize: '24px',
         fontWeight: 500,
-        color: theme.palette.text.primary.main, // Use theme text color
+        color: theme.palette.text.primary.main,
       };
 
     case 'welcomeTypographyBody2':
       return {
         fontSize: '16px',
         width: '70%',
-        color: theme.palette.text.secondary, // Use theme secondary text (was grey)
+        color: theme.palette.text.secondary,
         mt: 1,
         opacity: 0.9,
       };
@@ -60,8 +60,8 @@ const getAnalyticsStyle = (className, theme) => {
     case 'welcomeAction':
       return {
         mt: { xs: 1, md: 1.5 },
-        bgcolor: theme.palette.background.paper, // Use theme background (was white)
-        color: theme.palette.primary.main, // Use primary color (was #7367f0)
+        bgcolor: theme.palette.background.paper,
+        color: theme.palette.primary.main,
         border: `1px solid ${theme.palette.primary.main}`,
         p: { xs: '5px 10px', md: '5px 12px' },
         borderRadius: '6px',
@@ -87,7 +87,7 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         p: 2,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -108,7 +108,7 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'orderValue':
       return {
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: theme.palette.text.primary,
         fontSize: '25px',
         fontWeight: 500,
         color: 'darkgrey',
@@ -126,7 +126,7 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         p: 2,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -141,13 +141,12 @@ const getAnalyticsStyle = (className, theme) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        
       };
 
     case 'salesValue':
       return {
         my: 1,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: theme.palette.text.primary,
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 600,
         color: 'darkgrey',
@@ -155,11 +154,11 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'salesGrowth':
       return {
-        color: theme.palette.success.main, // Use success color (was #28c76f)
+        color: theme.palette.success.main,
         fontSize: { xs: '18px', md: '18px' },
         fontWeight: 600,
         display: 'flex',
-        alignItems: 'center', 
+        alignItems: 'center',
       };
 
     // Total Revenue + Company Growth
@@ -167,7 +166,7 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         p: { xs: 2.5, md: 3 },
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
@@ -198,16 +197,15 @@ const getAnalyticsStyle = (className, theme) => {
     case 'revenueHeaderTypographyH6':
       return {
         fontSize: { xs: '24px', md: '24px' },
-        color:'grey',
+        color: 'grey',
         fontWeight: 600,
-        // Use theme text color (was #1a1a1a)
       };
 
     case 'revenueHeaderTypographyBody2':
       return {
         fontSize: { xs: '20px', md: '20px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
-        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        color: theme.palette.text.secondary,
+        bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '6px',
         px: 1,
         py: 0.5,
@@ -220,70 +218,68 @@ const getAnalyticsStyle = (className, theme) => {
         maxHeight: '300px',
       };
 
-      case 'growthSection':
-        return {
-          flex: 1,
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-        };
-  
-      case 'growthTypographyH6':
-        return {
-          fontSize: { xs: '20px', md: '20px' },
-          fontWeight: 600,
-          color: theme.palette.text.secondary,
-          mb: 1,
-        };
-  
-      case 'growthProgress':
-        return {
-          position: 'relative',
-          display: 'block',
-          my: { xs: 1, md: 1.5 },
-          width: '100%',
-          height: '200px', // 与 ReactECharts 的 style 高度一致
-        };
-  
-      case 'growthValue':
-        return {
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          fontSize: { xs: '18px', md: '20px' },
-          fontWeight: 600,
-          color: theme.palette.text.primary,
-        };
-  
-      case 'growthStats':
-        return {
-          justifyContent: 'center',
-          gap: { xs: 1, md: 2 },
-          mt: 1,
-        };
-  
-      case 'growthStatItem':
-        return {
-          bgcolor: theme.palette.action.disabledBackground,
-          p: { xs: 0.75, md: 1 },
-          borderRadius: '6px',
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          minWidth: '80px',
-        };
-  
-      case 'growthStatTypographyBody2':
-        return {
-          fontSize: { xs: '11px', md: '12px' },
-          color: theme.palette.text.secondary,
-        };
+    case 'growthSection':
+      return {
+        flex: 1,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+      };
 
-   
+    case 'growthTypographyH6':
+      return {
+        fontSize: { xs: '20px', md: '20px' },
+        fontWeight: 600,
+        color: theme.palette.text.secondary,
+        mb: 1,
+      };
+
+    case 'growthProgress':
+      return {
+        position: 'relative',
+        display: 'block',
+        my: { xs: 1, md: 1.5 },
+        width: '100%',
+        height: '200px',
+      };
+
+    case 'growthValue':
+      return {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: { xs: '18px', md: '20px' },
+        fontWeight: 600,
+        color: theme.palette.text.primary,
+      };
+
+    case 'growthStats':
+      return {
+        justifyContent: 'center',
+        gap: { xs: 1, md: 2 },
+        mt: 1,
+      };
+
+    case 'growthStatItem':
+      return {
+        bgcolor: theme.palette.action.disabledBackground,
+        p: { xs: 0.75, md: 1 },
+        borderRadius: '6px',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minWidth: '80px',
+      };
+
+    case 'growthStatTypographyBody2':
+      return {
+        fontSize: { xs: '11px', md: '12px' },
+        color: theme.palette.text.secondary,
+      };
 
     // Payments Card
     case 'paymentsCard':
@@ -309,7 +305,7 @@ const getAnalyticsStyle = (className, theme) => {
     case 'paymentsValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: theme.palette.text.primary,
         fontSize: { xs: '25px', md: '25px' },
         fontWeight: 700,
         color: 'grey',
@@ -317,7 +313,7 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'paymentsGrowth':
       return {
-        color: theme.palette.success.main, // Use success color (was #28c76f)
+        color: theme.palette.success.main,
         fontSize: { xs: '20px', md: '20px' },
         fontWeight: 600,
         display: 'flex',
@@ -329,7 +325,7 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         p: 3,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
+        bgcolor: theme.palette.background.paper,
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -350,7 +346,7 @@ const getAnalyticsStyle = (className, theme) => {
     case 'revenueStatsValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: theme.palette.text.primary,
         fontSize: { xs: '20px', md: '20px' },
         fontWeight: 700,
         color: 'grey',
@@ -362,7 +358,8 @@ const getAnalyticsStyle = (className, theme) => {
         width: '100%',
         maxHeight: '60px',
       };
-      // Profit Report Card
+
+    // Profit Report Card
     case 'profitCard':
       return {
         p: { xs: 1, md: 1.25 },
@@ -385,7 +382,7 @@ const getAnalyticsStyle = (className, theme) => {
         alignItems: 'flex-start',
         p: 2,
         gap: 1.5,
-        maxWidth: '40%', // Limit text section width
+        maxWidth: '40%',
       };
 
     case 'profitTypographyH6':
@@ -427,8 +424,8 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'profitChart':
       return {
-        flex: 3.2, // Chart takes more space
-        width: '70%', // Allocate more width to chart
+        flex: 3.2,
+        width: '70%',
         height: '120%',
         pl: '10px',
       };
@@ -445,8 +442,8 @@ const getAnalyticsStyle = (className, theme) => {
         textAlign: 'left',
         overflow: 'hidden',
         width: '100%',
-        height:'500px',
       };
+
     case 'orderStatsHeader':
       return {
         display: 'flex',
@@ -454,13 +451,14 @@ const getAnalyticsStyle = (className, theme) => {
         alignItems: 'center',
         mb: 1,
       };
+
     case 'orderStatsTypographyH6':
       return {
         fontSize: { xs: '24px', md: '24px' },
         fontWeight: 600,
         color: 'grey',
-
       };
+
     case 'orderStatsValue':
       return {
         fontSize: { xs: '14px', md: '14px' },
@@ -468,11 +466,13 @@ const getAnalyticsStyle = (className, theme) => {
         color: 'grey',
         pl: 0,
       };
+
     case 'orderStatsTypographyBody2':
       return {
         fontSize: { xs: '18px', md: '18px' },
         color: theme.palette.text.secondary,
       };
+
     case 'orderStatsProgress':
       return {
         position: 'relative',
@@ -483,6 +483,7 @@ const getAnalyticsStyle = (className, theme) => {
           size: { xs: '40px', md: '40px' },
         },
       };
+
     case 'orderStatsProgressTypographyBody2':
       return {
         position: 'absolute',
@@ -493,11 +494,13 @@ const getAnalyticsStyle = (className, theme) => {
         fontWeight: 600,
         color: theme.palette.text.primary,
       };
+
     case 'orderStatsList':
       return {
         mt: { xs: 1, md: 2 },
         alignItems: 'flex-start',
       };
+
     case 'orderStatsItem':
       return {
         display: 'flex',
@@ -506,16 +509,19 @@ const getAnalyticsStyle = (className, theme) => {
         mb: { xs: 0.75, md: 1 },
         width: '100%',
       };
+
     case 'orderStatsIcon':
       return {
         mr: 1,
         size: '40px',
       };
+
     case 'orderStatsItemTypographyBody2':
       return {
         fontSize: { xs: '18px', md: '18px' },
         color: theme.palette.text.primary,
       };
+
     case 'orderStatsItemTypographyCaption':
       return {
         fontSize: { xs: '15px', md: '15px' },
@@ -525,10 +531,10 @@ const getAnalyticsStyle = (className, theme) => {
     // Income/Expenses/Profit Card
     case 'incomeCard':
       return {
-        p: { xs: 1, md: 1.25 },
+        p: 3,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -539,59 +545,55 @@ const getAnalyticsStyle = (className, theme) => {
     case 'incomeTabs':
       return {
         display: 'flex',
-        gap: { xs: 0.75, md: 1 },
-        mb: { xs: 0.75, md: 1 },
+        justifyContent: 'center',
+        gap: 2,
+        mb: 2,
       };
 
     case 'incomeTabTypographyButton':
       return {
-        p: { xs: '3px 6px', md: '4px 8px' },
+        p: '6px 10px',
         borderRadius: '6px',
-        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        bgcolor: theme.palette.action.disabledBackground,
         cursor: 'pointer',
-        fontSize: { xs: '11px', md: '12px' },
-        fontWeight: 600,
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: '16px',
+        fontWeight: 500,
+        color: theme.palette.text.secondary,
+        mb: 1,
       };
 
     case 'incomeActiveTab':
       return {
-        bgcolor: theme.palette.primary.main, // Use primary color (was #7367f0)
-        color: theme.palette.primary.contrastText, // Use contrast text (was #fff)
+        bgcolor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
       };
 
     case 'incomeTypographyH6':
       return {
-        fontSize: { xs: '13px', md: '14px' },
+        fontSize: { xs: '13px', md: '20px' },
         fontWeight: 600,
-        color: theme.palette.text.primary, // Use theme text color
+        color: 'grey',
       };
 
     case 'incomeValue':
       return {
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 700,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: 'green',
         my: 0.5,
       };
 
     case 'incomeStats':
       return {
-        color: theme.palette.error.main, // Use error color (was #ea5455)
-        fontSize: { xs: '11px', md: '12px' },
+        color: theme.palette.success.main,
+        fontSize: '14px',
         fontWeight: 600,
-        display: 'flex',
-        alignItems: 'center',
-        gap: '4px',
-        '& .MuiSvgIcon-root': {
-          fontSize: { xs: '11px', md: '12px' },
-        },
       };
 
     case 'incomeChart':
       return {
-        flex: 1,
         width: '100%',
+        maxHeight: '100px',
         minHeight: '50px',
       };
 
@@ -605,6 +607,7 @@ const getAnalyticsStyle = (className, theme) => {
         overflow: 'hidden',
         width: '100%',
       };
+
     case 'transactionsHeader':
       return {
         display: 'flex',
@@ -612,24 +615,28 @@ const getAnalyticsStyle = (className, theme) => {
         alignItems: 'center',
         mb: 4,
       };
+
     case 'transactionsTypographyH6':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
         color: theme.palette.text.primary,
       };
+
     case 'transactionsList':
       return {
         display: 'flex',
         flexDirection: 'column',
         gap: { xs: 1, md: 2 },
       };
+
     case 'transactionsItem':
       return {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
       };
+
     case 'transactionsIcon':
       return {
         width: '12px',
@@ -637,6 +644,7 @@ const getAnalyticsStyle = (className, theme) => {
         borderRadius: '50%',
         mr: 1,
       };
+
     case 'transactionsItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
@@ -646,12 +654,14 @@ const getAnalyticsStyle = (className, theme) => {
     // Activity Timeline Card
     case 'activityCard':
       return {
-        p: 2.5,
+        p: 3,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
+        mb: 6,
+        height: '480px',
       };
 
     case 'activityHeader':
@@ -659,53 +669,57 @@ const getAnalyticsStyle = (className, theme) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        mb: { xs: 1, md: 1.5 },
+        mb: 2,
       };
 
     case 'activityTypographyH6':
       return {
-        fontSize: { xs: '14px', md: '16px' },
+        fontSize: '25px',
         fontWeight: 600,
-        color: theme.palette.text.primary, // Use theme text color
+        color: 'grey',
+        width: '100%',
+        mb: 3,
       };
 
     case 'activityList':
       return {
         display: 'flex',
         flexDirection: 'column',
-        gap: { xs: 1, md: 1.5 },
+        gap: 3,
       };
 
     case 'activityItem':
       return {
         display: 'flex',
-        gap: 1.5,
+        justifyContent: 'space-around',
+        gap: 4,
         alignItems: 'center',
+        width: '90%',
       };
 
     case 'activityIcon':
       return {
-        width: '40px',
-        height: '40px',
+        width: '50px',
+        height: '50px',
         fontSize: '1rem',
         fontWeight: 600,
       };
 
     case 'activityItemTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        fontSize: '18px',
+        color: 'green',
       };
 
     case 'activityItemTypographyCaption':
       return {
-        fontSize: { xs: '9px', md: '10px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: '15px',
+        color: theme.palette.text.secondary,
       };
 
     case 'activityAttachment':
       return {
-        color: theme.palette.primary.main, // Use primary color (was #7367f0)
+        color: theme.palette.primary.main,
         mt: 0.5,
         display: 'block',
       };
@@ -720,14 +734,14 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'activityClientTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        fontSize: '15px',
+        color: theme.palette.text.primary,
       };
 
     case 'activityClientTypographyCaption':
       return {
-        fontSize: { xs: '9px', md: '10px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: '12px',
+        color: theme.palette.text.secondary,
       };
 
     case 'activityAvatars':
@@ -738,72 +752,81 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'activityAvatar':
       return {
-        width: { xs: '20px', md: '24px' },
-        height: { xs: '20px', md: '24px' },
+        width: '50px',
+        height: '50px',
         mr: { xs: '-6px', md: '-8px' },
-        border: `2px solid ${theme.palette.background.paper}`, // Use theme background (was #fff)
+        border: `2px solid ${theme.palette.background.paper}`,
       };
 
     // Browser/Country Stats Card
     case 'browserCard':
       return {
-        p: 2.5,
+        p: 3,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
+        mb: 6,
       };
 
     case 'browserTabs':
       return {
         display: 'flex',
-        gap: { xs: 1, md: 1.5 },
-        mb: { xs: 1, md: '1.5' },
+        justifyContent: 'center',
+        gap: 4,
+        mb: 2,
       };
 
     case 'browserTabTypographyButton':
       return {
-        p: { xs: '5px 10px', md: '6px 12px' },
+        p: '6px 12px',
         borderRadius: '6px',
-        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        bgcolor: theme.palette.action.disabledBackground,
         cursor: 'pointer',
-        fontSize: { xs: '11px', md: '12px' },
-        fontWeight: 600,
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: { xs: '11px', md: '16px' },
+        fontWeight: 500,
+        color: theme.palette.text.secondary,
+        mb: 3,
+      };
+
+    case 'browserActiveTab':
+      return {
+        bgcolor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
       };
 
     case 'browserList':
       return {
         display: 'flex',
         flexDirection: 'column',
-        gap: { xs: 1, md: 1.5 },
+        gap: 3,
       };
 
     case 'browserItem':
       return {
         display: 'flex',
         alignItems: 'center',
-        gap: 1,
+        gap: 3,
       };
 
     case 'browserItemTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize:'18px',
+        color: theme.palette.text.secondary,
       };
 
     case 'browserIcon':
       return {
-        width: { xs: '20px', md: '24px' },
-        height: { xs: '20px', md: '24px' },
+        width: '32px' ,
+        height: '32px' ,
       };
 
     case 'browserProgress':
       return {
         flex: 1,
-        height: { xs: '6px', md: '8px' },
-        bgcolor: theme.palette.action.disabledBackground, // Use theme disabled background (was #f5f5f9)
+        height: '10px' ,
+        bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '4px',
         overflow: 'hidden',
       };

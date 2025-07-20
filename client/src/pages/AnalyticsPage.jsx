@@ -445,7 +445,7 @@ const AnalyticsPage = () => {
           <TransactionsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />
 
           {/* Activity Timeline Card */}
-          <ActivityTimelineCard data={data} theme={theme} />
+          <ActivityTimelineCard theme={theme} />
 
           {/* Browser/Country Stats Card */}
           <BrowserCard data={data} theme={theme} statsTab={statsTab} setStatsTab={setStatsTab} />
