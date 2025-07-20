@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -30,12 +30,26 @@ import {
 } from '@mui/icons-material';
 import ReactECharts from 'echarts-for-react';
 import getAnalyticsStyle from '../styles/analyticsPageStyle';
+import OrderStatsCard from './analyticsComponents/OrderStatsCard';
+import IncomeCard from './analyticsComponents/IncomeCard';
+import TransactionsCard from './analyticsComponents/TransactionsCard';
+import ActivityTimelineCard from './analyticsComponents/ActivityTimelineCard';
+import BrowserCard from './analyticsComponents/BrowserCard';
+import {
+  getOrderChartOption,
+  getTotalRevenueChartOption,
+  getRevenueChartOption,
+  getIncomeChartOption,
+  getProfitChartOption,
+  getGrowthChartOption,
+} from './analyticsComponents/chartOptions';
 
 const AnalyticsPage = () => {
   const theme = useTheme();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [salesAnchorEl, setSalesAnchorEl] = useState(null);
   const [yearAnchor, setYearAnchor] = useState(null);
   const [selectedTab, setSelectedTab] = useState('Income');
   const [statsTab, setStatsTab] = useState('browser');
@@ -50,6 +64,14 @@ const AnalyticsPage = () => {
   const incomeChartContainerRef = useRef(null);
   const profitChartRef = useRef(null);
   const profitChartContainerRef = useRef(null);
+
+  // 将 useMemo 放在顶部，确保顺序一致
+  const orderChartOption = useMemo(() => getOrderChartOption(data, theme), [data, theme]);
+  const totalRevenueChartOption = useMemo(() => getTotalRevenueChartOption(theme), [theme]);
+  const revenueChartOption = useMemo(() => getRevenueChartOption(data, theme), [data, theme]);
+  const incomeChartOption = useMemo(() => getIncomeChartOption(data, selectedTab, theme), [data, selectedTab, theme]);
+  const profitChartOption = useMemo(() => getProfitChartOption(), []);
+  const growthChartOption = useMemo(() => getGrowthChartOption(), []);
 
   useEffect(() => {
     async function fetchAnalyticsData() {
@@ -111,6 +133,13 @@ const AnalyticsPage = () => {
   const handleCloseYearMenu = () => setYearAnchor(null);
   const handleTabChange = (tab) => setSelectedTab(tab);
 
+  const handleOpenMenu = (event, setAnchorEl) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = (setAnchorEl) => {
+    setAnchorEl(null);
+  };
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -163,150 +192,6 @@ const AnalyticsPage = () => {
     }
   };
 
-  const orderChartOption = {
-    xAxis: {
-      type: 'category',
-      data: data.order_card.chart.xAxis,
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: { show: false },
-    },
-    yAxis: {
-      type: 'value',
-      show: false,
-    },
-    series: [
-      {
-        data: data.order_card.chart.data,
-        type: 'line',
-        smooth: true,
-        lineStyle: { color: theme.palette.success.main, width: 2 },
-        itemStyle: { color: theme.palette.success.main },
-        showSymbol: true,
-        symbolSize: (val, params) => (params.dataIndex === data.order_card.chart.data.length - 1 ? 12 : 8),
-        symbol: 'circle',
-        areaStyle: { color: theme.palette.success.light },
-      },
-    ],
-    grid: { left: 0, right: 0, top: 10, bottom: 0 },
-  };
-
-  const totalRevenueChartOption = {
-    xAxis: {
-      type: 'category',
-      data: data.total_revenue_card.chart.xAxis,
-      axisLabel: { color: theme.palette.text.secondary, fontSize: 10 },
-      axisLine: { lineStyle: { color: theme.palette.divider } },
-      axisTick: { show: false },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { show: false },
-      axisLine: { show: false },
-      splitLine: { show: false },
-    },
-    series: data.total_revenue_card.chart.series.map((serie) => ({
-      name: serie.name,
-      type: 'bar',
-      data: serie.data,
-      barWidth: 10,
-      barGap: '0%',
-      itemStyle: {
-        color: serie.name === '2023' ? theme.palette.info.main : theme.palette.primary.main,
-        borderRadius: 4,
-      },
-    })),
-    grid: { left: 20, right: 20, top: 10, bottom: 20 },
-    legend: {
-      data: ['2024', '2023'],
-      bottom: 0,
-      icon: 'circle',
-      itemWidth: 8,
-      itemHeight: 8,
-      textStyle: { color: theme.palette.text.secondary, fontSize: 10 },
-    },
-  };
-
-  const revenueChartOption = {
-    xAxis: {
-      type: 'category',
-      data: data.revenue_stats_card.chart.xAxis,
-      axisLabel: { show: false },
-      axisLine: { show: false },
-      axisTick: { show: false },
-    },
-    yAxis: {
-      type: 'value',
-      show: false,
-    },
-    series: [
-      {
-        type: 'bar',
-        data: data.revenue_stats_card.chart.data,
-        barWidth: 6,
-        itemStyle: { color: theme.palette.warning.main, borderRadius: 4 },
-      },
-    ],
-    grid: { left: 0, right: 0, top: 0, bottom: 0 },
-  };
-
-  const incomeChartOption = {
-    xAxis: {
-      type: 'category',
-      data: data.income_card[selectedTab.toLowerCase()].chart.xAxis,
-      axisLabel: { color: theme.palette.text.secondary, fontSize: 8 },
-      axisLine: { lineStyle: { color: theme.palette.divider } },
-      axisTick: { show: false },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { show: false },
-      axisLine: { show: false },
-      splitLine: { show: false },
-    },
-    series: [
-      {
-        data: data.income_card[selectedTab.toLowerCase()].chart.data,
-        type: 'line',
-        smooth: true,
-        lineStyle: { color: theme.palette.primary.main, width: 2 },
-        areaStyle: { color: theme.palette.primary.light },
-        itemStyle: { color: theme.palette.primary.main },
-        showSymbol: true,
-        symbolSize: 6,
-        symbol: 'circle',
-      },
-    ],
-    grid: { left: 10, right: 10, top: 10, bottom: 10 },
-  };
-
-  const profitChartOption = {
-    xAxis: {
-      type: 'category',
-      data: data.profit_report_card.chart.xAxis,
-      axisLabel: { color: theme.palette.text.secondary, fontSize: 8 },
-      axisLine: { lineStyle: { color: theme.palette.divider } },
-      axisTick: { show: false },
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { show: false },
-      axisLine: { show: false },
-      splitLine: { show: false },
-    },
-    series: [
-      {
-        type: 'line',
-        data: data.profit_report_card.chart.data,
-        smooth: true,
-        lineStyle: { color: theme.palette.warning.main, width: 2 },
-        itemStyle: { color: theme.palette.warning.main },
-        showSymbol: false,
-      },
-    ],
-    grid: { left: 10, right: 10, top: 10, bottom: 10 },
-  };
-
   return (
     <Box sx={getAnalyticsStyle('analyticsMain', theme)}>
       <Box sx={getAnalyticsStyle('analyticsContent', theme)}>
@@ -338,12 +223,9 @@ const AnalyticsPage = () => {
             <Paper sx={{ ...getAnalyticsStyle('orderCard', theme), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('orderHeader', theme)}>
-                  <Typography variant="h6">{data.order_card.title}</Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
+                  <Typography>{data.order_card.title}</Typography>
                 </Box>
-                <Typography variant="h4" sx={getAnalyticsStyle('orderValue', theme)}>
+                <Typography sx={getAnalyticsStyle('orderValue', theme)}>
                   {data.order_card.value}
                 </Typography>
                 <Box ref={orderChartContainerRef} sx={getAnalyticsStyle('orderChart', theme)}>
@@ -361,7 +243,10 @@ const AnalyticsPage = () => {
                   <Box>
                     <img src="/stats-vertical-wallet.png" alt="Welcome" style={{ width: '40px' }} />
                   </Box>
-                  <IconButton>
+                  <IconButton
+                    onClick={(event) => handleOpenMenu(event, setSalesAnchorEl)}
+                    aria-label="More options"
+                  >
                     <MoreVert />
                   </IconButton>
                 </Box>
@@ -370,9 +255,21 @@ const AnalyticsPage = () => {
                   {data.sales_card.value}
                 </Typography>
                 <Typography variant="body2" sx={getAnalyticsStyle('salesGrowth', theme)}>
-                  <ArrowUpward sx={{ fontSize: '12px', color: theme.palette.success.main }} /> {data.sales_card.growth}
+                  <ArrowUpward sx={{ fontSize: '18px', color: theme.palette.success.main }} />{' '}
+                  {data.sales_card.growth}
                 </Typography>
               </Stack>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+                <Menu
+                  anchorEl={salesAnchorEl}
+                  open={Boolean(salesAnchorEl)}
+                  onClose={() => handleCloseMenu(setSalesAnchorEl)}
+                >
+                  <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Refresh</MenuItem>
+                  <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Share</MenuItem>
+                  <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Update</MenuItem>
+                </Menu>
+              </Box>
             </Paper>
           </Grid>
 
@@ -383,7 +280,7 @@ const AnalyticsPage = () => {
                 {/* Total Revenue Section */}
                 <Box sx={getAnalyticsStyle('revenueSection', theme)}>
                   <Box sx={getAnalyticsStyle('revenueHeader', theme)}>
-                    <Typography variant="h6" sx={getAnalyticsStyle('revenueHeaderTypographyH6', theme)}>
+                    <Typography sx={getAnalyticsStyle('revenueHeaderTypographyH6', theme)}>
                       {data.total_revenue_card.title}
                     </Typography>
                     <Box>
@@ -426,20 +323,7 @@ const AnalyticsPage = () => {
                     {data.company_growth_card.progress}% Company Growth
                   </Typography>
                   <Box sx={getAnalyticsStyle('growthProgress', theme)}>
-                    <CircularProgress
-                      variant="determinate"
-                      value={Number(data.company_growth_card.progress)}
-                      size={80}
-                      thickness={6}
-                      sx={{
-                        color: theme.palette.primary.main,
-                        backgroundColor: theme.palette.divider,
-                        borderRadius: '50%',
-                      }}
-                    />
-                    <Typography variant="h6" sx={getAnalyticsStyle('growthValue', theme)}>
-                      {data.company_growth_card.progress}%
-                    </Typography>
+                    <ReactECharts option={growthChartOption} style={{ height: '200px', width: '100%' }} />
                   </Box>
                   <Stack direction="row" spacing={2} sx={getAnalyticsStyle('growthStats', theme)}>
                     {data.company_growth_card.stats.map((stat, index) => (
@@ -481,14 +365,14 @@ const AnalyticsPage = () => {
                         <MoreVert />
                       </IconButton>
                     </Box>
-                    <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                    <Typography variant="h6" sx={{ fontSize: '16px' }}>
                       {data.payments_card.title}
                     </Typography>
                     <Typography variant="h4" sx={getAnalyticsStyle('paymentsValue', theme)}>
                       {data.payments_card.value}
                     </Typography>
                     <Typography variant="body2" sx={getAnalyticsStyle('paymentsGrowth', theme)}>
-                      <ArrowUpward sx={{ fontSize: '10px', color: theme.palette.success.main }} /> {data.payments_card.growth}
+                      <ArrowUpward sx={{ fontSize: '20px', color: theme.palette.success.main }} /> {data.payments_card.growth}
                     </Typography>
                   </Stack>
                 </Paper>
@@ -497,7 +381,7 @@ const AnalyticsPage = () => {
                 <Paper sx={getAnalyticsStyle('revenueStatsCard', theme)}>
                   <Stack spacing={1}>
                     <Box sx={getAnalyticsStyle('revenueStatsHeader', theme)}>
-                      <Typography variant="h6" sx={{ fontSize: '12px' }}>
+                      <Typography variant="h6" sx={{ fontSize: '18px' }}>
                         {data.revenue_stats_card.title}
                       </Typography>
                     </Box>
@@ -526,7 +410,7 @@ const AnalyticsPage = () => {
                       {data.profit_report_card.value}
                     </Typography>
                     <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth', theme)}>
-                      <ArrowUpward sx={{ fontSize: '10px', color: theme.palette.success.main }} /> +{data.profit_report_card.growth}
+                      <ArrowUpward sx={{ fontSize: '20px', color: theme.palette.success.main }} /> +{data.profit_report_card.growth}
                     </Typography>
                   </Box>
                   {/* Chart Section */}
@@ -539,245 +423,19 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Order Statistics Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
-            <Paper sx={{ ...getAnalyticsStyle('orderStatsCard', theme), flexGrow: 1 }}>
-              <Stack spacing={1} alignItems="center">
-                <Box sx={getAnalyticsStyle('orderStatsHeader', theme)}>
-                  <Typography variant="h6" sx={getAnalyticsStyle('orderStatsTypographyH6', theme)}>
-                    {data.order_statistics_card.title}
-                  </Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
-                </Box>
-                <Typography variant="h4" sx={getAnalyticsStyle('orderStatsValue', theme)}>
-                  {data.order_statistics_card.total_sales.replace(',', '.')}
-                </Typography>
-                <Typography variant="body2" sx={getAnalyticsStyle('orderStatsTypographyBody2', theme)}>
-                  Total Orders: {data.order_statistics_card.total_orders}
-                </Typography>
-                <Box sx={getAnalyticsStyle('orderStatsProgress', theme)}>
-                  <CircularProgress
-                    variant="determinate"
-                    value={parseFloat(data.order_statistics_card.progress)}
-                    size={40}
-                  />
-                  <Typography variant="body2" sx={getAnalyticsStyle('orderStatsProgressTypographyBody2', theme)}>
-                    {parseFloat(data.order_statistics_card.progress)}%
-                  </Typography>
-                </Box>
-                <Stack spacing={1} sx={getAnalyticsStyle('orderStatsList', theme)}>
-                  {data.order_statistics_card.categories.map((category, index) => (
-                    <Box key={index} sx={getAnalyticsStyle('orderStatsItem', theme)}>
-                      <Box sx={getAnalyticsStyle('orderStatsIcon', theme)}>{getCategoryIcon(category.name)}</Box>
-                      <Box>
-                        <Typography variant="body2" sx={getAnalyticsStyle('orderStatsItemTypographyBody2', theme)}>
-                          {category.name}
-                        </Typography>
-                        <Typography variant="caption" sx={getAnalyticsStyle('orderStatsItemTypographyCaption', theme)}>
-                          {category.description}
-                        </Typography>
-                      </Box>
-                      <Typography variant="body2" sx={[getAnalyticsStyle('orderStatsItemTypographyBody2', theme), { fontWeight: 600 }]}>
-                        {category.value}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </Stack>
-            </Paper>
-          </Grid>
+          <OrderStatsCard data={data} theme={theme} />
 
           {/* Income/Expenses/Profit Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
-            <Paper sx={{ ...getAnalyticsStyle('incomeCard', theme), flexGrow: 1 }}>
-              <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('incomeTabs', theme)}>
-                  {data.income_card.tabs.map((tab, index) => (
-                    <Typography
-                      key={index}
-                      variant="button"
-                      sx={selectedTab === tab ? [getAnalyticsStyle('incomeTabTypographyButton', theme), getAnalyticsStyle('incomeActiveTab', theme)] : getAnalyticsStyle('incomeTabTypographyButton', theme)}
-                      onClick={() => handleTabChange(tab)}
-                    >
-                      {tab}
-                    </Typography>
-                  ))}
-                </Box>
-                <Typography variant="h6" sx={getAnalyticsStyle('incomeTypographyH6', theme)}>
-                  {data.income_card[selectedTab.toLowerCase()].title}
-                </Typography>
-                <Typography variant="h4" sx={getAnalyticsStyle('incomeValue', theme)}>
-                  {data.income_card[selectedTab.toLowerCase()].value}
-                </Typography>
-                <Typography variant="body2" sx={getAnalyticsStyle('incomeStats', theme)}>
-                  <ArrowDownward sx={{ color: theme.palette.error.main }} /> 6.5% less than last week
-                </Typography>
-                <Box ref={incomeChartContainerRef} sx={getAnalyticsStyle('incomeChart', theme)}>
-                  <ReactECharts ref={incomeChartRef} option={incomeChartOption} />
-                </Box>
-              </Stack>
-            </Paper>
-          </Grid>
+          <IncomeCard data={data} theme={theme} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
           {/* Transactions Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
-            <Paper sx={{ ...getAnalyticsStyle('transactionsCard', theme), flexGrow: 1 }}>
-              <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('transactionsHeader', theme)}>
-                  <Typography variant="h6" sx={getAnalyticsStyle('transactionsTypographyH6', theme)}>
-                    {data.transactions_card.title}
-                  </Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
-                </Box>
-                <Stack spacing={1.5} sx={getAnalyticsStyle('transactionsList', theme)}>
-                  {data.transactions_card.list.map((transaction, index) => (
-                    <Box key={index} sx={getAnalyticsStyle('transactionsItem', theme)}>
-                      <Box sx={[getAnalyticsStyle('transactionsIcon', theme), { backgroundColor: transaction.color }]} />
-                      <Typography variant="body2" sx={getAnalyticsStyle('transactionsItemTypographyBody2', theme)}>
-                        {transaction.type}
-                      </Typography>
-                      <Typography variant="body2" sx={[getAnalyticsStyle('transactionsItemTypographyBody2', theme), { fontWeight: 600 }]}>
-                        {transaction.value}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </Stack>
-            </Paper>
-          </Grid>
+          <TransactionsCard data={data} theme={theme} />
 
           {/* Activity Timeline Card */}
-          <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
-            <Paper sx={{ ...getAnalyticsStyle('activityCard', theme), flexGrow: 1 }}>
-              <Stack spacing={1}>
-                <Box sx={getAnalyticsStyle('activityHeader', theme)}>
-                  <Typography variant="h6" sx={getAnalyticsStyle('activityTypographyH6', theme)}>
-                    {data.activity_timeline_card.title}
-                  </Typography>
-                  <IconButton>
-                    <MoreVert />
-                  </IconButton>
-                </Box>
-                <Stack spacing={1.5} sx={getAnalyticsStyle('activityList', theme)}>
-                  {data.activity_timeline_card.activities.map((activity, index) => (
-                    <Box key={index} sx={getAnalyticsStyle('activityItem', theme)}>
-                      <Avatar sx={[getAnalyticsStyle('activityIcon', theme), { bgcolor: activity.color }]}>
-                        {getActivityIcon(activity.title)}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="body2" sx={getAnalyticsStyle('activityItemTypographyBody2', theme)}>
-                          {activity.title}
-                        </Typography>
-                        <Typography variant="caption" sx={getAnalyticsStyle('activityItemTypographyCaption', theme)}>
-                          {activity.subtitle || activity.description}
-                        </Typography>
-                        {activity.attachment && (
-                          <Typography variant="caption" sx={getAnalyticsStyle('activityAttachment', theme)}>
-                            {activity.attachment}
-                          </Typography>
-                        )}
-                        {activity.client && (
-                          <Box sx={getAnalyticsStyle('activityClient', theme)}>
-                            <Avatar sx={[getAnalyticsStyle('activityAvatar', theme), { bgcolor: activity.avatar_color }]} />
-                            <Box>
-                              <Typography variant="body2" sx={getAnalyticsStyle('activityClientTypographyBody2', theme)}>
-                                {activity.client}
-                              </Typography>
-                              <Typography variant="caption" sx={getAnalyticsStyle('activityClientTypographyCaption', theme)}>
-                                CEO of ThemeSelection
-                              </Typography>
-                            </Box>
-                          </Box>
-                        )}
-                        {activity.avatars && (
-                          <Box sx={getAnalyticsStyle('activityAvatars', theme)}>
-                            {data.activity_timeline_card.activities[2].avatars.map((color, idx) => (
-                              <Avatar
-                                key={idx}
-                                sx={[getAnalyticsStyle('activityAvatar', theme), { bgcolor: color }]}
-                              />
-                            ))}
-                          </Box>
-                        )}
-                      </Box>
-                      <Typography variant="caption" sx={getAnalyticsStyle('activityItemTypographyCaption', theme)}>
-                        {activity.description}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Stack>
-              </Stack>
-            </Paper>
-          </Grid>
+          <ActivityTimelineCard data={data} theme={theme} />
 
           {/* Browser/Country Stats Card */}
-          <Grid size={{ xs: 6, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
-            <Paper sx={{ ...getAnalyticsStyle('browserCard', theme), flexGrow: 1 }}>
-              <Stack spacing={1}>
-                {/* Tabs */}
-                <Tabs
-                  value={statsTab}
-                  onChange={(event, newValue) => setStatsTab(newValue)}
-                  sx={getAnalyticsStyle('browserTabs', theme)}
-                >
-                  {data.browser_stats_card.tabs.map((tab, index) => (
-                    <Tab
-                      key={index}
-                      label={tab}
-                      value={tab.toLowerCase().replace(' ', '_')}
-                      sx={
-                        statsTab === tab.toLowerCase().replace(' ', '_')
-                          ? [getAnalyticsStyle('browserTabTypographyButton', theme), getAnalyticsStyle('incomeActiveTab', theme)]
-                          : getAnalyticsStyle('browserTabTypographyButton', theme)
-                      }
-                    />
-                  ))}
-                </Tabs>
-                {/* Stats List */}
-                {data.browser_stats_card[statsTab] && data.browser_stats_card[statsTab].stats ? (
-                  <Stack spacing={1.5} sx={getAnalyticsStyle('browserList', theme)}>
-                    {data.browser_stats_card[statsTab].stats.map((stat, index) => (
-                      <Box key={index} sx={getAnalyticsStyle('browserItem', theme)}>
-                        <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2', theme)}>
-                          {stat.rank}
-                        </Typography>
-                        <Avatar
-                          sx={[getAnalyticsStyle('browserIcon', theme), { bgcolor: 'transparent' }]}
-                          src={
-                            stat.browser === 'Chrome' ? '/chrome.png' :
-                            stat.browser === 'Safari' ? '/safari.png' :
-                            stat.browser === 'Firefox' ? '/firefox.png' :
-                            stat.browser === 'Edge' ? '/edge.png' :
-                            stat.browser === 'Opera' ? '/opera.png' :
-                            stat.browser === 'Brave' ? '/brave.png' :
-                            null
-                          }
-                        />
-                        <Typography
-                          variant="body2"
-                          sx={[getAnalyticsStyle('browserItemTypographyBody2', theme), { color: theme.palette.text.primary, fontWeight: 600 }]}
-                        >
-                          {stat[statsTab === 'browser' ? 'browser' : statsTab === 'operating_system' ? 'system' : 'country']}
-                        </Typography>
-                        <Typography variant="body2" sx={getAnalyticsStyle('browserItemTypographyBody2', theme)}>
-                          {stat.value}
-                        </Typography>
-                        <Box sx={getAnalyticsStyle('browserProgress', theme)}>
-                          <Box sx={[getAnalyticsStyle('browserProgressBar', theme), { width: stat.percentage, bgcolor: stat.color }]} />
-                        </Box>
-                        <Typography variant="body2" sx={[getAnalyticsStyle('browserItemTypographyBody2', theme), { fontWeight: 600 }]}>
-                          {stat.percentage}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Stack>
-                ) : null}
-              </Stack>
-            </Paper>
-          </Grid>
+          <BrowserCard data={data} theme={theme} statsTab={statsTab} setStatsTab={setStatsTab} />
         </Grid>
       </Box>
     </Box>
