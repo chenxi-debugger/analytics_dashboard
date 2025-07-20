@@ -65,7 +65,6 @@ const AnalyticsPage = () => {
   const profitChartRef = useRef(null);
   const profitChartContainerRef = useRef(null);
 
-  // 将 useMemo 放在顶部，确保顺序一致
   const orderChartOption = useMemo(() => getOrderChartOption(data, theme), [data, theme]);
   const totalRevenueChartOption = useMemo(() => getTotalRevenueChartOption(theme), [theme]);
   const revenueChartOption = useMemo(() => getRevenueChartOption(data, theme), [data, theme]);
@@ -361,7 +360,10 @@ const AnalyticsPage = () => {
                       <Box>
                         <img src="/paypal.png" alt="paypal" style={{ width: '40px' }} />
                       </Box>
-                      <IconButton>
+                      <IconButton
+                        onClick={(event) => handleOpenMenu(event, setSalesAnchorEl)}
+                        aria-label="More options"
+                      >
                         <MoreVert />
                       </IconButton>
                     </Box>
@@ -375,6 +377,17 @@ const AnalyticsPage = () => {
                       <ArrowUpward sx={{ fontSize: '20px', color: theme.palette.success.main }} /> {data.payments_card.growth}
                     </Typography>
                   </Stack>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+                    <Menu
+                      anchorEl={salesAnchorEl}
+                      open={Boolean(salesAnchorEl)}
+                      onClose={() => handleCloseMenu(setSalesAnchorEl)}
+                    >
+                      <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Refresh</MenuItem>
+                      <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Share</MenuItem>
+                      <MenuItem onClick={() => handleCloseMenu(setSalesAnchorEl)}>Update</MenuItem>
+                    </Menu>
+                  </Box>
                 </Paper>
 
                 {/* Revenue Stats Card */}
@@ -423,13 +436,13 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Order Statistics Card */}
-          <OrderStatsCard data={data} theme={theme} />
+          <OrderStatsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />
 
           {/* Income/Expenses/Profit Card */}
           <IncomeCard data={data} theme={theme} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
           {/* Transactions Card */}
-          <TransactionsCard data={data} theme={theme} />
+          <TransactionsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />
 
           {/* Activity Timeline Card */}
           <ActivityTimelineCard data={data} theme={theme} />

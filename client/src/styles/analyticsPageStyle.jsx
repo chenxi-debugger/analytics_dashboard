@@ -436,17 +436,17 @@ const getAnalyticsStyle = (className, theme) => {
     // Order Statistics Card
     case 'orderStatsCard':
       return {
-        p: { xs: 1, md: 1.25 },
+        p: 3,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
-        textAlign: 'center',
+        textAlign: 'left',
         overflow: 'hidden',
         width: '100%',
+        height:'500px',
       };
-
     case 'orderStatsHeader':
       return {
         display: 'flex',
@@ -454,56 +454,50 @@ const getAnalyticsStyle = (className, theme) => {
         alignItems: 'center',
         mb: 1,
       };
-
     case 'orderStatsTypographyH6':
       return {
-        fontSize: { xs: '13px', md: '14px' },
+        fontSize: { xs: '24px', md: '24px' },
         fontWeight: 600,
-        color: theme.palette.text.primary, // Use theme text color
-      };
+        color: 'grey',
 
+      };
     case 'orderStatsValue':
       return {
-        fontSize: { xs: '18px', md: '20px' },
-        fontWeight: 700,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
-        my: 0.5,
+        fontSize: { xs: '14px', md: '14px' },
+        fontWeight: 400,
+        color: 'grey',
+        pl: 0,
       };
-
     case 'orderStatsTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: { xs: '18px', md: '18px' },
+        color: theme.palette.text.secondary,
       };
-
     case 'orderStatsProgress':
       return {
         position: 'relative',
         display: 'inline-flex',
         my: { xs: 0.75, md: 1 },
         '& .MuiCircularProgress-root': {
-          color: theme.palette.success.main, // Use success color (was #28c76f)
+          color: theme.palette.success.main,
           size: { xs: '40px', md: '40px' },
         },
       };
-
     case 'orderStatsProgressTypographyBody2':
       return {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        fontSize: { xs: '11px', md: '12px' },
+        fontSize: { xs: '20px', md: '20px' },
         fontWeight: 600,
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        color: theme.palette.text.primary,
       };
-
     case 'orderStatsList':
       return {
-        mt: { xs: 1, md: 1.5 },
+        mt: { xs: 1, md: 2 },
         alignItems: 'flex-start',
       };
-
     case 'orderStatsItem':
       return {
         display: 'flex',
@@ -512,22 +506,20 @@ const getAnalyticsStyle = (className, theme) => {
         mb: { xs: 0.75, md: 1 },
         width: '100%',
       };
-
     case 'orderStatsIcon':
       return {
         mr: 1,
+        size: '40px',
       };
-
     case 'orderStatsItemTypographyBody2':
       return {
-        fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.primary, // Use theme text color (was #1a1a1a)
+        fontSize: { xs: '18px', md: '18px' },
+        color: theme.palette.text.primary,
       };
-
     case 'orderStatsItemTypographyCaption':
       return {
-        fontSize: { xs: '9px', md: '10px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        fontSize: { xs: '15px', md: '15px' },
+        color: theme.palette.text.secondary,
       };
 
     // Income/Expenses/Profit Card
@@ -603,46 +595,41 @@ const getAnalyticsStyle = (className, theme) => {
         minHeight: '50px',
       };
 
-    // Transactions Card
+    // TransactionsCard Styles
     case 'transactionsCard':
       return {
-        p: 2.5,
+        p: 4,
         borderRadius: '10px',
-        bgcolor: theme.palette.background.paper, // Use theme background (was #fff)
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
       };
-
     case 'transactionsHeader':
       return {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        mb: { xs: 1, md: 1.5 },
+        mb: 4,
       };
-
     case 'transactionsTypographyH6':
       return {
         fontSize: { xs: '13px', md: '14px' },
         fontWeight: 600,
-        color: theme.palette.text.primary, // Use theme text color
+        color: theme.palette.text.primary,
       };
-
     case 'transactionsList':
       return {
         display: 'flex',
         flexDirection: 'column',
-        gap: { xs: 1, md: 1.5 },
+        gap: { xs: 1, md: 2 },
       };
-
     case 'transactionsItem':
       return {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
       };
-
     case 'transactionsIcon':
       return {
         width: '12px',
@@ -650,11 +637,10 @@ const getAnalyticsStyle = (className, theme) => {
         borderRadius: '50%',
         mr: 1,
       };
-
     case 'transactionsItemTypographyBody2':
       return {
         fontSize: { xs: '11px', md: '12px' },
-        color: theme.palette.text.secondary, // Use theme secondary text (was #6e6b7b)
+        color: theme.palette.text.secondary,
       };
 
     // Activity Timeline Card
