@@ -660,7 +660,7 @@ const getAnalyticsStyle = (className, theme) => {
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
-        mb: 6,
+        mb: 1,
         height: '480px',
       };
 
@@ -685,7 +685,7 @@ const getAnalyticsStyle = (className, theme) => {
       return {
         display: 'flex',
         flexDirection: 'column',
-        gap: 3,
+        gap: 2,
       };
 
     case 'activityItem':
@@ -767,7 +767,8 @@ const getAnalyticsStyle = (className, theme) => {
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         width: '100%',
-        mb: 6,
+        mb: 1,
+        height: '480px',
       };
 
     case 'browserTabs':
@@ -787,7 +788,7 @@ const getAnalyticsStyle = (className, theme) => {
         fontSize: { xs: '11px', md: '16px' },
         fontWeight: 500,
         color: theme.palette.text.secondary,
-        mb: 3,
+        mb: 5,
       };
 
     case 'browserActiveTab':

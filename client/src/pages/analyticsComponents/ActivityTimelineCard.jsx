@@ -101,7 +101,7 @@ const ActivityTimelineCard = ({ theme }) => {
                     <Box sx={getAnalyticsStyle('activityClient', theme)}>
                       <Avatar
                         sx={[getAnalyticsStyle('activityAvatar', theme), { bgcolor: activity.avatar_color }]}
-                        src={'/2.png'}
+                        src={'/8.png'}
                       />
                       <Box>
                         <Typography variant="body2" sx={getAnalyticsStyle('activityClientTypographyBody2', theme)}>

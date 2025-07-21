@@ -73,6 +73,7 @@ const App = () => {
             flexGrow: 1,
             p: 3,
             mt: 8,
+            mb: 6,
             width: { xs: '100%', lg: `calc(100% - ${drawerWidth}px)` },
             backgroundColor: theme.palette.background.default,
             minHeight: '100vh',
