@@ -24,8 +24,8 @@ const getEcommerceStyle = (className, theme) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         p: 2,
-        bgcolor: theme.palette.background.paper, // Use same background as other cards
-        color: theme.palette.text.primary, // Use primary text color for readability
+        bgcolor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       };
@@ -58,17 +58,101 @@ const getEcommerceStyle = (className, theme) => {
       };
 
     case 'newVisitorsCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'activityCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'profitCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'totalIncomeCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'reportCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'performanceCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'conversionRateCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'salesCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'transactionsCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'expensesCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'revenueCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'topProductsCard':
+      return {
+        p: 2,
+        borderRadius: '8px',
+        bgcolor: theme.palette.background.paper,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+      };
+
     case 'totalBalanceCard':
       return {
         p: 2,
@@ -99,7 +183,27 @@ const getEcommerceStyle = (className, theme) => {
       };
 
     case 'visitorsStats':
+      return {
+        color: theme.palette.text.secondary,
+        fontSize: '0.8rem',
+        display: 'flex',
+        alignItems: 'center',
+        '& .MuiTypography-body2': {
+          ml: 0.5,
+        },
+      };
+
     case 'activityStats':
+      return {
+        color: theme.palette.text.secondary,
+        fontSize: '0.8rem',
+        display: 'flex',
+        alignItems: 'center',
+        '& .MuiTypography-body2': {
+          ml: 0.5,
+        },
+      };
+
     case 'salesStats':
       return {
         color: theme.palette.text.secondary,
@@ -112,9 +216,37 @@ const getEcommerceStyle = (className, theme) => {
       };
 
     case 'newVisitorsChart':
+      return {
+        height: '60px',
+        bgcolor: theme.palette.action.disabledBackground,
+        borderRadius: '6px',
+        mt: 1.5,
+      };
+
     case 'activityChart':
+      return {
+        height: '60px',
+        bgcolor: theme.palette.action.disabledBackground,
+        borderRadius: '6px',
+        mt: 1.5,
+      };
+
     case 'conversionRateChart':
+      return {
+        height: '60px',
+        bgcolor: theme.palette.action.disabledBackground,
+        borderRadius: '6px',
+        mt: 1.5,
+      };
+
     case 'expensesChart':
+      return {
+        height: '60px',
+        bgcolor: theme.palette.action.disabledBackground,
+        borderRadius: '6px',
+        mt: 1.5,
+      };
+
     case 'totalBalanceChart':
       return {
         height: '60px',
@@ -271,6 +403,13 @@ const getEcommerceStyle = (className, theme) => {
       };
 
     case 'visitorsValue':
+      return {
+        my: 1,
+        color: theme.palette.text.primary,
+        fontSize: '1.75rem',
+        fontWeight: 700,
+      };
+
     case 'activityValue':
       return {
         my: 1,
