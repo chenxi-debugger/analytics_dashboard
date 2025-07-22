@@ -178,7 +178,7 @@ const getChatpageStyle = (key, props = {}) => {
       alignItems: 'center',
       backgroundColor: theme?.palette?.background?.paper || '#fff',
       gap: 1,
-      marginBottom: 2,
+      marginBottom: 10,
     },
     messageInput: {
       flexGrow: 1,

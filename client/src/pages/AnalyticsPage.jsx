@@ -35,6 +35,9 @@ import IncomeCard from './analyticsComponents/IncomeCard';
 import TransactionsCard from './analyticsComponents/TransactionsCard';
 import ActivityTimelineCard from './analyticsComponents/ActivityTimelineCard';
 import BrowserCard from './analyticsComponents/BrowserCard';
+import ProfitCard from './analyticsComponents/ProfitCard'
+
+
 import {
   getOrderChartOption,
   getTotalRevenueChartOption,
@@ -409,45 +412,13 @@ const AnalyticsPage = () => {
               </Box>
 
               {/* Bottom Stack: Profit Report Card */}
-              <Paper sx={{ ...getAnalyticsStyle('profitCard', theme), flexGrow: 1 }}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between', // 🔥 关键：左右分布
-                    alignItems: 'center',            // 🔥 垂直居中
-                    height: '100%',
-                  }}
-                >
-                  {/* Text Section */}
-                  <Box sx={{ ...getAnalyticsStyle('profitTextSection', theme), flexShrink: 0, minWidth: 160 }}>
-                    <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6', theme)}>
-                      {data.profit_report_card.title}
-                    </Typography>
-                    <Typography variant="button" sx={getAnalyticsStyle('profitYear', theme)}>
-                      Year {data.profit_report_card.year}
-                    </Typography>
-                    <Typography variant="h4" sx={getAnalyticsStyle('profitValue', theme)}>
-                      {data.profit_report_card.value}
-                    </Typography>
-                    <Typography variant="body2" sx={getAnalyticsStyle('profitGrowth', theme)}>
-                      <ArrowUpward sx={{ fontSize: '20px', color: theme.palette.success.main }} /> +{data.profit_report_card.growth}
-                    </Typography>
-                  </Box>
-
-                  {/* Chart Section */}
-                  <Box
-                ref={profitChartContainerRef}
-                sx={{ ...getAnalyticsStyle('profitChart', theme), width: 220, minWidth: 200 }}
-              >
-                <ReactECharts
-                  ref={profitChartRef}
-                  option={profitChartOption}
-                  style={{ width: '100%', height: 100 }}
-                />
-              </Box>
-                </Box>
-              </Paper>
+              <ProfitCard
+  data={data}
+  theme={theme}
+  profitChartRef={profitChartRef}
+  profitChartContainerRef={profitChartContainerRef}
+  profitChartOption={profitChartOption}
+/>
 
             </Stack>
           </Grid>
