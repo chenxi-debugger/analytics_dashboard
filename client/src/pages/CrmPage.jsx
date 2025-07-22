@@ -68,6 +68,7 @@ const CrmPage = () => {
           <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
             <OverviewSalesCard theme={theme} />
           </Grid>
+          
           <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
             <Stack spacing={3} sx={{ width: '100%' }}>
               <Box sx={{ display: 'flex', gap: 3 }}>

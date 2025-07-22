@@ -21,11 +21,11 @@ const getEcommerceStyle = (className, theme) => {
     case 'congratulationsCard':
       return {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         p: 2,
         bgcolor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
+        color: 'rgb(105, 108, 255)',
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       };
@@ -37,10 +37,10 @@ const getEcommerceStyle = (className, theme) => {
 
     case 'congratulationsAction':
       return {
-        mt: 1.5,
-        bgcolor: theme.palette.info.main,
+        mt: 1,
+        bgcolor: 'rgb(105, 108, 255)',
         color: theme.palette.info.contrastText,
-        p: '6px 12px',
+        p: '4px 12px',
         borderRadius: '4px',
         display: 'inline-block',
         cursor: 'pointer',
@@ -49,20 +49,23 @@ const getEcommerceStyle = (className, theme) => {
         fontSize: '0.75rem',
       };
 
-    case 'congratulationsImage':
-      return {
-        '& img': {
-          height: '80px',
-          width: 'auto',
-        },
-      };
+      case 'congratulationsImage':
+        return {
+          display: 'flex',
+          justifyContent: 'flex-start',
+          '& img': {
+            mt: 5,
+            height: '140px',
+            width: 'auto',
+          },
+        };
 
     case 'newVisitorsCard':
       return {
         p: 2,
         borderRadius: '8px',
         bgcolor: theme.palette.background.paper,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       };
 
     case 'activityCard':
