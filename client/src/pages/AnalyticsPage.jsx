@@ -196,7 +196,7 @@ const AnalyticsPage = () => {
       <Box sx={getAnalyticsStyle('analyticsContent', theme)}>
         <Grid container spacing={3} sx={{ alignItems: 'stretch' }}>
           {/* Welcome Card */}
-          <Grid size={{ xs: 12, md: 6, lg: 8 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 12, lg: 8 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('welcomeCard', theme), flexGrow: 1 }}>
               <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('welcomeContent', theme)}>
                 <Box>
@@ -218,7 +218,7 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Order Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 6, md: 6, lg: 2 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('orderCard', theme), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('orderHeader', theme)}>
@@ -235,7 +235,7 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Sales Card */}
-          <Grid size={{ xs: 6, md: 4, lg: 2 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 6, md: 6, lg: 2 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('salesCard', theme), flexGrow: 1 }}>
               <Stack spacing={1}>
                 <Box sx={getAnalyticsStyle('salesHeader', theme)}>
@@ -322,7 +322,7 @@ const AnalyticsPage = () => {
                     {data.company_growth_card.progress}% Company Growth
                   </Typography>
                   <Box sx={getAnalyticsStyle('growthProgress', theme)}>
-                    <ReactECharts option={growthChartOption} style={{ height: '200px', width: '100%' }} />
+                    <ReactECharts option={growthChartOption} style={{ height: '100%', width: '100%' }} />
                   </Box>
                   <Stack direction="row" spacing={2} sx={getAnalyticsStyle('growthStats', theme)}>
                     {data.company_growth_card.stats.map((stat, index) => (
@@ -410,9 +410,17 @@ const AnalyticsPage = () => {
 
               {/* Bottom Stack: Profit Report Card */}
               <Paper sx={{ ...getAnalyticsStyle('profitCard', theme), flexGrow: 1 }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between', // 🔥 关键：左右分布
+                    alignItems: 'center',            // 🔥 垂直居中
+                    height: '100%',
+                  }}
+                >
                   {/* Text Section */}
-                  <Box sx={getAnalyticsStyle('profitTextSection', theme)}>
+                  <Box sx={{ ...getAnalyticsStyle('profitTextSection', theme), flexShrink: 0, minWidth: 160 }}>
                     <Typography variant="h6" sx={getAnalyticsStyle('profitTypographyH6', theme)}>
                       {data.profit_report_card.title}
                     </Typography>
@@ -426,12 +434,21 @@ const AnalyticsPage = () => {
                       <ArrowUpward sx={{ fontSize: '20px', color: theme.palette.success.main }} /> +{data.profit_report_card.growth}
                     </Typography>
                   </Box>
+
                   {/* Chart Section */}
-                  <Box ref={profitChartContainerRef} sx={getAnalyticsStyle('profitChart', theme)}>
-                    <ReactECharts ref={profitChartRef} option={profitChartOption} />
-                  </Box>
+                  <Box
+                ref={profitChartContainerRef}
+                sx={{ ...getAnalyticsStyle('profitChart', theme), width: 220, minWidth: 200 }}
+              >
+                <ReactECharts
+                  ref={profitChartRef}
+                  option={profitChartOption}
+                  style={{ width: '100%', height: 100 }}
+                />
+              </Box>
                 </Box>
               </Paper>
+
             </Stack>
           </Grid>
 
@@ -439,7 +456,9 @@ const AnalyticsPage = () => {
           <OrderStatsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />
 
           {/* Income/Expenses/Profit Card */}
-          <IncomeCard data={data} theme={theme} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>
+          <IncomeCard/>
+          </Grid>
 
           {/* Transactions Card */}
           <TransactionsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />

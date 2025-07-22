@@ -164,13 +164,20 @@ const getOrderChartOption = (data, theme) => ({
   });
   
   const getProfitChartOption = () => ({
+    grid: {
+      left: '8%',
+      right: '6%',     // ✅ 不要用 30%，图表内容会被挤
+      top: '20%',
+      bottom: '30%',
+      containLabel: true,
+    },
     xAxis: {
       type: 'category',
       boundaryGap: false,
     },
     yAxis: {
       type: 'value',
-      boundaryGap: [0, '30%'],
+      boundaryGap: [0, '10%'],
     },
     visualMap: {
       type: 'piecewise',
@@ -195,30 +202,22 @@ const getOrderChartOption = (data, theme) => ({
         },
         areaStyle: {},
         data: [
-          ['2024-10-10', 200],
-          ['2024-10-11', 560],
-          ['2024-10-12', 750],
-          ['2024-10-13', 580],
-          ['2024-10-14', 250],
-          ['2024-10-15', 300],
-          ['2024-10-16', 450],
-          ['2024-10-17', 300],
-          ['2024-10-18', 100],
+          ['2017', 200],
+          ['2018', 560],
+          ['2019', 750],
+          ['2020', 580],
+          ['2021', 250],
+          ['2022', 300],
+          ['2023', 450],
+          ['2024', 300],
+          ['2025', 900],
         ],
       },
     ],
   });
   
-  const getGrowthChartOption = () => ({
-    toolbox: {
-      show: false,
-      feature: {
-        mark: { show: true },
-        dataView: { show: true, readOnly: false },
-        restore: { show: true },
-        saveAsImage: { show: true },
-      },
-    },
+  
+  const getGrowthChartOption = () => ({ 
     series: [
       {
         name: 'Nightingale Chart',
@@ -228,10 +227,10 @@ const getOrderChartOption = (data, theme) => ({
         roseType: 'area',
         itemStyle: { borderRadius: 8 },
         data: [
-          { value: 40, name: 'rose 1' },
-          { value: 38, name: 'rose 2' },
-          { value: 32, name: 'rose 3' },
-          { value: 30, name: 'rose 4' },
+          { value: 40, name: 'profit 1' },
+          { value: 38, name: 'profit 2' },
+          { value: 32, name: 'profit 3' },
+          { value: 30, name: 'profit 4' },
           
         ],
       },

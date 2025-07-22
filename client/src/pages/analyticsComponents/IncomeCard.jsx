@@ -1,142 +1,202 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Stack, Grid } from '@mui/material';
-import getAnalyticsStyle from '../../styles/analyticsPageStyle';
+import { Box, Typography, Paper, Stack } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
 
-const IncomeCard = ({ theme }) => {
+const IncomeCard = () => {
   const [selectedTab, setSelectedTab] = useState('INCOME');
 
-  // 硬编码线状图数据
-  const lineChartData = {
-    'INCOME': {
-      xAxis: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      data: [400, 450, 500, 420, 480, 460, 390]
+  const tabData = {
+    INCOME: {
+      title: 'Total Income',
+      value: '$459.1k',
+      growth: '↑ 42.9%',
+      weekValue: '6.5k',
+      weekDesc: '$39k less than last week',
+      icon: '/INCOME1.png',
+      color: '#6366f1',
+      lineData: [40, 400, 200, 460, 190, 40, 500],
     },
-    'EXPENSES': {
-      xAxis: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      data: [300, 320, 350, 310, 340, 330, 280]
+    EXPENSES: {
+      title: 'Total Expenses',
+      value: '$316.5k',
+      growth: '↑ 27.8%',
+      weekValue: '7.2k',
+      weekDesc: '$16k less than last week',
+      icon: '/EXPENSES.png',
+      color: '#ef4444',
+      lineData: [20, 300, 450, 50, 460, 240, 410],
     },
-    'PROFIT': {
-      xAxis: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      data: [100, 130, 150, 110, 140, 130, 110]
-    }
+    PROFIT: {
+      title: 'Total Profit',
+      value: '$147.9k',
+      growth: '↑ 35.1%',
+      weekValue: '4.2k',
+      weekDesc: '$28k less than last week',
+      icon: '/PROFIT1.png',
+      color: '#10b981',
+      lineData: [0, 200, 110, 280, 330, 200, 310],
+    },
   };
+
+  const data = tabData[selectedTab];
 
   const lineChartOption = {
+    grid: { top: 20, left: 10, right: 10, bottom: 30 },
     xAxis: {
       type: 'category',
-      data: lineChartData[selectedTab].xAxis,
-      axisLabel: { color: theme.palette.text.secondary, fontSize: 8 },
-      axisLine: { lineStyle: { color: theme.palette.divider } },
-      axisTick: { show: false }
+      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      axisLabel: { color: '#9ca3af' },
+      axisLine: { lineStyle: { color: '#e5e7eb' } },
     },
-    yAxis: {
-      type: 'value',
-      axisLabel: { show: false },
-      axisLine: { show: false },
-      splitLine: { show: false }
-    },
+    yAxis: { show: false },
     series: [
       {
-        data: lineChartData[selectedTab].data,
+        data: data.lineData,
         type: 'line',
         smooth: true,
-        lineStyle: { color: theme.palette.primary.main, width: 2 },
-        areaStyle: { color: theme.palette.primary.light },
-        itemStyle: { color: theme.palette.primary.main },
-        showSymbol: true,
-        symbolSize: 6,
-        symbol: 'circle'
-      }
+        areaStyle: {
+          color: 'rgba(99, 102, 241, 0.1)',
+        },
+        lineStyle: {
+          color: '#6366f1',
+          width: 5,
+        },
+        symbol: 'circle',
+        symbolSize: 12,
+        itemStyle: {
+          color: '#6366f1',
+        },
+      },
     ],
-    grid: { left: 10, right: 10, top: 10, bottom: 10 }
   };
 
-  // 硬编码饼图数据
   const pieChartOption = {
-    tooltip: {
-      trigger: 'item'
-    },
-    legend: {
-      top: '5%',
-      left: 'center'
-    },
     series: [
       {
-        name: 'Access From',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['85%', '100%'],
+        startAngle: 90,
         avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 40,
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
+        silent: true,
+        label: { show: false },
+        labelLine: { show: false },
         data: [
-          { value: 459.1, name: 'INCOME' },
-          { value: 316.5, name: 'EXPENSES' },
-          { value: 147.9, name: 'PROFIT' }
-        ]
-      }
-    ]
+          {
+            value: 70,
+            itemStyle: { color: data.color },
+          },
+          {
+            value: 30,
+            itemStyle: { color: '#e5e7eb' },
+          },
+        ],
+      },
+    ],
   };
 
-  // 硬编码 tab 数据
-  const tabData = {
-    'INCOME': { title: 'Total Income', value: '$459.1k', change: '↑ 4.2%', week: '6.5k', weekChange: '$39k less than last week' },
-    'EXPENSES': { title: 'Total Expenses', value: '$316.5k', change: '↑ 27.8%', week: '7.2k', weekChange: '$16k less than last week' },
-    'PROFIT': { title: 'Total Profit', value: '$147.9k', change: '↑ 35.1%', week: '4.2k', weekChange: '$28k less than last week' }
-  }[selectedTab];
-
   return (
-    <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
-      <Paper sx={getAnalyticsStyle('incomeCard', theme)}>
-        <Stack spacing={1}>
-          <Box sx={getAnalyticsStyle('incomeTabs', theme)}>
-            {['INCOME', 'EXPENSES', 'PROFIT'].map((tab, index) => (
-              <Typography
-                key={index}
-                variant="button"
-                sx={selectedTab === tab ? [getAnalyticsStyle('incomeTabTypographyButton', theme), getAnalyticsStyle('incomeActiveTab', theme)] : getAnalyticsStyle('incomeTabTypographyButton', theme)}
-                onClick={() => setSelectedTab(tab)}
-              >
-                {tab}
-              </Typography>
-            ))}
+    <Paper
+      elevation={0}
+      sx={{
+        p: 3,
+        borderRadius: '10px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+        flexGrow: 1,
+        width:'100%',
+      }}
+    >
+      {/* Tabs with underline */}
+      <Box display="flex" justifyContent="space-between">
+        {['INCOME', 'EXPENSES', 'PROFIT'].map((tab) => (
+          <Box
+            key={tab}
+            onClick={() => setSelectedTab(tab)}
+            sx={{
+              flex: 1,
+              textAlign: 'center',
+              fontWeight: 700,
+              fontSize: 18,
+              pb: 1,
+              borderBottom: selectedTab === tab ? '3px solid #6366f1' : '3px solid transparent',
+              color: selectedTab === tab ? '#6366f1' : '#6b7280',
+              cursor: 'pointer',
+            }}
+          >
+            {tab}
           </Box>
-          <hr/>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Box sx={{ width: 20, height: 20, bgcolor: theme.palette.primary.light, borderRadius: '50%' }} />
-            <Typography variant="h6" sx={getAnalyticsStyle('incomeTypographyH6', theme)}>
-              {tabData.title}
-            </Typography>
-          </Stack>
-          <Typography variant="h4" sx={getAnalyticsStyle('incomeValue', theme)}>
-            {tabData.value} {tabData.change}
+        ))}
+      </Box>
+
+      {/* Icon + Title */}
+      <Stack direction="row" alignItems="center" spacing={1}>
+        {/* Icon */}
+        <Box
+          component="img"
+          src={data.icon}
+          alt={selectedTab}
+          sx={{
+            width: 50,
+            height: 50,
+            borderRadius: '8px',
+            bgcolor: '#f3f4f6',
+            objectFit: 'contain',
+
+          }}
+        />
+        {/* Texts */}
+        <Box>
+          <Typography fontSize={18} fontWeight={400} color="#6b7280">
+            {data.title}
           </Typography>
-          <Box sx={{ ...getAnalyticsStyle('incomeChart', theme), width: '100%', height: '100px', overflow: 'hidden'}}> 
-            <ReactECharts option={lineChartOption} />
-          </Box>
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Box sx={getAnalyticsStyle('incomeChart', theme)}>
-              <ReactECharts option={pieChartOption} />
-            </Box>
-            <Typography variant="body2" sx={getAnalyticsStyle('incomeStats', theme)}>
-              {tabData.week} {tabData.weekChange}
+          <Typography fontSize={22} fontWeight={700}>
+            {data.value}{' '}
+            <Typography component="span" fontSize={16} fontWeight={600} color="#10b981">
+              {data.growth}
             </Typography>
-          </Stack>
-        </Stack>
-      </Paper>
-    </Grid>
+          </Typography>
+        </Box>
+      </Stack>
+
+
+      {/* Line Chart */}
+      <Box height={220}>
+        <ReactECharts option={lineChartOption} style={{ width: '100%', height: '100%' }} />
+      </Box>
+
+      {/* Weekly Summary */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 0 }}>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Box width={50} height={50} position="relative">
+              <ReactECharts option={pieChartOption} style={{ width: '100%', height: '100%' }} />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: 15,
+                  fontWeight: 500,
+                  color: '#4b5563',
+                }}
+              >
+                {data.weekValue}
+              </Box>
+            </Box>
+            <Box>
+              <Typography fontSize={16} fontWeight={600}>
+                {data.title.replace('Total ', '')} this week
+              </Typography>
+              <Typography fontSize={16} color="#9ca3af">
+                {data.weekDesc}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+
+    </Paper>
   );
 };
 
