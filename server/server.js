@@ -15,7 +15,6 @@ import crmRouter from './mongoose/routes/crm.js';
 import emailRouter from './mongoose/routes/emailRoutes.js';
 import chatRoutes from './mongoose/routes/chatRoutes.js'; 
 
-
 // Resolve __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -46,9 +45,9 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 
 // Serve static files for production build
-app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
 // Start server
