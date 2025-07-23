@@ -1,12 +1,14 @@
-# dependencies
+dist
+!server/client/dist/# dependencies
 client/node_modules
 server/node_modules
 
 # env config
-server/.env
+# server/.env
 
 # build
 dist
+!server/client/dist/
 
 # system files
 .DS_Store
