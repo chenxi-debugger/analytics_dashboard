@@ -45,9 +45,10 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/invoices', invoicesRoutes); // MySQL API route
 
 // Serve static files for production build
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+app.use(express.static(path.join('/', 'var', 'app', 'current', 'client', 'dist')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  res.sendFile(path.join('/', 'var', 'app', 'current', 'client', 'dist', 'index.html'));
 });
 
 // Start server
