@@ -22,6 +22,7 @@ const __dirname = path.dirname(__filename);
 
 // Create Express app
 const PORT = (typeof process !== 'undefined' && process.env.PORT) || 5001;
+
 const app = express();
 
 // Middleware
