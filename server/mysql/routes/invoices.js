@@ -1,25 +1,19 @@
-// invoices.js
 import express from 'express';
-import mysql from 'mysql2/promise';
-import pool from '../../mysql/config.js';
+import pool from '../config.js';
 
 const router = express.Router();
 
-const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-  port: process.env.MYSQL_PORT
-});
-
-// GET /api/invoices
 router.get('/', async (req, res) => {
   try {
+    console.log('Environment variables:', {
+      MYSQL_HOST: process.env.MYSQL_HOST,
+      MYSQL_PORT: process.env.MYSQL_PORT
+    });
+    console.log('Querying database with pool:', pool);
     const [rows] = await pool.query('SELECT * FROM invoice');
     res.json(rows);
   } catch (error) {
-    console.error('Error fetching invoices:', error);
+    console.error('Error fetching invoices:', error.code, error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
