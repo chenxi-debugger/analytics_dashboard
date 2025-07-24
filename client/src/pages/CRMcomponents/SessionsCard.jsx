@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Box, Typography, IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import { Box, Typography, IconButton, Menu, MenuItem, Stack, Paper } from '@mui/material';
 import { MoreVert, ArrowUpward } from '@mui/icons-material';
 import ReactECharts from 'echarts-for-react';
 import getCrmStyle from '../../styles/crmPageStyle';
@@ -37,7 +37,19 @@ const SessionsCard = ({ theme }) => {
   const handleCloseMenu = () => setAnchorEl(null);
 
   return (
-    <Box sx={getCrmStyle('sessionsCard', theme)}>
+    <Paper
+      sx={{
+        p: 3,
+        borderRadius: '10px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        display: 'flex', 
+        flexDirection: 'column',
+        gap: 0,
+        overflowX: 'auto',
+        flexGrow: 1,
+      }}
+    >
+    <Box>
       <Stack spacing={0.5}>
         {/* Header with title and menu */}
         <Box sx={getCrmStyle('sessionsHeader', theme)}>
@@ -57,7 +69,7 @@ const SessionsCard = ({ theme }) => {
 
       {/* Chart */}
       <Box sx={getCrmStyle('sessionsChart', theme)}>
-        <ReactECharts ref={chartRef} option={chartOption} style={{ height: '60px', width: '100%' }} />
+        <ReactECharts ref={chartRef} option={chartOption} style={{ height: '80px', width: '100%' }} />
       </Box>
 
       {/* Dropdown Menu */}
@@ -73,6 +85,7 @@ const SessionsCard = ({ theme }) => {
         </Menu>
       </Box>
     </Box>
+    </Paper>
   );
 };
 
