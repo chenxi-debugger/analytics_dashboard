@@ -26,8 +26,7 @@ const SalesCard = ({ theme }) => {
         flexDirection: 'column',
         gap: 1,
         flexGrow: 1,
-        height:'200px',
-        position: 'relative', // 👈 必须有这个
+        position: 'relative', 
         height:'209px',
       }}
     >

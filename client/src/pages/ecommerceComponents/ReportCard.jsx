@@ -29,7 +29,6 @@ const ReportCard = () => {
         flexDirection: 'column',
         gap: 2,
         position: 'relative',
-        flexGrow: 1,
         height:'444px',
       }}
     >

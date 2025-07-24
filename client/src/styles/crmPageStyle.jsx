@@ -244,7 +244,6 @@ const getCrmStyle = (className, theme) => {
     case 'generatedLeadsValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary,
         fontSize: { xs: '25px', md: '25px' },
         fontWeight: 700,
         color: 'grey',

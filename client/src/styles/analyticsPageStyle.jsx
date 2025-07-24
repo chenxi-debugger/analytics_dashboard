@@ -111,7 +111,6 @@ const getAnalyticsStyle = (className, theme) => {
         color: theme.palette.text.primary,
         fontSize: '25px',
         fontWeight: 500,
-        color: 'darkgrey',
       };
 
     case 'orderChart':
@@ -146,7 +145,6 @@ const getAnalyticsStyle = (className, theme) => {
     case 'salesValue':
       return {
         my: 1,
-        color: theme.palette.text.primary,
         fontSize: { xs: '18px', md: '20px' },
         fontWeight: 600,
         color: 'darkgrey',
@@ -305,7 +303,6 @@ const getAnalyticsStyle = (className, theme) => {
     case 'paymentsValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary,
         fontSize: { xs: '25px', md: '25px' },
         fontWeight: 700,
         color: 'grey',
