@@ -3,7 +3,8 @@ import { MongoClient } from 'mongodb';
 import 'dotenv/config';
 
 const router = express.Router();
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/chenxilogs';
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/chenxilogs';
+
 const dbName = 'chenxilogs';
 
 // Fetch all email data (emails, tabs, labels)
