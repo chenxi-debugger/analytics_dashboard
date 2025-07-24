@@ -8,18 +8,13 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // 按库名细分 chunk
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('@mui') || id.includes('material-ui')) {
-              return 'mui-vendor';
-            }
+            if (id.includes('@mui')) return 'mui-vendor';
+            if (id.includes('react')) return 'react-vendor';
             return 'vendor';
           }
-        }
-      }
+        },
+      },
     },
-    chunkSizeWarningLimit: 600 // 调整警告阈值至 600 kB（可选）
-  }
+    chunkSizeWarningLimit: 1000, // optional
+  },
 });
