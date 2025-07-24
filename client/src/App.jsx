@@ -117,10 +117,14 @@
 
 // export default App;
 
-import TestAPI from './TestAPI';
-
 function App() {
-  return <TestAPI />;
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h1>Hello Vercel + Render</h1>
+      <p>This is a minimal page to confirm runtime works.</p>
+    </div>
+  );
 }
 
 export default App;
+
