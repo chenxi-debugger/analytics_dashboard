@@ -28,7 +28,7 @@ const EcommercePage = () => {
   useEffect(() => {
     async function fetchEcommerceData() {
       try {
-        const response = await fetch('http://localhost:5001/api/ecommerce', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/ecommerce`, {
           mode: 'cors',
         });
         if (!response.ok) {

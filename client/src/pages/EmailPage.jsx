@@ -146,7 +146,7 @@ const EmailPage = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const emailsResponse = await fetch('http://localhost:5001/api/email/emails', {
+        const emailsResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/email/emails`, {
           mode: 'cors',
         });
         if (!emailsResponse.ok) {
