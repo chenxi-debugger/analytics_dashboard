@@ -32,7 +32,7 @@ const CrmPage = () => {
   useEffect(() => {
     async function fetchCrmData() {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/crm`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/crm`, {
           mode: 'cors',
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);

@@ -81,7 +81,7 @@ const ChatPage = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
           mode: 'cors',
         });
         if (!response.ok) {

@@ -78,7 +78,7 @@ const AnalyticsPage = () => {
   useEffect(() => {
     async function fetchAnalyticsData() {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/analytics`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analytics`, {
           mode: 'cors',
         });
         if (!response.ok) {
