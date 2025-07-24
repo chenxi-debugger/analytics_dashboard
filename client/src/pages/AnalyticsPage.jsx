@@ -201,7 +201,7 @@ const AnalyticsPage = () => {
           {/* Welcome Card */}
           <Grid size={{ xs: 12, md: 12, lg: 8 }} sx={{ display: 'flex' }}>
             <Paper sx={{ ...getAnalyticsStyle('welcomeCard', theme), flexGrow: 1 }}>
-              <Stack direction={{ xs: 'column', md: 'row' }} sx={getAnalyticsStyle('welcomeContent', theme)}>
+              <Stack direction='row' sx={getAnalyticsStyle('welcomeContent', theme)}>
                 <Box>
                   <Typography variant="h6" sx={getAnalyticsStyle('welcomeTypographyH6', theme)}>
                     {data.welcome_card.title} 🎉
@@ -352,7 +352,7 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Right Section: Payments, Revenue Stats, and Profit Report Cards */}
-          <Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 12, lg: 4 }} sx={{ display: 'flex' }}>
             <Stack spacing={3} sx={{ width: '100%' }}>
               {/* Top Stack: Payments Card and Revenue Stats Card */}
               <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 3 }}>
@@ -424,7 +424,9 @@ const AnalyticsPage = () => {
           </Grid>
 
           {/* Order Statistics Card */}
+          
           <OrderStatsCard data={data} theme={theme} salesAnchorEl={salesAnchorEl} handleOpenMenu={handleOpenMenu} handleCloseMenu={handleCloseMenu} setSalesAnchorEl={setSalesAnchorEl} />
+        
 
           {/* Income/Expenses/Profit Card */}
           <Grid size={{ xs: 12, md: 8, lg: 4 }} sx={{ display: 'flex' }}>

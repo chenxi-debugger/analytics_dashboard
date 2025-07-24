@@ -64,14 +64,14 @@ const CrmPage = () => {
       <Box sx={getCrmStyle('crmContent', theme)}>
         <Grid container spacing={3}>
           {/* First Row: Three Columns (Reference Analytics Layout) */}
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <CustomerRatingCard data={data} theme={theme} />
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <OverviewSalesCard theme={theme} />
           </Grid>
           
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 12, lg: 4 }} sx={{ display: 'flex' }}>
             <Stack spacing={3} sx={{ width: '100%' }}>
               <Box sx={{ display: 'flex', gap: 3 }}>
                 <Box sx={{ flex: 1 }}>
@@ -88,13 +88,13 @@ const CrmPage = () => {
           </Grid>
 
           {/* Bottom Grid Blocks */}
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <TopProductsSalesCard data={data} theme={theme} />
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <TopProductsVolumeCard data={data} theme={theme} />
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4}} sx={{ display: 'flex' }}>
             <EarningReportCard data={data} theme={theme} />
           </Grid>
           <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>

@@ -54,7 +54,7 @@ const ActivityTimelineCard = ({ theme }) => {
   const avatarImages = ['/9.png', '/5.png', '/6.png', '/7.png', '/8.png'];
 
   return (
-    <Grid size={{ xs: 12, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
+    <Grid size={{ xs: 12, md: 12, lg: 6 }} sx={{ display: 'flex' }}>
       <Paper sx={getAnalyticsStyle('activityCard', theme)}>
         <Stack spacing={1}>
           <Box sx={getAnalyticsStyle('activityHeader', theme)}>

@@ -9,7 +9,7 @@ const getCrmStyle = (className, theme) => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        bgcolor: theme.palette.background.default,
+
       };
 
     case 'crmContent':

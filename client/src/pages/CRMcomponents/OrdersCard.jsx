@@ -16,7 +16,15 @@ const OrdersCard = ({ theme }) => {
   };
 
   return (
-    <Paper sx={{ ...getCrmStyle('ordersCard', theme), flexGrow: 1, p: 2, borderRadius: '8px' }}>
+    <Paper 
+    sx={{ ...getCrmStyle('ordersCard', theme), 
+    flexGrow: 1, 
+    p: 3,
+        borderRadius: '10px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        height:'210px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
         <Box>
           <img src="/order-icon.png" alt="order" style={{ width: '40px' }} />

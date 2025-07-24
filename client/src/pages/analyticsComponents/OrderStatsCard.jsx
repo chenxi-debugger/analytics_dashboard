@@ -57,7 +57,7 @@ const OrderStatsCard = ({ theme, salesAnchorEl, handleOpenMenu, handleCloseMenu,
   };
 
   return (
-    <Grid size={{ xs: 6, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
+    <Grid size={{ xs: 12, md: 12, lg: 4 }} sx={{ display: 'flex' }}>
       <Paper sx={getAnalyticsStyle('orderStatsCard', theme)}>
         <Box sx={getAnalyticsStyle('orderStatsHeader', theme)}>
           <Typography variant="h6" sx={getAnalyticsStyle('orderStatsTypographyH6', theme)}>

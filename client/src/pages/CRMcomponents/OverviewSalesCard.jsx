@@ -75,6 +75,7 @@ const OverviewSalesCard = ({ theme }) => {
       minWidth: 0,
       display: 'flex',
       flexDirection: 'column',
+      height:'430px',
     }}
   >  
 

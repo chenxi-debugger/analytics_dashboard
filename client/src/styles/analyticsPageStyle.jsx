@@ -9,8 +9,7 @@ const getAnalyticsStyle = (className, theme) => {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden',
-        bgcolor: theme.palette.background.default,
+        overflow: 'hidden', 
         minHeight: '100vh',
         width: '100%',
       };

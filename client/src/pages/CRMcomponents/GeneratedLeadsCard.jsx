@@ -65,7 +65,7 @@ const GeneratedLeadsCard = ({ theme }) => {
       sx={{
         ...getCrmStyle('generatedLeadsCard', theme),
         flexGrow: 1,
-        p: 2,
+        p: 3,
         borderRadius: '8px',
         display: 'flex',
         justifyContent: 'space-between',

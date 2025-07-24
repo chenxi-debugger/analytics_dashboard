@@ -47,6 +47,7 @@ const SessionsCard = ({ theme }) => {
         gap: 0,
         overflowX: 'auto',
         flexGrow: 1,
+        height:'210px'
       }}
     >
     <Box>

@@ -93,6 +93,7 @@ const CustomerRatingCard = ({ data, theme }) => {
       minWidth: 0,
       display: 'flex',
       flexDirection: 'column',
+      height:'430px'
     }}>
 
       {/* Header with title and menu */}

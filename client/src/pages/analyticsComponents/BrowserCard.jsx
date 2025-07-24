@@ -40,7 +40,7 @@ const BrowserCard = ({ theme }) => {
   };
 
   return (
-    <Grid size={{ xs: 6, md: 6, lg: 6 }} sx={{ display: 'flex' }}>
+    <Grid size={{ xs: 12, md: 12, lg: 6 }} sx={{ display: 'flex' }}>
       <Paper sx={getAnalyticsStyle('browserCard', theme)}>
         <Stack spacing={1}>
           {/* Tabs */}
