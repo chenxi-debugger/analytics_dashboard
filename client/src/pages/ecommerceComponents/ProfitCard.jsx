@@ -57,7 +57,6 @@ const ProfitCard = () => {
         flexDirection: 'column',
         gap: 0,
         flexGrow: 1,
-        width:'100%',
         height:'209px',
       }}
     >
