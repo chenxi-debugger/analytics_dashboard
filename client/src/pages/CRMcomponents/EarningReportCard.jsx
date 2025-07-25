@@ -74,6 +74,7 @@ const EarningReportCard = ({ theme }) => {
         p: 3,
         borderRadius: '10px',
         flexGrow: 1,
+        height: '100%', // ✅ 关键
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -81,7 +82,7 @@ const EarningReportCard = ({ theme }) => {
       }}
     >
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 2 }}>
         <Typography variant="h6" sx={{ fontWeight: 700,fontSize: '25px', color:'grey' }}>
           Earning Report
         </Typography>
@@ -90,15 +91,15 @@ const EarningReportCard = ({ theme }) => {
         </IconButton>
       </Box>
 
-      <Typography variant="caption" sx={{ color: theme.palette.text.secondary, fontSize: '14px'}}>
+      <Typography variant="caption" sx={{ color: theme.palette.text.secondary, fontSize: '16px', pb: 1.5}}>
         Weekly Earnings Overview
       </Typography>
 
       {/* Info Items */}
       {items.map((item, index) => (
-        <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1 }}>
+        <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
           {/* Left: icon + label */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <Box
               sx={{
                 bgcolor: item.color,
@@ -129,8 +130,8 @@ const EarningReportCard = ({ theme }) => {
       ))}
 
       {/* Chart */}
-      <Box sx={{ mt: 2 }}>
-        <ReactECharts option={chartOption} style={{ width: '100%', height: 100 }} />
+      <Box sx={{ mt: 3 }}>
+        <ReactECharts option={chartOption} style={{ width: '100%', height: '140%' }} />
       </Box>
 
       {/* Menu */}

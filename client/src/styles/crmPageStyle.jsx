@@ -16,7 +16,7 @@ const getCrmStyle = (className, theme) => {
       return {
         flex: 1,
         p: 1,
-        overflowY: 'auto',
+        overflowY: 'hidden',
       };
 
     // Typography Styles (Global)
@@ -448,7 +448,6 @@ const getCrmStyle = (className, theme) => {
         borderRadius: '8px',
         bgcolor: theme.palette.background.paper,
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        height:'400px',
       };
 
     case 'teamMembersList':

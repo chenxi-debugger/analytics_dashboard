@@ -72,7 +72,13 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
         >
           <ListItemIcon sx={getListItemIconStyles(theme)(isActive)}>{sideBarIcon}</ListItemIcon>
           {!isMini && <ListItemText primary={sideBarText} />}
-          {!isMini && sideBarBadge && <Badge color="secondary" badgeContent={sideBarBadge} />}
+          {!isMini && sideBarBadge && (
+              <Badge
+                color="secondary"
+                badgeContent={sideBarBadge}
+                sx={{ "& .MuiBadge-badge": { backgroundColor: "red" } }}
+              />
+            )}
           {!isMini && sideBarNestedItems && (open ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>
       </ListItem>

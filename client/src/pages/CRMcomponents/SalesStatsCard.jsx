@@ -59,6 +59,7 @@ const SalesStatsCard = ({ theme }) => {
       display: 'flex',
       flexDirection: 'column',
       gap: 4,
+      height: '100%',
     }}
   >
     {/* Header at top */}
@@ -89,7 +90,7 @@ const SalesStatsCard = ({ theme }) => {
       </Box>
 
       {/* Legend */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4, mt:3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box sx={{ width: 15, height: 15, bgcolor: '#63e355', borderRadius: '50%' }} />
           <Typography sx={{ fontWeight: 500, fontSize: '15px', color:'grey' }}>Conversion Ratio</Typography>

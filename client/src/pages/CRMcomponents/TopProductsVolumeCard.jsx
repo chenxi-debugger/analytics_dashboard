@@ -70,6 +70,7 @@ const TopProductsVolumeCard = ({ theme }) => {
         p: 3,
         borderRadius: '10px',
         flexGrow: 1,
+        height: '100%', // ✅ 关键
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -77,7 +78,7 @@ const TopProductsVolumeCard = ({ theme }) => {
       }}
     >
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb:1.5 }}>
         <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '25px', color:'grey' }}>
           Top Products by Volume
         </Typography>

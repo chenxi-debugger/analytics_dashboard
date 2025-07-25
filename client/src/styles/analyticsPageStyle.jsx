@@ -657,7 +657,7 @@ const getAnalyticsStyle = (className, theme) => {
         overflow: 'hidden',
         width: '100%',
         mb: 1,
-        height: '480px',
+        
       };
 
     case 'activityHeader':
@@ -764,15 +764,14 @@ const getAnalyticsStyle = (className, theme) => {
         overflow: 'hidden',
         width: '100%',
         mb: 1,
-        height: '480px',
       };
 
     case 'browserTabs':
       return {
         display: 'flex',
         justifyContent: 'center',
+        alignItem:'center',
         gap: 4,
-        mb: 2,
       };
 
     case 'browserTabTypographyButton':
@@ -781,10 +780,10 @@ const getAnalyticsStyle = (className, theme) => {
         borderRadius: '6px',
         bgcolor: theme.palette.action.disabledBackground,
         cursor: 'pointer',
-        fontSize: { xs: '11px', md: '16px' },
-        fontWeight: 500,
+        fontSize: { xs: '11px', md: '18px' },
+        fontWeight: 700,
         color: theme.palette.text.secondary,
-        mb: 5,
+        mb:3,
       };
 
     case 'browserActiveTab':

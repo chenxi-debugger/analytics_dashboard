@@ -71,7 +71,7 @@ const SalesCountriesCard = ({ theme }) => {
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
-        height:'440px',
+        height: '100%',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
         
       }}

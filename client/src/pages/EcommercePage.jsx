@@ -74,7 +74,7 @@ const EcommercePage = () => {
   return (
     <Box sx={getEcommerceStyle('ecommerceMain', theme)}>
       <Box sx={getEcommerceStyle('ecommerceContent', theme)}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ alignItems: 'stretch'}}>
           <Grid size={{ xs: 12, md: 4, lg: 4 }} sx={{ display: 'flex' }}>
             <CongratulationsCard data={data.congratulations_card} theme={theme} />
           </Grid>
@@ -114,14 +114,14 @@ const EcommercePage = () => {
   
 
           
-          <Grid size={{ xs: 12, md: 6, lg: 5 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <TotalIncomeCard
               data={data.total_income_card}
               theme={theme}
               
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 6, lg: 3 }} sx={{ display: 'flex' }}>
+          <Grid size={{ xs: 12, md: 6, lg: 4 }} sx={{ display: 'flex' }}>
             <ReportCard data={data.report_card} theme={theme} />
           </Grid>
           

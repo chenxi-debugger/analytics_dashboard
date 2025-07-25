@@ -82,13 +82,14 @@ const CustomersMembersCard = ({ theme }) => {
         borderRadius: '10px',
         width: '100%',
         flexGrow: 1,
+        height: '100%', // 添加这一行
         display: 'flex',
         flexDirection: 'column',
         gap: 0,
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        height:'440px',
       }}
     >
+
       {/* Header Row */}
       <Box
         sx={{

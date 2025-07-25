@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import {
   Paper,
   Typography,
@@ -14,6 +15,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import WalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 const ReportCard = () => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
   const handleCloseMenu = () => setAnchorEl(null);
@@ -22,6 +24,7 @@ const ReportCard = () => {
     <Paper
       sx={{
         p: 3,
+        bgcolor: theme.palette.background.paper,
         borderRadius: '10px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
         flexGrow: 1,
@@ -51,7 +54,7 @@ const ReportCard = () => {
       </Box>
 
       {/* 标题 */}
-      <Typography variant="h5" fontWeight={700} color="text.secondary">
+      <Typography variant="h5" fontWeight={700} color={theme.palette.text.primary}>
         Report
       </Typography>
       <Typography variant="body1" color="text.disabled">
@@ -63,7 +66,7 @@ const ReportCard = () => {
         {
           label: 'Income',
           icon: <PaymentIcon sx={{ color: '#6366F1' }} />,
-          bgcolor: 'rgba(36, 36, 75, 0.1)',
+          bgcolor: 'rgba(36, 36, 75, 0.1)',         
           value: '$42,845',
           growth: '+2.7k',
           growthColor: '#4CAF50',
@@ -93,7 +96,7 @@ const ReportCard = () => {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            bgcolor: '#F9FAFB',
+            bgcolor: theme.palette.background.paper,
             p: 2.5,
             borderRadius: '10px',
             justifyContent: 'space-between',

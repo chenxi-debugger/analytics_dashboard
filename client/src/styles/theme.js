@@ -12,7 +12,7 @@ export const getDesignTokens = (mode) => ({
             paper: '#fff',
           },
           text: {
-            primary: '#111827',
+            primary: '#4A4A4A',
             secondary: '#6b7280',
           },
         }

@@ -119,7 +119,6 @@ const TotalBalanceCard = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          bgcolor: '#F9FAFB',
           p: 1.5,
           borderRadius: '8px',
           mt: 1,

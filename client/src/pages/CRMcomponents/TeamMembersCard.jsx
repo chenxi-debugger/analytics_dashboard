@@ -42,7 +42,7 @@ const members = [
     progress: 50,
     total: 82,
     progressColor: '#f5a623',
-    avatar: '/12.png', // initials avatar
+    avatar: '/12.png',
   },
   {
     name: 'Alma Gonzalez',
@@ -77,17 +77,19 @@ const TeamMembersCard = ({ theme }) => {
         ...getCrmStyle('salesCountriesCard', theme),
         p: 3,
         borderRadius: '10px',
+        width: '100%',
         flexGrow: 1,
+        height: '100%', // 添加这一行
         display: 'flex',
         flexDirection: 'column',
         gap: 0,
-        height: '440px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       }}
     >
+
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '24px', color:'grey' }}>
+        <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '24px', color: 'grey' }}>
           Team Members
         </Typography>
         <IconButton onClick={handleOpenMenu}>
