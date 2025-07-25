@@ -7,14 +7,14 @@ const StyledFooter = styled(Box)(({ theme, variant }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '12px',
-    backgroundColor: theme.palette.background.paper, // Use theme background
+    padding: '13px',
+    backgroundColor: 'white',
     position: 'fixed',
     bottom: 0,
-    width: '100vw',
+    width:'91%',
     boxSizing: 'border-box',
-    paddingRight: '180px',
-    paddingLeft: '28px',
+
+
   }),
   ...(variant === 'left' && {
     display: 'flex',
