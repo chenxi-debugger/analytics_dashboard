@@ -78,7 +78,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
   const isOpen = (anchor) => Boolean(anchor);
 
   const searchLinks = {
-    Analytics: '/dashboards/analytics',
+    Analytics: '/',
     CRM: '/dashboards/crm',
     eCommerce: '/dashboards/ecommerce',
     'User List': '/users',
