@@ -17,7 +17,7 @@ const Sales2Card = () => {
         flexDirection: 'column',
         gap: 0,
         flexGrow: 1,
-        height:'200px',
+        height:'100%',
       }}
     >
       {/* Title */}
@@ -52,13 +52,13 @@ const Sales2Card = () => {
         variant="body2"
         fontWeight={600}
         color="text.secondary"
-        mt={0}
+        mt={1}
       >
         Sales Target
       </Typography>
 
       {/* 进度条 + 百分比 */}
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" gap={3} mt={1}>
         <LinearProgress
           variant="determinate"
           value={78}
