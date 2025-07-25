@@ -152,6 +152,15 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
         <ClickAwayListener onClickAway={handleClose(setSearchAnchor)}>
           <Box sx={searchStyles}>
             <Paper sx={searchBoxStyles(theme)}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { lg: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
               <IconButton onClick={handleOpen(setSearchAnchor)} sx={{ p: 1 }}>
                 <Search sx={searchIconStyles(theme)} />
               </IconButton>
@@ -162,15 +171,6 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                 sx={{ cursor: 'pointer' }}
               />
               <Box sx={actionsStyles}>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { lg: 'none' } }}
-                >
-                  <MenuIcon />
-                </IconButton>
                 <Tooltip title="Language">
                   <IconButton onClick={handleOpen(setLangAnchor)}>
                     <Translate />
@@ -305,7 +305,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                         borderRadius: 1,
                         mr: 1,
                         cursor: 'pointer',
-                        fontSize:'20px',
+                        fontSize: '20px',
                       }}
                       onClick={handleClose(setSearchAnchor)}
                     >
@@ -320,7 +320,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       {['Popular Searches', 'User Interface'].map((category) => (
-                        <Box key={category} sx={{ mb: 6, m:8, fontSize:'20px' }}>
+                        <Box key={category} sx={{ mb: 6, m: 8, fontSize: '20px' }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -329,7 +329,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                               textTransform: 'uppercase',
                               mb: 1,
                               display: 'block',
-                              fontSize:'16px',
+                              fontSize: '16px',
                             }}
                           >
                             {category}
@@ -371,7 +371,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                     </Grid>
                     <Grid item xs={6}>
                       {['Apps & Pages', 'Forms & Tables'].map((category) => (
-                        <Box key={category} sx={{ mb: -3.5, mt:8 }}>
+                        <Box key={category} sx={{ mb: -3.5, mt: 8 }}>
                           <Typography
                             variant="caption"
                             sx={{
@@ -380,7 +380,7 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                               textTransform: 'uppercase',
                               mb: 1,
                               display: 'block',
-                              fontSize:'16px',
+                              fontSize: '16px',
                             }}
                           >
                             {category}
