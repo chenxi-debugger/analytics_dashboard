@@ -157,7 +157,7 @@ const EmailPage = () => {
         console.log('Sent Emails:', emailsData.filter((email) => email.tab.includes('sent')));
         setEmails(emailsData);
 
-        const tabsResponse = await fetch('http://localhost:5001/api/email/tabs', {
+        const tabsResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/email/tabs`, {
           mode: 'cors',
         });
         if (!tabsResponse.ok) {
@@ -170,7 +170,7 @@ const EmailPage = () => {
           icon: iconMap[tab.icon],
         })));
 
-        const labelsResponse = await fetch('http://localhost:5001/api/email/labels', {
+        const labelsResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/email/labels`, {
           mode: 'cors',
         });
         if (!labelsResponse.ok) {
