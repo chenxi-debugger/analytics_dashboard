@@ -51,12 +51,12 @@ import {
   getNestedListItemButtonStyles,
 } from '../styles/dashboardStyles';
 
-const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null, isMini = false, theme }) => {
-  const [open, setOpen] = React.useState(false);
+const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNestedItems = null, isActive = false, onClick = null, isMini = false, theme, alwaysExpanded = false }) => {
+  const [open, setOpen] = React.useState(alwaysExpanded); // Use alwaysExpanded to control initial state
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (sideBarNestedItems) {
+    if (sideBarNestedItems && !alwaysExpanded) { // Only toggle if not always expanded
       setOpen(!open);
     } else if (onClick) {
       onClick();
@@ -76,14 +76,14 @@ const SidebarItem = ({ sideBarIcon, sideBarText, sideBarBadge = null, sideBarNes
               <Badge
                 color="secondary"
                 badgeContent={sideBarBadge}
-                sx={{ "& .MuiBadge-badge": { backgroundColor: "red" } }}
+                sx={{ "& .MuiBadge-badge": { backgroundColor: "red", marginRight: "25px" } }}
               />
             )}
-          {!isMini && sideBarNestedItems && (open ? <ExpandLess /> : <ExpandMore />)}
+          {!isMini && sideBarNestedItems && !alwaysExpanded && (open ? <ExpandLess /> : <ExpandMore />)}
         </ListItemButton>
       </ListItem>
       {sideBarNestedItems && !isMini && (
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={alwaysExpanded ? true : open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding sx={{ pl: 4 }}>
             {sideBarNestedItems.map((nested, index) => (
               <ListItemButton
@@ -115,7 +115,8 @@ SidebarItem.propTypes = {
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
   isMini: PropTypes.bool,
-  theme: PropTypes.object.isRequired, // Add theme prop
+  theme: PropTypes.object.isRequired,
+  alwaysExpanded: PropTypes.bool, // Add prop for controlling expansion
 };
 
 const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLeave }) => {
@@ -216,6 +217,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
             sideBarNestedItems={dashboardItems}
             isMini={isMini}
             theme={theme}
+            alwaysExpanded={true} // Always expand Dashboards
           />
 
           {!isMini && (
