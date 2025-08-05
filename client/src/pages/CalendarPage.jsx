@@ -1,7 +1,7 @@
 // CalendarPage.jsx
 import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Box, Tabs, Tab, IconButton, useMediaQuery, Drawer } from '@mui/material';
+import { Box, Tabs, Tab, IconButton, useMediaQuery, Drawer, Typography } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import getCalendarPageStyle from '../styles/getCalendarPageStyle';
 import Sidebar from './CalendarPage/Sidebar';
@@ -35,11 +35,14 @@ class ErrorBoundary extends React.Component {
 const CalendarPage = () => {
   const theme = useTheme();
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(() => new Date());
+  const [selectedDate, setSelectedDate] = useState(() => new Date(today.getFullYear(), today.getMonth(), today.getDate()));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [view, setView] = useState('month');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  // ✅ 默认启用所有分类
+  const [activeFilters, setActiveFilters] = useState(['Personal', 'Business', 'Family', 'Holiday', 'ETC']);
 
   const events = useCalendarEvents(selectedDate, rawEventsMap);
 
@@ -59,7 +62,6 @@ const CalendarPage = () => {
     }
     setSelectedDate(newDate);
   };
-  
 
   return (
     <ErrorBoundary>
@@ -83,6 +85,8 @@ const CalendarPage = () => {
               today={today}
               handlePrevMonth={handlePrevMonth}
               handleNextMonth={handleNextMonth}
+              activeFilters={activeFilters}
+              setActiveFilters={setActiveFilters}
             />
           </Drawer>
         </Box>
@@ -94,6 +98,8 @@ const CalendarPage = () => {
             today={today}
             handlePrevMonth={handlePrevMonth}
             handleNextMonth={handleNextMonth}
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
           />
         </Box>
 
@@ -108,8 +114,24 @@ const CalendarPage = () => {
             setView={setView}
           />
 
-          {view === 'month' && <CalendarMonthView events={events} selectedDate={selectedDate} today={today} theme={theme} />}
-          {view === 'week' && <CalendarWeekView events={events} selectedDate={selectedDate} theme={theme} />}
+          {view === 'month' && (
+            <CalendarMonthView
+              events={events}
+              selectedDate={selectedDate}
+              today={today}
+              theme={theme}
+              activeFilters={activeFilters}
+            />
+          )}
+          {view === 'week' && (
+            <CalendarWeekView
+              events={events}
+              selectedDate={selectedDate}
+              theme={theme}
+              activeFilters={activeFilters}
+            />
+          )}
+
           {view === 'day' && <CalendarDayView events={events} selectedDate={selectedDate} theme={theme} />}
           {view === 'list' && <CalendarListView events={events} selectedDate={selectedDate} theme={theme} />}
         </Box>

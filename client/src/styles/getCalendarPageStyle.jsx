@@ -58,19 +58,23 @@ const getCalendarPageStyle = (key, options = {}) => {
         }),
       },
       filterSection: {
-        mt: 2,
+        m: 3,
         borderTop: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
-        pt: 2,
+        pt: 4,
+        display: 'flex',
+        flexDirection: 'column', // 确保竖向排列
+        alignItems: 'flex-start', // ✅ 左对齐
       },
       filterTitle: {
         color: theme?.palette?.text?.secondary || '#a1a5b7',
         fontSize: '14px',
-        fontWeight: 500,
+        fontWeight: 700,
         mb: 1,
         textTransform: 'uppercase',
       },
       filterCheckbox: {
         color: theme?.palette?.text?.secondary || '#a1a5b7',
+        alignSelf: 'flex-start', // ✅ 确保每一个 checkbox 单独也左对齐
         '&.Mui-checked': {
           color: theme?.palette?.primary?.main || '#696cff',
         },
@@ -151,7 +155,7 @@ const getCalendarPageStyle = (key, options = {}) => {
         color: theme?.palette?.text?.primary || '#5e5873',
         borderRadius: '4px',
         p: 0.5,
-        fontSize: '10px',
+        fontSize: '15px',
         mb: 0.5,
         whiteSpace: 'nowrap',
         overflow: 'hidden',
@@ -169,7 +173,7 @@ const getCalendarPageStyle = (key, options = {}) => {
       weekDayHeader: {
         textAlign: 'center',
         color: theme?.palette?.text?.secondary || '#a1a5b7',
-        fontSize: '12px',
+        fontSize: '14px',
         fontWeight: 500,
         p: 1,
         borderBottom: `1px solid ${theme?.palette?.divider || '#2a2f3e'}`,
@@ -235,7 +239,7 @@ const getCalendarPageStyle = (key, options = {}) => {
         color: theme?.palette?.text?.primary || '#5e5873',
         borderRadius: '4px',
         p: 0.5,
-        fontSize: '10px',
+        fontSize: '13px',
         mb: 0.5,
       },
     };

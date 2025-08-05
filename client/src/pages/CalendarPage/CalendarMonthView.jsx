@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import getCalendarPageStyle from '../../styles/getCalendarPageStyle';
 
-const CalendarMonthView = ({ events, selectedDate, today, theme }) => {
+const CalendarMonthView = ({ events, selectedDate, today, theme, activeFilters }) => {
   const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   const firstDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1).getDay();
@@ -13,6 +13,11 @@ const CalendarMonthView = ({ events, selectedDate, today, theme }) => {
     const day = i - firstDay + 1;
     return day > 0 && day <= daysInMonth ? day : null;
   });
+
+  const effectiveFilters = Array.isArray(activeFilters)
+  ? activeFilters
+  : ['Personal', 'Business', 'Family', 'Holiday', 'ETC'];
+
 
   return (
     <Box sx={getCalendarPageStyle('calendarGrid', { theme })}>
@@ -43,7 +48,11 @@ const CalendarMonthView = ({ events, selectedDate, today, theme }) => {
                   .filter(event => {
                     const eventStart = event.date.getDate();
                     const eventEnd = event.end.getDate();
-                    return day >= eventStart && day <= eventEnd;
+                    return (
+                      day >= eventStart &&
+                      day <= eventEnd &&
+                      effectiveFilters.includes(event.category)
+                    );
                   })
                   .map((event, idx) => (
                     <Box

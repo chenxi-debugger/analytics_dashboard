@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import getCalendarPageStyle from '../../styles/getCalendarPageStyle';
 
-const CalendarWeekView = ({ events, selectedDate, theme }) => {
+const CalendarWeekView = ({ events, selectedDate, theme, activeFilters = [] }) => {
   const hours = Array.from({ length: 24 - 8 }, (_, i) => `${(i + 8) % 12 === 0 ? 12 : (i + 8) % 12}${i + 8 < 12 ? 'am' : 'pm'}`);
 
   const getWeekDates = () => {
@@ -38,7 +38,9 @@ const CalendarWeekView = ({ events, selectedDate, theme }) => {
               return (
                 eventDate.getDate() === date.getDate() &&
                 eventDate.getMonth() === date.getMonth() &&
-                eventDate.getFullYear() === date.getFullYear()
+                eventDate.getFullYear() === date.getFullYear() &&
+                (activeFilters === undefined || activeFilters.includes(event.category))
+
               );
             });
 
@@ -51,32 +53,31 @@ const CalendarWeekView = ({ events, selectedDate, theme }) => {
                 }}
               >
                 {dayEvents.map(event => {
-                if (event.allDay && index === 0) {  // 修改：添加 && index === 0，只在第一个小时槽渲染全天事件
-                  return (
-                    <Box
-                      key={event.id}
-                      sx={{
-                        ...getCalendarPageStyle('weekEvent', {
-                          color: event.color,
-                          top: 0,  // 修改：从顶部开始
-                          height: 1070,  // 修改：设置足够高度覆盖整个日（16小时 * 60px/小时 = 960px，根据你的实际槽高调整）
-                          theme,
-                        }),
-                        position: 'absolute',  // 修改：使用 absolute 定位来拉伸覆盖父级槽
-                        width: '100%',  // 修改：全宽覆盖列
-                        zIndex: 1,  // 可选：确保在其他事件上方
-                        fontSize: '18px',
-                        padding: '200px 6px',
-                        lineHeight: 1.2,
-                        // whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
-                    >
-                      {event.title}
-                    </Box>
-                  );
-                }
+                  if (event.allDay && index === 0) {
+                    return (
+                      <Box
+                        key={event.id}
+                        sx={{
+                          ...getCalendarPageStyle('weekEvent', {
+                            color: event.color,
+                            top: 0,
+                            height: 1070,
+                            theme,
+                          }),
+                          position: 'absolute',
+                          width: '100%',
+                          zIndex: 1,
+                          fontSize: '18px',
+                          padding: '200px 6px',
+                          lineHeight: 1.2,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {event.title}
+                      </Box>
+                    );
+                  }
 
                   const startHour = event.date.getHours();
                   const endHour = event.end.getHours();
@@ -86,7 +87,7 @@ const CalendarWeekView = ({ events, selectedDate, theme }) => {
                   const startTotal = startHour + startMinutes / 60;
                   const endTotal = endHour + endMinutes / 60;
 
-                  const top = (startTotal - 8) * 60; // Start from 8am
+                  const top = (startTotal - 8) * 60;
                   const height = (endTotal - startTotal) * 60;
 
                   if (index === Math.floor(startTotal) - 8) {
