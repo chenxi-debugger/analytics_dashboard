@@ -200,7 +200,7 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'revenueHeaderTypographyBody2':
       return {
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize:'20px',
         color: theme.palette.text.secondary,
         bgcolor: theme.palette.action.disabledBackground,
         borderRadius: '6px',
@@ -227,7 +227,7 @@ const getAnalyticsStyle = (className, theme) => {
 
     case 'growthTypographyH6':
       return {
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         color: theme.palette.text.secondary,
         mb: 1,
@@ -296,13 +296,13 @@ const getAnalyticsStyle = (className, theme) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
       };
 
     case 'paymentsValue':
       return {
         my: 0.5,
-        fontSize: { xs: '25px', md: '25px' },
+        fontSize: '25px',
         fontWeight: 700,
         color: 'grey',
       };
@@ -310,7 +310,7 @@ const getAnalyticsStyle = (className, theme) => {
     case 'paymentsGrowth':
       return {
         color: theme.palette.success.main,
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
@@ -342,8 +342,8 @@ const getAnalyticsStyle = (className, theme) => {
     case 'revenueStatsValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary,
-        fontSize: { xs: '20px', md: '20px' },
+        
+        fontSize: '20px' ,
         fontWeight: 700,
         color: 'grey',
       };
@@ -411,7 +411,7 @@ const getAnalyticsStyle = (className, theme) => {
     case 'profitGrowth':
       return {
         color: theme.palette.success.main,
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
@@ -486,7 +486,7 @@ const getAnalyticsStyle = (className, theme) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         color: theme.palette.text.primary,
       };

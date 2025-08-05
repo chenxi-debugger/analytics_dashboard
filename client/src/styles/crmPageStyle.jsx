@@ -200,14 +200,13 @@ const getCrmStyle = (className, theme) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px' ,
       };
 
     case 'ordersValue':
       return {
         my: 0.5,
-        color: theme.palette.text.primary,
-        fontSize: { xs: '25px', md: '25px' },
+        fontSize: '25px',
         fontWeight: 700,
         color: 'grey',
       };
@@ -215,7 +214,7 @@ const getCrmStyle = (className, theme) => {
     case 'ordersGrowth':
       return {
         color: theme.palette.error.main,
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
@@ -238,13 +237,13 @@ const getCrmStyle = (className, theme) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
       };
 
     case 'generatedLeadsValue':
       return {
         my: 0.5,
-        fontSize: { xs: '25px', md: '25px' },
+        fontSize: '25px',
         fontWeight: 700,
         color: 'grey',
       };
@@ -252,7 +251,7 @@ const getCrmStyle = (className, theme) => {
     case 'generatedLeadsGrowth':
       return {
         color: theme.palette.success.main,
-        fontSize: { xs: '20px', md: '20px' },
+        fontSize: '20px',
         fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
