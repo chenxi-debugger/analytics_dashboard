@@ -132,8 +132,23 @@ const CalendarPage = () => {
             />
           )}
 
-          {view === 'day' && <CalendarDayView events={events} selectedDate={selectedDate} theme={theme} />}
-          {view === 'list' && <CalendarListView events={events} selectedDate={selectedDate} theme={theme} />}
+          {view === 'day' && (
+            <CalendarDayView
+              events={events}
+              selectedDate={selectedDate}
+              theme={theme}
+              activeFilters={activeFilters}
+            />
+          )}
+
+          {view === 'list' && (
+            <CalendarListView
+              events={events}
+              selectedDate={selectedDate}
+              theme={theme}
+              activeFilters={activeFilters}
+            />
+          )}
         </Box>
       </Box>
     </ErrorBoundary>

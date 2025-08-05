@@ -18,6 +18,14 @@ const CalendarWeekView = ({ events, selectedDate, theme, activeFilters = [] }) =
     });
   };
 
+  const matchesFilter = (event) => {
+    if (!Array.isArray(activeFilters) || activeFilters.length === 0) return false;
+    if (Array.isArray(event.category)) {
+      return event.category.some(cat => activeFilters.includes(cat));
+    }
+    return activeFilters.includes(event.category);
+  };
+
   const weekDates = getWeekDates();
 
   return (
@@ -39,8 +47,7 @@ const CalendarWeekView = ({ events, selectedDate, theme, activeFilters = [] }) =
                 eventDate.getDate() === date.getDate() &&
                 eventDate.getMonth() === date.getMonth() &&
                 eventDate.getFullYear() === date.getFullYear() &&
-                (activeFilters === undefined || activeFilters.includes(event.category))
-
+                matchesFilter(event)
               );
             });
 
@@ -117,6 +124,7 @@ const CalendarWeekView = ({ events, selectedDate, theme, activeFilters = [] }) =
                       </Box>
                     );
                   }
+
                   return null;
                 })}
               </Box>

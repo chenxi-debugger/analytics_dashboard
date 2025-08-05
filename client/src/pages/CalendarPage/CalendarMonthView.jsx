@@ -14,10 +14,13 @@ const CalendarMonthView = ({ events, selectedDate, today, theme, activeFilters }
     return day > 0 && day <= daysInMonth ? day : null;
   });
 
-  const effectiveFilters = Array.isArray(activeFilters)
-  ? activeFilters
-  : ['Personal', 'Business', 'Family', 'Holiday', 'ETC'];
-
+  const matchesFilter = (event) => {
+    if (!Array.isArray(activeFilters) || activeFilters.length === 0) return false;
+    if (Array.isArray(event.category)) {
+      return event.category.some(cat => activeFilters.includes(cat));
+    }
+    return activeFilters.includes(event.category);
+  };
 
   return (
     <Box sx={getCalendarPageStyle('calendarGrid', { theme })}>
@@ -27,11 +30,23 @@ const CalendarMonthView = ({ events, selectedDate, today, theme, activeFilters }
         </Box>
       ))}
       {calendarDays.map((day, index) => {
-        const isCurrentDate = (
+        const isCurrentDate =
           day === today.getDate() &&
           selectedDate.getMonth() === today.getMonth() &&
-          selectedDate.getFullYear() === today.getFullYear()
-        );
+          selectedDate.getFullYear() === today.getFullYear();
+
+        const dayEvents = day
+          ? events.filter(event => {
+              const eventStart = event.date.getDate();
+              const eventEnd = event.end.getDate();
+              return (
+                day >= eventStart &&
+                day <= eventEnd &&
+                matchesFilter(event)
+              );
+            })
+          : [];
+
         return (
           <Box
             key={index}
@@ -44,29 +59,19 @@ const CalendarMonthView = ({ events, selectedDate, today, theme, activeFilters }
             {day && (
               <>
                 <Typography variant="caption">{day}</Typography>
-                {events
-                  .filter(event => {
-                    const eventStart = event.date.getDate();
-                    const eventEnd = event.end.getDate();
-                    return (
-                      day >= eventStart &&
-                      day <= eventEnd &&
-                      effectiveFilters.includes(event.category)
-                    );
-                  })
-                  .map((event, idx) => (
-                    <Box
-                      key={event.id}
-                      sx={getCalendarPageStyle('event', { color: event.color, theme })}
-                    >
-                      {day === event.date.getDate() ? event.title : ' '}
-                      {day === event.date.getDate() && idx === 2 && events.filter(e => e.date.getDate() === day).length > 3 && (
-                        <Typography variant="caption" color="text.secondary">
-                          + {events.filter(e => e.date.getDate() === day).length - 3} more
-                        </Typography>
-                      )}
-                    </Box>
-                  ))}
+                {dayEvents.slice(0, 3).map((event, idx) => (
+                  <Box
+                    key={event.id}
+                    sx={getCalendarPageStyle('event', { color: event.color, theme })}
+                  >
+                    {day === event.date.getDate() ? event.title : ' '}
+                  </Box>
+                ))}
+                {dayEvents.length > 3 && (
+                  <Typography variant="caption" color="text.secondary">
+                    + {dayEvents.length - 3} more
+                  </Typography>
+                )}
               </>
             )}
           </Box>

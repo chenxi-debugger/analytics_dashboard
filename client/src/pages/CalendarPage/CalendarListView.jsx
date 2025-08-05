@@ -3,12 +3,21 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import getCalendarPageStyle from '../../styles/getCalendarPageStyle';
 
-const CalendarListView = ({ events, selectedDate, theme }) => {
+const CalendarListView = ({ events, selectedDate, theme, activeFilters = [] }) => {
+  const matchesFilter = (event) => {
+    if (!Array.isArray(activeFilters) || activeFilters.length === 0) return false;
+    if (Array.isArray(event.category)) {
+      return event.category.some(cat => activeFilters.includes(cat));
+    }
+    return activeFilters.includes(event.category);
+  };
+
   const filteredEvents = events.filter(event => {
     const date = new Date(event.date);
     return (
       date.getMonth() === selectedDate.getMonth() &&
-      date.getFullYear() === selectedDate.getFullYear()
+      date.getFullYear() === selectedDate.getFullYear() &&
+      matchesFilter(event)
     );
   });
 
