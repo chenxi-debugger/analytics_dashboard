@@ -10,8 +10,10 @@ import Footer from './components/Footer';
 import EmailPage from './pages/EmailPage';
 import ChatPage from './pages/ChatPage';
 import CalendarPage from './pages/CalendarPage';
+import InvoiceList from './pages/InvoiceList';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { ColorModeContext } from './theme/themeContext';
+
 
 const App = () => {
   const theme = useTheme();
@@ -95,6 +97,7 @@ const App = () => {
             <Route path="/apps/email/label/:labelName" element={<EmailPage />} />
             <Route path="/apps/chat" element={<ChatPage />} />
             <Route path="/apps/calendar" element={<CalendarPage />} />
+            <Route path="/apps/invoice/list" element={<InvoiceList />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
 

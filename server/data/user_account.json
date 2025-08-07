@@ -12,7 +12,7 @@
         "name": "Jordan Stevenson",
         "service": "Software Development",
         "total": 3428,
-        "avatar": "",
+        "avatar": "/4.png",
         "avatarColor": "primary",
         "invoiceStatus": "Paid",
         "balance": "$724",
@@ -29,7 +29,7 @@
         "name": "Stephanie Burns",
         "service": "UI/UX Design & Development",
         "total": 5219,
-        "avatar": "/images/avatars/1.png",
+        "avatar": "/1.png",
         "invoiceStatus": "Downloaded",
         "balance": 0,
         "dueDate": "15 Jul 2023"

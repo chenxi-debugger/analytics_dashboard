@@ -18,7 +18,7 @@ export const rawEventsMap = {
     { id: 203, day: 3, hour: 10, minute: 0, durationMins: 90, title: '1-on-1 Check-in', color: '#e0e7ff', category: 'Business' },
     { id: 204, day: 4, hour: 8, minute: 0, durationMins: 60, title: 'Lunch with Sarah', color: '#ffecd1', category: ['Family', 'Personal'] },
     { id: 205, day: 5, title: 'Yoga Class', color: '#ffdad6', category: 'Personal', allDay: true },
-    
+    { id: 304, day: 6, hour: 9, minute: 0, durationMins: 120, title: 'Team Check-In', color: '#d4f8e8', category: ['Business', 'Personal'] },
     { id: 207, day: 7, hour: 11, minute: 30, durationMins: 60, title: 'Grocery Shopping', color: '#ffdad6', category: 'Personal' },
     { id: 208, day: 8, title: 'Mom’s Birthday', color: '#ffecd1', category: ['Family', 'Personal'], allDay: true },
     { id: 209, day: 9, hour: 8, minute: 0, durationMins: 130, title: 'Team Standup', color: '#d4f8e8', category: 'Business' },
