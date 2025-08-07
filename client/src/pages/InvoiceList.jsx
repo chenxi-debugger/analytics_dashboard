@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
@@ -28,6 +29,7 @@ const InvoiceList = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchInvoices() {
@@ -111,7 +113,9 @@ const InvoiceList = () => {
           {selectedIds.length ? `Delete (${selectedIds.length})` : 'Actions'}
         </Button>
         <TextField placeholder="Search Invoice" size="small" />
-        <Button variant="contained">Create Invoice</Button>
+        <Button variant="contained" onClick={() => navigate('/apps/invoice/add')}>
+            Create Invoice
+        </Button>
       </Box>
 
       {/* Table */}

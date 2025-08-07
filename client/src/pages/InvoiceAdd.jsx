@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Grid,
@@ -16,6 +17,8 @@ import getInvoiceAddStyle from '../styles/invoiceAddStyle';
 import InvoiceItemEditor from '../components/InvoiceItemEditor';
 
 const InvoiceAdd = () => {
+    const navigate = useNavigate();
+
   return (
     <Grid container spacing={4} sx={getInvoiceAddStyle('page')}>
       {/* LEFT SIDE */}
@@ -106,7 +109,13 @@ const InvoiceAdd = () => {
       <Grid size={{ xs: 12, md: 12, lg: 4 }}>
         <Box sx={getInvoiceAddStyle('actionPanel')}>
           <Button variant="contained" fullWidth startIcon={<Send />} sx={getInvoiceAddStyle('primaryButton')}>SEND INVOICE</Button>
-          <Button variant="outlined" fullWidth>PREVIEW</Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => navigate('/apps/invoice/preview')}  
+            >
+            PREVIEW
+            </Button>
           <Button variant="outlined" fullWidth>SAVE</Button>
 
           <Divider sx={{ my: 2 }} />

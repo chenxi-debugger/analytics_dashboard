@@ -72,7 +72,7 @@ const getInvoicePreviewStyle = (key) => {
           gap: 2,
           height: 'fit-content',
           position: 'sticky',
-          top: 32,
+          top: 90,
         };
       case 'primaryButton':
         return {
