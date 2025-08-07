@@ -14,6 +14,7 @@ import InvoiceList from './pages/InvoiceList';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { ColorModeContext } from './theme/themeContext';
 import InvoicePreview from './pages/InvoicePreview';
+import InvoiceEdit from './pages/InvoiceEdit';
 
 
 const App = () => {
@@ -100,6 +101,7 @@ const App = () => {
             <Route path="/apps/calendar" element={<CalendarPage />} />
             <Route path="/apps/invoice/list" element={<InvoiceList />} />
             <Route path="/apps/invoice/preview" element={<InvoicePreview />} />
+            <Route path="/apps/invoice/edit" element={<InvoiceEdit />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
 

@@ -1,4 +1,4 @@
-const getInvoicePreviewStyle = (key) => {
+const getInvoiceEditStyle = (key) => {
     switch (key) {
       case 'page':
         return {
@@ -10,13 +10,15 @@ const getInvoicePreviewStyle = (key) => {
           p: 4,
           bgcolor: 'white',
           borderRadius: 1,
-          boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         };
       case 'header':
         return {
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'space-between',
-          mb: 4,
+          mb: 8,
+          gap: 4,
         };
       case 'logo':
         return {
@@ -26,53 +28,60 @@ const getInvoicePreviewStyle = (key) => {
         };
       case 'address':
         return {
-          color: 'gray',
-          fontSize: '1rem',
-        };
-      case 'invoiceInfo':
-        return {
-          textAlign: 'right',
-          '& h5': {
-            m: 2,
-          },
-          '& span': {
-            color: '#7367f0',
-          },
-        };
-      case 'billSection':
-        return {
-          display: 'flex',
-          justifyContent: 'space-between',
-          mb: 4,
-          mt: 4,
-          gap: 4,
-        };
-      case 'footer':
-        return {
-          display: 'flex',
-          justifyContent: 'space-between',
-          mt: 10,
-          mb: 10,
-          fontSize: '1rem',
-        };
-      case 'note':
-        return {
-          fontSize: '1rem',
+          m: 2,
           color: '#6e6b7b',
+          fontSize: '1rem',
+        };
+      case 'invoiceForm':
+        return {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-begin',
+          gap: 2,
+          textAlign: 'left',
+          '& .MuiInputBase-root': {
+            width: '300px',
+          },
+        };
+      case 'billing':
+        return {
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 3,
+          mb: 4,
+        };
+      case 'itemsBox':
+        return {
+          mt: 2,
+          mb: 3,
+          p: 2,
+          bgcolor: '#f8f8f8',
+          borderRadius: 2,
+        };
+      case 'addButton':
+        return {
+          mt: 2,  
+          borderStyle: 'dashed',
+        };
+      case 'summaryBox':
+        return {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          mt: 0,
+          mb: 8,
         };
       case 'actionPanel':
         return {
           p: 3,
           bgcolor: 'white',
           borderRadius: 1,
-          boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
-          flexGrow: 1,
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
-          height: 'fit-content',
           position: 'sticky',
-          top: 32,
+          top: 90,
         };
       case 'primaryButton':
         return {
@@ -82,13 +91,12 @@ const getInvoicePreviewStyle = (key) => {
             bgcolor: '#5e50ee',
           },
         };
-      case 'paymentButton':
+      case 'greenButton':
         return {
-          bgcolor: '#7367f0',
+          bgcolor: '#28c76f',
           color: '#fff',
-          mt: 2,
           '&:hover': {
-            bgcolor: '#5e50ee',
+            bgcolor: '#1fab5d',
           },
         };
       default:
@@ -96,5 +104,5 @@ const getInvoicePreviewStyle = (key) => {
     }
   };
   
-  export default getInvoicePreviewStyle;
+  export default getInvoiceEditStyle;
   
