@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
@@ -12,24 +11,43 @@ import {
   TableRow,
   Checkbox,
   Avatar,
-  Button,
   IconButton,
-  TextField,
+  Tooltip,
+  Menu,
   MenuItem,
+  Button,
+  TextField,
 } from '@mui/material';
 import { Delete, Visibility, MoreVert } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import PaginationControls from '../components/PaginationControls';
 import getInvoiceListStyle from '../styles/invoiceListStyle';
 
 const InvoiceList = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Menu control for MoreVert
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [activeMenuRow, setActiveMenuRow] = useState(null);
+
+  const handleOpenMenu = (event, rowId) => {
+    setAnchorEl(event.currentTarget);
+    setActiveMenuRow(rowId);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+    setActiveMenuRow(null);
+  };
 
   useEffect(() => {
     async function fetchInvoices() {
@@ -39,6 +57,7 @@ const InvoiceList = () => {
         });
         const result = await res.json();
         setData(result);
+        setFilteredData(result);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -48,14 +67,12 @@ const InvoiceList = () => {
     fetchInvoices();
   }, []);
 
-  const paginatedData = data.slice(
+  const paginatedData = filteredData.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
 
-  const isAllSelected = paginatedData.every((invoice) =>
-    selectedIds.includes(invoice.id)
-  );
+  const isAllSelected = paginatedData.every((invoice) => selectedIds.includes(invoice.id));
 
   const toggleSelectAll = () => {
     if (isAllSelected) {
@@ -72,6 +89,10 @@ const InvoiceList = () => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
+  };
+
+  const handleDeleteRow = (id) => {
+    setFilteredData((prev) => prev.filter((item) => item.id !== id));
   };
 
   if (loading) {
@@ -92,30 +113,13 @@ const InvoiceList = () => {
 
   return (
     <Box sx={getInvoiceListStyle('root', theme)}>
-      {/* Filters */}
-      <Box sx={getInvoiceListStyle('filters')}>
-        <TextField label="Invoice Status" select fullWidth>
-          <MenuItem value="">All</MenuItem>
-          <MenuItem value="Paid">Paid</MenuItem>
-          <MenuItem value="Unpaid">Unpaid</MenuItem>
-        </TextField>
-        <TextField
-          label="Invoice Date"
-          type="date"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-        />
-      </Box>
-
-      {/* Action Row */}
+      {/* Top Action Bar */}
       <Box sx={getInvoiceListStyle('actionRow')}>
         <Button variant="outlined" disabled={!selectedIds.length}>
           {selectedIds.length ? `Delete (${selectedIds.length})` : 'Actions'}
         </Button>
         <TextField placeholder="Search Invoice" size="small" />
-        <Button variant="contained" onClick={() => navigate('/apps/invoice/add')}>
-            Create Invoice
-        </Button>
+        <Button variant="contained">Create Invoice</Button>
       </Box>
 
       {/* Table */}
@@ -148,9 +152,7 @@ const InvoiceList = () => {
                   onChange={() => toggleSelectOne(invoice.id)}
                 />
               </TableCell>
-              <TableCell sx={getInvoiceListStyle('invoiceId')}>
-                #{invoice.id}
-              </TableCell>
+              <TableCell sx={getInvoiceListStyle('invoiceId')}>#{invoice.id}</TableCell>
               <TableCell>
                 <Box sx={getInvoiceListStyle('client')}>
                   <Avatar
@@ -172,16 +174,35 @@ const InvoiceList = () => {
                   {invoice.balance}
                 </Box>
               </TableCell>
-              <TableCell onClick={(e) => e.stopPropagation()}>
-                <IconButton>
-                  <Delete />
-                </IconButton>
-                <IconButton>
-                  <Visibility />
-                </IconButton>
-                <IconButton>
-                  <MoreVert />
-                </IconButton>
+              <TableCell onClick={(e) => e.stopPropagation()} sx={{ position: 'relative' }}>
+                <Tooltip title="Delete Invoice">
+                  <IconButton onClick={() => handleDeleteRow(invoice.id)}>
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Preview">
+                  <IconButton onClick={() => navigate('/apps/invoice/preview')}>
+                    <Visibility />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="More">
+                  <IconButton onClick={(e) => handleOpenMenu(e, invoice.id)}>
+                    <MoreVert />
+                  </IconButton>
+                </Tooltip>
+
+                {/* More options menu */}
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl) && activeMenuRow === invoice.id}
+                  onClose={handleCloseMenu}
+                >
+                  <MenuItem onClick={handleCloseMenu}>Download</MenuItem>
+                  <MenuItem onClick={handleCloseMenu}>Edit</MenuItem>
+                  <MenuItem onClick={handleCloseMenu}>Duplicate</MenuItem>
+                </Menu>
               </TableCell>
             </TableRow>
           ))}
@@ -190,7 +211,7 @@ const InvoiceList = () => {
 
       {/* Pagination */}
       <PaginationControls
-        count={data.length}
+        count={filteredData.length}
         page={page}
         rowsPerPage={rowsPerPage}
         onPageChange={(newPage) => setPage(newPage)}

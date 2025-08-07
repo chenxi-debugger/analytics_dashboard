@@ -467,9 +467,15 @@ const EmailPage = () => {
                                 <IconButton size="small">
                                   <ForwardIcon sx={getEmailPageStyle('actionIcon', { theme })} />
                                 </IconButton>
-                                <IconButton size="small">
+                                <IconButton
+                                  size="small"
+                                  onClick={() => {
+                                    setEmails((prev) => prev.filter((e) => e.id !== email.id));
+                                  }}
+                                >
                                   <DeleteIcon sx={getEmailPageStyle('actionIcon', { theme })} />
                                 </IconButton>
+
                               </Box>
                             )}
                           </Box>
