@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage';
 import Sidebar from './components/Sidebar';
-import Headerbar from './components/Headerbar'; // Import Headerbar
+import Headerbar from './components/Headerbar'; 
 import AnalyticsPage from './pages/AnalyticsPage';
 import CrmPage from './pages/CrmPage';
 import EcommercePage from './pages/EcommercePage';
@@ -13,6 +13,7 @@ import CalendarPage from './pages/CalendarPage';
 import InvoiceList from './pages/InvoiceList';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { ColorModeContext } from './theme/themeContext';
+import InvoicePreview from './pages/InvoicePreview';
 
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
             <Route path="/apps/chat" element={<ChatPage />} />
             <Route path="/apps/calendar" element={<CalendarPage />} />
             <Route path="/apps/invoice/list" element={<InvoiceList />} />
+            <Route path="/apps/invoice/preview" element={<InvoicePreview />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
 
