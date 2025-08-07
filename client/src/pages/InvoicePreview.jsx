@@ -16,7 +16,7 @@ const InvoicePreview = () => {
   return (
     <Grid container spacing={4} sx={getInvoicePreviewStyle('page')}>
       {/* LEFT SIDE */}
-      <Grid item xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 12, lg: 8 }}>
         <Box sx={getInvoicePreviewStyle('paper')}>
           <Box sx={getInvoicePreviewStyle('header')}>
             <Box>
@@ -29,7 +29,7 @@ const InvoicePreview = () => {
             </Box>
 
             <Box sx={getInvoicePreviewStyle('invoiceInfo')}>
-              <Typography variant="h6" fontWeight={600}>Invoice <span>#4987</span></Typography>
+              <Typography variant="h5" fontWeight={600}>Invoice <span>#4987</span></Typography>
               <Typography>Date Issued: <strong>13 Aug 2025</strong></Typography>
               <Typography>Date Due: <strong>23 Aug 2025</strong></Typography>
             </Box>
@@ -120,7 +120,7 @@ const InvoicePreview = () => {
       </Grid>
 
       {/* RIGHT SIDE */}
-      <Grid item xs={12} md={4}>
+      <Grid size={{ xs: 12, md: 12, lg: 4 }}>
         <Box sx={getInvoicePreviewStyle('actionPanel')}>
           <Button variant="contained" fullWidth sx={getInvoicePreviewStyle('primaryButton')}>
             🚀 SEND INVOICE

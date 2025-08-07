@@ -2,15 +2,15 @@ const getInvoicePreviewStyle = (key) => {
     switch (key) {
       case 'page':
         return {
-          p: 4,
-          backgroundColor: '#f4f5fa',
+          p: 1,
+        //   backgroundColor: '#f4f5fa',
         };
       case 'paper':
         return {
           p: 4,
           bgcolor: 'white',
-          borderRadius: 2,
-          boxShadow: '0px 2px 10px rgba(0,0,0,0.05)',
+          borderRadius: 1,
+          boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
         };
       case 'header':
         return {
@@ -21,19 +21,19 @@ const getInvoicePreviewStyle = (key) => {
       case 'logo':
         return {
           fontWeight: 700,
-          fontSize: '1.25rem',
+          fontSize: '2rem',
           mb: 1,
         };
       case 'address':
         return {
           color: 'gray',
-          fontSize: '0.875rem',
+          fontSize: '1rem',
         };
       case 'invoiceInfo':
         return {
           textAlign: 'right',
-          '& h6': {
-            mb: 1,
+          '& h5': {
+            m: 2,
           },
           '& span': {
             color: '#7367f0',
@@ -44,19 +44,20 @@ const getInvoicePreviewStyle = (key) => {
           display: 'flex',
           justifyContent: 'space-between',
           mb: 4,
-          mt: 2,
-          gap: 3,
+          mt: 4,
+          gap: 4,
         };
       case 'footer':
         return {
           display: 'flex',
           justifyContent: 'space-between',
-          mt: 4,
-          mb: 3,
+          mt: 10,
+          mb: 10,
+          fontSize: '1rem',
         };
       case 'note':
         return {
-          fontSize: '0.85rem',
+          fontSize: '1rem',
           color: '#6e6b7b',
         };
       case 'actionPanel':
@@ -64,7 +65,8 @@ const getInvoicePreviewStyle = (key) => {
           p: 3,
           bgcolor: 'white',
           borderRadius: 2,
-          boxShadow: '0px 2px 10px rgba(0,0,0,0.05)',
+          boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
+          flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
