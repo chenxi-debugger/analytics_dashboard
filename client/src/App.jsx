@@ -31,6 +31,23 @@ import FaqPage from './pages/faq/FaqPage';
 import HelpCenterPage from './pages/help/HelpCenterPage';
 import PricingPage from './pages/pricing/PricingPage';
 import { MiscIndexPage, MiscScreen } from './pages/misc/MiscPages';
+import TypographyPage from './pages/ui/TypographyPage';
+import { IconsPage, IconsTestPage } from './pages/ui/IconsPage';
+import CardsPage from './pages/ui/CardsPage';
+import ComponentsPage from './pages/ui/ComponentsPage';
+import FormElementsPage from './pages/forms/FormElementsPage';
+import FormLayoutsPage from './pages/forms/FormLayoutsPage';
+import FormValidationPage from './pages/forms/FormValidationPage';
+import FormWizardPage from './pages/forms/FormWizardPage';
+import WizardExamplesPage from './pages/examples/WizardExamplesPage';
+import DialogExamplesPage from './pages/examples/DialogExamplesPage';
+import BasicTablePage from './pages/tables/BasicTablePage';
+import DataGridPage from './pages/tables/DataGridPage';
+import ChartsPage from './pages/charts/ChartsPage';
+import AccessControlPage from './pages/misc/AccessControlPage';
+import OthersPage from './pages/misc/OthersPage';
+
+const CARD_VARIANTS = ['basic', 'advanced', 'statistics', 'widgets', 'gamification', 'actions'];
 
 // /misc/coming-soon, /misc/404 … (full-screen status pages)
 const MiscRoute = () => {
@@ -173,6 +190,25 @@ const App = () => (
         <Route path="/pages/help-center" element={<HelpCenterPage />} />
         <Route path="/pages/pricing" element={<PricingPage />} />
         <Route path="/pages/miscellaneous" element={<MiscIndexPage />} />
+        <Route path="/wizard-examples" element={<WizardExamplesPage />} />
+        <Route path="/dialog-examples" element={<DialogExamplesPage />} />
+        <Route path="/ui/typography" element={<TypographyPage />} />
+        <Route path="/ui/icons" element={<IconsPage />} />
+        <Route path="/ui/icons-test" element={<IconsTestPage />} />
+        {CARD_VARIANTS.map((v) => (
+          <Route key={v} path={`/ui/cards/${v}`} element={<CardsPage />} />
+        ))}
+        <Route path="/ui/components" element={<ComponentsPage />} />
+        <Route path="/forms/elements" element={<FormElementsPage />} />
+        <Route path="/forms/layouts" element={<FormLayoutsPage />} />
+        <Route path="/forms/validation" element={<FormValidationPage />} />
+        <Route path="/forms/wizard" element={<FormWizardPage />} />
+        <Route path="/tables/table" element={<BasicTablePage />} />
+        <Route path="/tables/mui-datagrid" element={<DataGridPage />} />
+        <Route path="/charts" element={<ChartsPage />} />
+        {/* Static paths beat the full-screen /misc/:kind route above */}
+        <Route path="/misc/access-control" element={<AccessControlPage />} />
+        <Route path="/misc/others" element={<OthersPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
