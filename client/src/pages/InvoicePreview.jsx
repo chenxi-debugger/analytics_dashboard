@@ -20,7 +20,7 @@ const InvoicePreview = () => {
         <Box sx={getInvoicePreviewStyle('paper')}>
           <Box sx={getInvoicePreviewStyle('header')}>
             <Box>
-              <Typography sx={getInvoicePreviewStyle('logo')}>🧾 sneat</Typography>
+              <Typography sx={getInvoicePreviewStyle('logo')}>🧾 InsightBoard</Typography>
               <Typography sx={getInvoicePreviewStyle('address')}>
                 Office 149, 450 South Brand Brooklyn<br />
                 San Diego County, CA 91905, USA<br />

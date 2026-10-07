@@ -184,7 +184,7 @@ const Sidebar = ({ open, onToggle, isMini, onToggleMini, onMouseEnter, onMouseLe
       <Toolbar sx={{ display: 'flex', justifyContent: isMini ? 'center' : 'space-between', alignItems: 'center' }}>
         {!isMini && (
           <Typography variant="h6" sx={typographyTitleStyles(theme)}>
-            🌀 sneat
+            📊 InsightBoard
           </Typography>
         )}
         {isLargeScreen && (

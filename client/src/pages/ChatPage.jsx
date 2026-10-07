@@ -117,7 +117,7 @@ const ChatPage = () => {
     setMessageInput('');
     // Update unread count in MongoDB
     try {
-      const response = await fetch(`http://localhost:5001/api/chat/chats/${chat.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/chats/${chat.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...chat, unreadCount: 0 }),
@@ -159,7 +159,7 @@ const ChatPage = () => {
         messages: [newMessage],
       };
       try {
-        const response = await fetch('http://localhost:5001/api/chat/chats', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/chats`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newChat),
@@ -168,7 +168,7 @@ const ChatPage = () => {
         const createdChat = await response.json();
         setChats([createdChat, ...chats]);
         // Delete contact
-        await fetch(`http://localhost:5001/api/chat/contacts/${selectedContact.id}`, {
+        await fetch(`${import.meta.env.VITE_API_URL}/api/chat/contacts/${selectedContact.id}`, {
           method: 'DELETE',
         });
         setContacts(contacts.filter((c) => c.id !== selectedContact.id));
@@ -180,7 +180,7 @@ const ChatPage = () => {
     } else {
       // Update existing chat
       try {
-        const response = await fetch('http://localhost:5001/api/chat/send', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/send`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ chatId: selectedChat.id, message: newMessage }),
@@ -199,7 +199,7 @@ const ChatPage = () => {
 
   const handleDeleteChat = async (chatId) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/chat/chats/${chatId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/chats/${chatId}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete chat');
@@ -212,7 +212,7 @@ const ChatPage = () => {
 
   const handleDeleteContact = async (contactId) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/chat/contacts/${contactId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat/contacts/${contactId}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete contact');

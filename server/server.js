@@ -39,7 +39,11 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ Connected to MongoDB'))
+.then(async () => {
+  console.log('✅ Connected to MongoDB');
+  // First run on an empty database: create roles, permissions and demo users.
+  await ensureAuthSeed();
+})
 .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 // ✅ API 路由（按需保留）
@@ -50,6 +54,11 @@ import userAccountRoutes from './mongoose/routes/userAccount.js';
 import crmRouter from './mongoose/routes/crm.js';
 import emailRouter from './mongoose/routes/emailRoutes.js';
 import chatRoutes from './mongoose/routes/chatRoutes.js';
+import authRoutes from './mongoose/routes/auth.js';
+import usersRoutes from './mongoose/routes/users.js';
+import rolesRoutes from './mongoose/routes/roles.js';
+import permissionsRoutes from './mongoose/routes/permissions.js';
+import { ensureAuthSeed } from './mongoose/scripts/seedAuthData.js';
 
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/ecommerce', ecommerceRouter);
@@ -58,6 +67,13 @@ app.use('/api/user-account', userAccountRoutes);
 app.use('/api/crm', crmRouter);
 app.use('/api/email', emailRouter);
 app.use('/api/chat', chatRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/roles', rolesRoutes);
+app.use('/api/permissions', permissionsRoutes);
+
+// Unknown /api routes return JSON instead of the React page
+app.use('/api', (req, res) => res.status(404).json({ message: 'Not found' }));
 
 // ✅ 提供前端构建产物（dist）
 const clientBuildPath = path.join(__dirname, '..', 'client', 'dist');

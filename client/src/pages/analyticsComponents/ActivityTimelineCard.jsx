@@ -108,7 +108,7 @@ const ActivityTimelineCard = ({ theme }) => {
                           {activity.client}
                         </Typography>
                         <Typography variant="caption" sx={getAnalyticsStyle('activityClientTypographyCaption', theme)}>
-                          CEO of ThemeSelection
+                          CEO of Northwind
                         </Typography>
                       </Box>
                     </Box>

@@ -59,9 +59,14 @@ import {
   userInfoStyles,
 } from './HeaderbarStyle';
 import { ColorModeContext } from '../theme/themeContext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import { UserAvatar } from './common';
 
 const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
   const colorMode = useContext(ColorModeContext);
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [searchAnchor, setSearchAnchor] = useState(null);
   const [langAnchor, setLangAnchor] = useState(null);
   const [shortcutAnchor, setShortcutAnchor] = useState(null);
@@ -81,13 +86,13 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
     Analytics: '/',
     CRM: '/dashboards/crm',
     eCommerce: '/dashboards/ecommerce',
-    'User List': '/users',
+    'User List': '/apps/user/list',
     Typography: '/ui/typography',
     Tabs: '/ui/tabs',
     Buttons: '/ui/buttons',
     'Advanced Cards': '/ui/advanced-cards',
     Calendar: '/apps/calendar',
-    'Invoice List': '/apps/invoice-list',
+    'Invoice List': '/apps/invoice/list',
     Pricing: '/apps/pricing',
     'Account Settings': '/apps/account-settings',
     Select: '/forms/select',
@@ -226,28 +231,38 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                     <MenuItem sx={readAllStyles}>READ ALL NOTIFICATIONS</MenuItem>
                   </Box>
                 </Menu>
-                <Tooltip title="User menu">
+                <Tooltip title={user ? user.fullName : 'Sign in'}>
                   <IconButton onClick={handleOpen(setUserAnchor)}>
-                    <Avatar src="/user.png" sx={avatarStyles} />
+                    {user ? <UserAvatar name={user.fullName} color={user.avatarColor} size={38} /> : <Avatar src="/user.png" sx={avatarStyles} />}
                   </IconButton>
                 </Tooltip>
                 <Menu anchorEl={userAnchor} open={isOpen(userAnchor)} onClose={handleClose(setUserAnchor)}>
                   <Box sx={userMenuStyles}>
                     <Box sx={userInfoStyles}>
-                      <Avatar src="/user.png" sx={avatarStyles} />
+                      {user ? <UserAvatar name={user.fullName} color={user.avatarColor} size={38} /> : <Avatar src="/user.png" sx={avatarStyles} />}
                       <Box sx={{ ml: 2 }}>
-                        <Typography variant="subtitle2">John Doe</Typography>
+                        <Typography variant="subtitle2">{user ? user.fullName : 'Guest'}</Typography>
                         <Typography variant="caption" color="text.secondary">
-                          Admin
+                          {user ? user.role : 'Not signed in'}
                         </Typography>
                       </Box>
                     </Box>
                     <Divider sx={dividerStyles} />
-                    {['Profile', 'Inbox', 'Chat', 'Settings', 'Pricing', 'FAQ'].map((opt) => (
-                      <MenuItem key={opt}>{opt}</MenuItem>
+                    {[
+                      { label: 'My Profile', to: user ? `/apps/user/view?id=${user.id}` : '/auth/login' },
+                      { label: 'Users', to: '/apps/user/list' },
+                      { label: 'Roles & Permissions', to: '/apps/roles' },
+                      { label: 'Inbox', to: '/apps/email' },
+                      { label: 'Chat', to: '/apps/chat' },
+                    ].map(({ label, to }) => (
+                      <MenuItem key={label} onClick={() => { setUserAnchor(null); navigate(to); }}>{label}</MenuItem>
                     ))}
                     <Divider sx={dividerStyles} />
-                    <MenuItem>Sign Out</MenuItem>
+                    {user ? (
+                      <MenuItem onClick={() => { setUserAnchor(null); logout(); navigate('/auth/login'); }}>Sign Out</MenuItem>
+                    ) : (
+                      <MenuItem onClick={() => { setUserAnchor(null); navigate('/auth/login'); }}>Sign In</MenuItem>
+                    )}
                   </Box>
                 </Menu>
               </Box>

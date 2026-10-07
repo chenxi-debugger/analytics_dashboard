@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage';
 import Sidebar from './components/Sidebar';
 import Headerbar from './components/Headerbar'; 
@@ -16,9 +16,18 @@ import { ColorModeContext } from './theme/themeContext';
 import InvoicePreview from './pages/InvoicePreview';
 import InvoiceEdit from './pages/InvoiceEdit';
 import InvoiceAdd from './pages/InvoiceAdd';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import UserListPage from './pages/users/UserListPage';
+import UserViewPage from './pages/users/UserViewPage';
+import UserEditPage from './pages/users/UserEditPage';
+import RolesPage from './pages/roles/RolesPage';
+import PermissionsPage from './pages/permissions/PermissionsPage';
 
 
-const App = () => {
+// Sidebar + header + footer around every dashboard page.
+const DashboardLayout = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
@@ -52,8 +61,7 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
         {/* Headerbar */}
         <Headerbar
           drawerWidth={drawerWidth}
@@ -91,21 +99,7 @@ const App = () => {
             }),
           }}
         >
-          <Routes>
-            <Route path="/" element={<AnalyticsPage />} />
-            <Route path="/dashboards/crm" element={<CrmPage />} />
-            <Route path="/dashboards/ecommerce" element={<EcommercePage />} />
-            <Route path="/apps/email" element={<EmailPage />} />
-            <Route path="/apps/email/:tab" element={<EmailPage />} />
-            <Route path="/apps/email/label/:labelName" element={<EmailPage />} />
-            <Route path="/apps/chat" element={<ChatPage />} />
-            <Route path="/apps/calendar" element={<CalendarPage />} />
-            <Route path="/apps/invoice/list" element={<InvoiceList />} />
-            <Route path="/apps/invoice/preview" element={<InvoicePreview />} />
-            <Route path="/apps/invoice/edit" element={<InvoiceEdit />} />
-            <Route path="/apps/invoice/add" element={<InvoiceAdd />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Outlet />
 
           {/* Footer */}
           <Box
@@ -120,10 +114,42 @@ const App = () => {
             <Footer />
           </Box>
         </Box>
-      </Box>
-    </Router>
+    </Box>
   );
 };
+
+const App = () => (
+  <Router>
+    <Routes>
+      {/* Full-screen pages without sidebar/header */}
+      <Route path="/auth/login" element={<LoginPage />} />
+      <Route path="/auth/register" element={<RegisterPage />} />
+      <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+
+      {/* Everything else uses the dashboard layout */}
+      <Route element={<DashboardLayout />}>
+        <Route path="/" element={<AnalyticsPage />} />
+        <Route path="/dashboards/crm" element={<CrmPage />} />
+        <Route path="/dashboards/ecommerce" element={<EcommercePage />} />
+        <Route path="/apps/email" element={<EmailPage />} />
+        <Route path="/apps/email/:tab" element={<EmailPage />} />
+        <Route path="/apps/email/label/:labelName" element={<EmailPage />} />
+        <Route path="/apps/chat" element={<ChatPage />} />
+        <Route path="/apps/calendar" element={<CalendarPage />} />
+        <Route path="/apps/invoice/list" element={<InvoiceList />} />
+        <Route path="/apps/invoice/preview" element={<InvoicePreview />} />
+        <Route path="/apps/invoice/edit" element={<InvoiceEdit />} />
+        <Route path="/apps/invoice/add" element={<InvoiceAdd />} />
+        <Route path="/apps/user/list" element={<UserListPage />} />
+        <Route path="/apps/user/view" element={<UserViewPage />} />
+        <Route path="/apps/user/edit" element={<UserEditPage />} />
+        <Route path="/apps/roles" element={<RolesPage />} />
+        <Route path="/apps/permissions" element={<PermissionsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  </Router>
+);
 
 export default App;
 

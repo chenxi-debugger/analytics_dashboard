@@ -27,7 +27,7 @@ const InvoiceAdd = () => {
           {/* Header */}
           <Box sx={getInvoiceAddStyle('header')}>
             <Box>
-              <Typography sx={getInvoiceAddStyle('logo')}>🧾 sneat</Typography>
+              <Typography sx={getInvoiceAddStyle('logo')}>🧾 InsightBoard</Typography>
               <Typography sx={getInvoiceAddStyle('address')}>
                 Office 149, 450 South Brand Brooklyn<br />
                 San Diego County, CA 91905, USA<br />
