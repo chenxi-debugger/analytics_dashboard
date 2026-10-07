@@ -23,13 +23,8 @@ import { apiFetch } from '../../api/client';
 import { useAuth } from '../../auth/AuthContext';
 import { RoleLabel, StatusChip, UserAvatar } from '../../components/common';
 import useUserFromQuery from './useUserFromQuery';
+import { planByName } from '../../data/plans';
 
-const PLAN_INFO = {
-  Basic: { price: 0, features: ['1 User', '1 GB storage', 'Community support'] },
-  Team: { price: 49, features: ['5 Users', 'Up to 20 GB storage', 'Email support'] },
-  Company: { price: 99, features: ['10 Users', 'Up to 50 GB storage', 'Priority support'] },
-  Enterprise: { price: 199, features: ['Unlimited users', '1 TB storage', 'Dedicated support'] },
-};
 
 const formatDate = (iso) => (iso ? new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '–');
 
@@ -159,7 +154,7 @@ const UserViewPage = () => {
   if (error) return <Alert severity="error">{error}</Alert>;
   if (!user) return <Alert severity="info">No users yet.</Alert>;
 
-  const plan = PLAN_INFO[user.plan] || PLAN_INFO.Basic;
+  const plan = planByName(user.plan);
   // Day of the current 30-day billing cycle, counted from the sign-up date.
   const daysUsed = (Math.floor((Date.now() - new Date(user.createdAt)) / 86400000) % 30) + 1;
 
@@ -233,7 +228,7 @@ const UserViewPage = () => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
               <Chip label={user.plan} color="primary" size="small" sx={{ borderRadius: 1 }} />
               <Typography variant="h4" color="primary.main" sx={{ fontWeight: 600 }}>
-                ${plan.price}
+                ${plan.monthly}
                 <Typography component="span" variant="body2" color="text.secondary"> / month</Typography>
               </Typography>
             </Box>

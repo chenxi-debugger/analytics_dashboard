@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema(
     avatarColor: { type: String, default: 'primary' },
     billing: { type: String, enum: ['Auto Debit', 'Manual - Cash', 'Manual - Paypal', 'Manual - Credit Card'], default: 'Auto Debit' },
     isDemoAdmin: { type: Boolean, default: false }, // the seeded demo account cannot be deleted
+    // { [notificationKey]: { email, browser, app } } — saved from Account Settings → Notifications
+    notificationPrefs: { type: mongoose.Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 );
@@ -39,6 +41,7 @@ userSchema.methods.toPublicJSON = function toPublicJSON() {
     avatarColor: this.avatarColor,
     billing: this.billing,
     isDemoAdmin: this.isDemoAdmin,
+    notificationPrefs: this.notificationPrefs || {},
     createdAt: this.createdAt,
   };
 };

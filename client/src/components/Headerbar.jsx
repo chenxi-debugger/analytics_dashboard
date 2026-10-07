@@ -93,8 +93,8 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
     'Advanced Cards': '/ui/advanced-cards',
     Calendar: '/apps/calendar',
     'Invoice List': '/apps/invoice/list',
-    Pricing: '/apps/pricing',
-    'Account Settings': '/apps/account-settings',
+    Pricing: '/pages/pricing',
+    'Account Settings': '/pages/account',
     Select: '/forms/select',
     Autocomplete: '/forms/autocomplete',
     Table: '/tables/table',
@@ -249,11 +249,11 @@ const Headerbar = ({ drawerWidth, theme, handleDrawerToggle }) => {
                     </Box>
                     <Divider sx={dividerStyles} />
                     {[
-                      { label: 'My Profile', to: user ? `/apps/user/view?id=${user.id}` : '/auth/login' },
-                      { label: 'Users', to: '/apps/user/list' },
-                      { label: 'Roles & Permissions', to: '/apps/roles' },
-                      { label: 'Inbox', to: '/apps/email' },
-                      { label: 'Chat', to: '/apps/chat' },
+                      { label: 'My Profile', to: '/pages/user-profile' },
+                      { label: 'Account Settings', to: '/pages/account' },
+                      { label: 'Billing & Plans', to: '/pages/billing-plans' },
+                      { label: 'Pricing', to: '/pages/pricing' },
+                      { label: 'FAQ', to: '/pages/faq' },
                     ].map(({ label, to }) => (
                       <MenuItem key={label} onClick={() => { setUserAnchor(null); navigate(to); }}>{label}</MenuItem>
                     ))}

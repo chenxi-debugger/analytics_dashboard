@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, useParams } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage';
 import Sidebar from './components/Sidebar';
 import Headerbar from './components/Headerbar'; 
@@ -25,6 +25,18 @@ import UserEditPage from './pages/users/UserEditPage';
 import RolesPage from './pages/roles/RolesPage';
 import PermissionsPage from './pages/permissions/PermissionsPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserProfilePage from './pages/profile/UserProfilePage';
+import AccountSettingsPage from './pages/account/AccountSettingsPage';
+import FaqPage from './pages/faq/FaqPage';
+import HelpCenterPage from './pages/help/HelpCenterPage';
+import PricingPage from './pages/pricing/PricingPage';
+import { MiscIndexPage, MiscScreen } from './pages/misc/MiscPages';
+
+// /misc/coming-soon, /misc/404 … (full-screen status pages)
+const MiscRoute = () => {
+  const { kind } = useParams();
+  return <MiscScreen kind={kind} />;
+};
 
 
 // Sidebar + header + footer around every dashboard page.
@@ -126,6 +138,7 @@ const App = () => (
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
       <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/misc/:kind" element={<MiscRoute />} />
 
       {/* Everything else needs a logged-in user and uses the dashboard layout */}
       <Route
@@ -152,6 +165,14 @@ const App = () => (
         <Route path="/apps/user/edit" element={<UserEditPage />} />
         <Route path="/apps/roles" element={<RolesPage />} />
         <Route path="/apps/permissions" element={<PermissionsPage />} />
+        <Route path="/pages/user-profile" element={<UserProfilePage />} />
+        {['/pages/account-settings', '/pages/account', '/pages/security', '/pages/billing-plans', '/pages/notifications', '/pages/connections'].map((path) => (
+          <Route key={path} path={path} element={<AccountSettingsPage />} />
+        ))}
+        <Route path="/pages/faq" element={<FaqPage />} />
+        <Route path="/pages/help-center" element={<HelpCenterPage />} />
+        <Route path="/pages/pricing" element={<PricingPage />} />
+        <Route path="/pages/miscellaneous" element={<MiscIndexPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
