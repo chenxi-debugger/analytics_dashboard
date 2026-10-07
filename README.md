@@ -173,11 +173,11 @@ Dashboard and app data come from `/api/analytics`, `/api/crm`, `/api/ecommerce`,
 
 ## Deployment (Render)
 
-One **Web Service** runs everything. Typical settings:
+One **Web Service** runs everything:
 
 - **Root directory:** `server`
-- **Build command:** `npm install && npm run build` (also builds the React app)
-- **Start command:** `npm start`
+- **Build command:** `npm install && cd ../client && npm install && npm run build` (installs the server, then builds the React app into `client/dist`)
+- **Start command:** `node server.js`
 - **Environment variables:** `MONGO_URI`, `JWT_SECRET` (and optionally `DEMO_ADMIN_PASSWORD`)
 
 The client's `.env.production` points `VITE_API_URL` at the Render URL.
