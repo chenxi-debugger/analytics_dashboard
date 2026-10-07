@@ -24,6 +24,7 @@ import UserViewPage from './pages/users/UserViewPage';
 import UserEditPage from './pages/users/UserEditPage';
 import RolesPage from './pages/roles/RolesPage';
 import PermissionsPage from './pages/permissions/PermissionsPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 // Sidebar + header + footer around every dashboard page.
@@ -126,8 +127,14 @@ const App = () => (
       <Route path="/auth/register" element={<RegisterPage />} />
       <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
 
-      {/* Everything else uses the dashboard layout */}
-      <Route element={<DashboardLayout />}>
+      {/* Everything else needs a logged-in user and uses the dashboard layout */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/" element={<AnalyticsPage />} />
         <Route path="/dashboards/crm" element={<CrmPage />} />
         <Route path="/dashboards/ecommerce" element={<EcommercePage />} />

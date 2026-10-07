@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, Navigate, useNavigate } from 'react-router-dom';
 import AuthLayout from './AuthLayout';
 import { useAuth } from '../../auth/AuthContext';
 
@@ -30,7 +30,7 @@ function validate(form) {
 }
 
 const RegisterPage = () => {
-  const { register } = useAuth();
+  const { register, isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ fullName: '', username: '', email: '', password: '', agree: false });
   const [touched, setTouched] = useState({});
@@ -64,6 +64,9 @@ const RegisterPage = () => {
     }
   };
 
+
+  // Already signed in? Skip this page.
+  if (isLoggedIn && !busy) return <Navigate to="/" replace />;
   return (
     <AuthLayout title="Adventure starts here 🚀" subtitle="Create an account to explore the dashboard. New accounts start with the Subscriber role.">
       {error && (
